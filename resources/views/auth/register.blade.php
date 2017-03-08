@@ -10,20 +10,6 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('studentNumber') ? ' has-error' : '' }}">
-                            <label for="studentNumber" class="col-md-4 control-label">Numéro étudiant</label>
-
-                            <div class="col-md-6">
-                                <input id="studentNumber" type="text" class="form-control" name="studentNumber" value="{{ old('studentNumber') }}" required autofocus>
-
-                                @if ($errors->has('studentNumber'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('studentNumber') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
                             <label for="lastname" class="col-md-4 control-label">Nom</label>
 
@@ -66,16 +52,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('sex') ? ' has-error' : '' }}">
-                            <label for="sex" class="col-md-4 control-label">Sexe</label>
-
+                        <div class="form-group">
+                            {!! Form::label('sex', 'Sexe', array('class' => 'col-md-4 control-label')) !!}
                             <div class="col-md-6">
-                                <input id="sex" type="radio" class="form-control" name="sex" value="{{ old('sex') }}" required>
-
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('sex') }}</strong>
-                                    </span>
-                                @endif
+                                {{ Form::radio('sex', 'male') }}  {!! Form::label('male', 'Homme') !!}<br>
+                                {{ Form::radio('sex', 'female') }}  {!! Form::label('female', 'Femme') !!}
                             </div>
                         </div>
 
