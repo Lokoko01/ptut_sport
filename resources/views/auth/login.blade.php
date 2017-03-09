@@ -7,18 +7,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">S'identifier</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+
+                    {!! BootForm::openHorizontal($columnSizes)->action(route('login')) !!}
+
+                    {!! BootForm::close() !!}
+
+                    {{--<form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('studentNumber') ? ' has-error' : '' }}">
-                            <label for="studentNumber" class="col-md-4 control-label">Numéro étudiant</label>
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-4 control-label">E-mail</label>
 
                             <div class="col-md-6">
-                                <input id="studentNumber" type="text" class="form-control" name="studentNumber" value="{{ old('studentNumber') }}" required autofocus>
+                                <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
-                                @if ($errors->has('studentNumber'))
+                                @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('studentNumber') }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -59,7 +64,7 @@
                                 </a>
                             </div>
                         </div>
-                    </form>
+                    </form>--}}
                 </div>
             </div>
         </div>
