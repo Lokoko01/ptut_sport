@@ -15,7 +15,6 @@
                             ?>
 
                             {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
-
                             {!! BootForm::text('Nom', 'lastname') !!}
                             {!! BootForm::text('Prénom', 'firstname') !!}
                             {!! BootForm::date('Date de naissance', 'dateOfBirth') !!}
@@ -37,7 +36,6 @@
                                 </div>
                             </div>
                             {!! BootForm::submit("S'inscrire")->class('btn btn-primary') !!}
-
                             {!! BootForm::close() !!}
                     </div>
                 </div>
