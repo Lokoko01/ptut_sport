@@ -15,6 +15,7 @@ class CreateUfrTable extends Migration
     {
         Schema::create('ufr', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code');
             $table->string('label');
             $table->timestamps();
         });

@@ -26,6 +26,7 @@
                                 </div>
                             </div>
                             {!! BootForm::email('Email', 'email') !!}
+                            {!! BootForm::select('Unité de Formation de Recherche', 'ufr')->options($ufrs) !!}
                             {!! BootForm::password('Mot de passe', 'password') !!}
                             <div class="form-group">
                                 <label for="password-confirm" class="col-md-4 control-label">Confirmation de mot de passe</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Ufr;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -52,6 +53,7 @@ class RegisterController extends Controller
             'firstname' => 'required|max:255',
             'dateOfBirth' => 'required|date',
             'sex' => 'required',
+            'ufr' => 'required',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:8|confirmed',
         ]);
@@ -73,5 +75,19 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $ufrs = Ufr::all()
+            ->pluck('label', 'code');
+
+        return view('auth.register')
+            ->with('ufrs', $ufrs);
     }
 }
