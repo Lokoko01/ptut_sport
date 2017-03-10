@@ -17,6 +17,8 @@ class CreateMarksTable extends Migration
             $table->increments('id');
             $table->integer('studentId');
             $table->integer('professorSportId');
+            $table->integer('mark');
+            $table->string('comment');
             $table->timestamps();
         });
     }
