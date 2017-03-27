@@ -13,14 +13,11 @@
                     ];
                     ?>
 
-                    <!-- Pour faire un form bien on peut utiliser celui la avec le $columnSizes d'enhaut-->
-                        {{--  {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}--}}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
 
-                        {!! BootForm::open()->action(route('register')) !!}
-
+                        {!! BootForm::text('Numéro étudiant', 'studentNumber') !!}
                         {!! BootForm::text('Nom', 'lastname') !!}
                         {!! BootForm::text('Prénom', 'firstname') !!}
-                        {!! BootForm::date('Date de naissance', 'dateOfBirth') !!}
 
                         {!! BootForm::inlineRadio('Homme', 'sex', 'male') !!}
                         {!! BootForm::inlineRadio('Femme', 'sex', 'female') !!}
@@ -32,6 +29,7 @@
                         {!! BootForm::submit("S'inscrire")->class('btn btn-primary') !!}
 
                         {!! BootForm::close() !!}
+
                     </div>
                 </div>
             </div>
