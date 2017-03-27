@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Ufr;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -50,8 +51,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'lastname' => 'required|max:255',
             'firstname' => 'required|max:255',
-            'dateOfBirth' => 'required|date',
+            'studentNumber' => 'required|unique:users|max:8',
             'sex' => 'required',
+            'ufr' => 'required',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:8|confirmed',
         ]);
@@ -69,9 +71,23 @@ class RegisterController extends Controller
             'lastname' => $data['lastname'],
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
-            'dateOfBirth' => $data['dateOfBirth'],
+            'studentNumber' => $data['studentNumber'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $ufrs = Ufr::all()
+            ->pluck('label', 'code');
+
+        return view('auth.register')
+            ->with('ufrs', $ufrs);
     }
 }

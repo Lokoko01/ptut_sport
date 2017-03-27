@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLevelsTable extends Migration
+class CreateStudentSportTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('student_sport', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label');
-            $table->float('maxMark');
-            $table->integer('studentSportId');
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->integer('session_id')->unsigned();
+            $table->foreign('session_id')->references('id')->on('sessions');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('student_sport');
     }
 }

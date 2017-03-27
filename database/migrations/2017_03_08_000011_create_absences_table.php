@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUfrTable extends Migration
+class CreateAbsencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateUfrTable extends Migration
      */
     public function up()
     {
-        Schema::create('ufr', function (Blueprint $table) {
+        Schema::create('absences', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('label');
+            $table->integer('studentSport_id')->unsigned();
+            $table->foreign('studentSport_id')->references('id')->on('student_sport');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateUfrTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ufr');
+        Schema::dropIfExists('professors');
     }
 }
