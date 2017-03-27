@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfessorSportTable extends Migration
+class CreateAbsencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateProfessorSportTable extends Migration
      */
     public function up()
     {
-        Schema::create('professor_Sport', function (Blueprint $table) {
+        Schema::create('absences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('professorId');
-            $table->integer('sportId');
+            $table->integer('studentSport_id')->unsigned();
+            $table->foreign('studentSport_id')->references('id')->on('student_sport');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateProfessorSportTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('professor_Sport');
+        Schema::dropIfExists('professors');
     }
 }

@@ -15,8 +15,12 @@ class CreateMarksTable extends Migration
     {
         Schema::create('marks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('studentId');
-            $table->integer('professorSportId');
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->integer('session_id')->unsigned();
+            $table->foreign('session_id')->references('id')->on('sessions');
+            $table->integer('mark');
+            $table->integer('comment');
             $table->timestamps();
         });
     }
