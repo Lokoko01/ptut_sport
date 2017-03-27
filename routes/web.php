@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/preregister', function (){
+    return view('auth.preregister');
+})->name('preregister');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
