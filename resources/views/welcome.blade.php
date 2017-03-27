@@ -78,7 +78,7 @@
     @endif
 
     <div class="content">
-        <img src="images/iut-logo-lyon-1.jpeg" style="width: 50%;">
+        <img src="images/univ-lyon.png" style="width: 50%;">
         <div class="title m-b-md">
             Gestion des activités
         </div>
