@@ -1,14 +1,11 @@
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Info</div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <h2>Veuillez suivre ce lien pour accéder au formulaire d'inscription :</h2>
 
-                    <a href="http://www.google.fr"></a>
-
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+    <a href="http://www.google.fr"></a>
+</body>
+</html>
