@@ -84,7 +84,7 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        $ufrs = Ufr::all()
+        $ufrs = Ufr::orderBy('label', 'asc')
             ->pluck('label', 'code');
 
         return view('auth.register')
