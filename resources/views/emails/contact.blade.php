@@ -4,8 +4,6 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <h2>Veuillez suivre ce lien pour accéder au formulaire d'inscription :</h2>
-
-    <a href="http://www.google.fr"></a>
+    <p>Pour vous inscrire veuillez <a href="http://tygrysko.sytes.net/register">cliquer ici</a>.</p>
 </body>
 </html>
