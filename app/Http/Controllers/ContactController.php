@@ -19,13 +19,13 @@ class ContactController extends Controller
             'name' => "Formulaire d'inscription",
         );
 
-        //$name = Request::input('name');
 
         Mail::send('emails.contact', $data, function ($message) {
 
+
             $message->from('univ.sport.lyon@gmail.com', 'Formulaire d\'inscription');
 
-            $message->to('martin.rascle@gmail.com')->subject('Accéder au formulaire d\'inscription');
+            $message->to(Request::input('studentEmail'))->subject('Accéder au formulaire d\'inscription');
 
         });
 
