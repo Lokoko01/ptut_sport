@@ -70,15 +70,12 @@
         <div class="top-right links">
             @if (Auth::check())
                 <a href="{{ url('/home') }}">Accueil</a>
-            @else
-            <!-- <a href="{{ url('/login') }}">S'identifier</a>
-                <a href="{{ url('/preregister') }}">S'inscrire</a>-->
             @endif
         </div>
     @endif
 
     <div class="content">
-        <img src="images/iut-logo-lyon-1.jpeg" style="width: 50%;">
+        <img src="images/UDL_logo_couleur-01.png" style="width: 30%;">
         <div class="title m-b-md">
             Gestion des activités
         </div>
