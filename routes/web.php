@@ -23,20 +23,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('sendemail', function () {
-
-    $data = array(
-        'name' => "Learning Laravel",
-    );
-
-    Mail::send('emails.contact', $data, function ($message) {
-
-        $message->from('univ.sport.lyon@gmail.com', 'Learning Laravel');
-
-        $message->to('martin.rascle@gmail.com')->subject('Learning Laravel test email');
-
-    });
-
-    return "Your email has been sent successfully";
-
-});
+Route::get('/sendmail', 'ContactController@sendMail');

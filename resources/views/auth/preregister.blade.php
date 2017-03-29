@@ -13,7 +13,7 @@
                         ];
                         ?>
 
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('sendmail')) !!}
                         {!! BootForm::email('Email étudiant', 'studentEmail') !!}
 
                         <p>
@@ -29,6 +29,7 @@
                         </p>
 
                         {!! BootForm::submit("Envoyer")->class('btn btn-primary') !!}
+                        {!! BootForm::close() !!}
                     </div>
                 </div>
             </div>
