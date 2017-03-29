@@ -13,19 +13,21 @@ class ContactController extends Controller
         return view('contact');
     }
 
-    public function sendMail(Request $request)
+    public function store(Request $request)
     {
-        $data = array(
+
+        $data = [
             'name' => "Formulaire d'inscription",
-        );
+            'studentEmail'   => $request->input('studentEmail')
+        ];
 
 
-        Mail::send('emails.contact', $data, function ($message) {
+        Mail::send('emails.contact', $data, function ($message) use ($data) {
 
 
-            $message->from('univ.sport.lyon@gmail.com', 'Formulaire d\'inscription');
+            $message->from('univ.sport.lyon@gmail.com', $data['name']);
 
-            $message->to(Request::input('studentEmail'))->subject('Accéder au formulaire d\'inscription');
+            $message->to($data['studentEmail'])->subject('Accéder au formulaire d\'inscription');
 
         });
 
