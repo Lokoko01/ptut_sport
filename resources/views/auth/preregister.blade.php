@@ -13,6 +13,7 @@
                         ];
                         ?>
 
+
                         {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
                         {!! BootForm::email('Email étudiant', 'studentEmail') !!}
 
