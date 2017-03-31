@@ -10,6 +10,11 @@
                             {{ session()->get('message') }}
                         </div>
                     @endif
+                        @if(session()->has('error'))
+                        <div class="alert alert-warning">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
 
                     <div class="panel-heading">Se préinscrire</div>
                     <div class="panel-body">

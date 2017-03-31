@@ -7,6 +7,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+
 
 class RegisterController extends Controller
 {
@@ -82,12 +85,29 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function showRegistrationForm()
+    public function showRegistrationForm($email, $token)
     {
-        $ufrs = Ufr::orderBy('label', 'asc')
-            ->pluck('label', 'code');
+        $isTokenRight = $this->verifyToken($token, $email);
+        if($isTokenRight){
+            $ufrs = Ufr::orderBy('label', 'asc')
+                ->pluck('label', 'code');
 
-        return view('auth.register')
-            ->with('ufrs', $ufrs);
+            return view('auth.register')
+                ->with('ufrs', $ufrs);
+        }
+        else{
+            abort(404);
+        }
+    }
+
+    private function verifyToken($token, $email){
+        $tokens = DB::table('user_preregister')->where([
+            ['email', $email],
+            ['token', $token],
+        ])->get();
+
+        if(!empty($tokens->all())){
+            return true;
+        }else return false;
     }
 }

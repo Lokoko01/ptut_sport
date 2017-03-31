@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Preregister;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\Contact;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
-    public function create()
-    {
-        return view('contact');
-    }
-
     public function store(Request $request)
     {
-
         $data = [
             'name' => "Formulaire d'inscription",
             'studentEmail' => $request->input('studentEmail')
@@ -24,15 +21,30 @@ class ContactController extends Controller
             'studentEmail' => 'required|email|max:255|regex:/^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon+[0-3]\.fr$/'
         ]);
 
-        Mail::send('emails.contact', $data, function ($message) use ($data) {
+        $token = uniqid();
+
+        $data['token'] = $token;
+
+        if($this->isUserAlreadyExist($data['studentEmail'])){
+            return redirect('preregister')->with('error', 'Un email a déjà été envoyé, vérfiez votre boite mail ou contactez l\'admin. Nous ne pouvons pas vous envoyer un deuxième email.');
+        }
 
 
-            $message->from('univ.sport.lyon@gmail.com', $data['name']);
+        Preregister::create([
+            'email' => $data['studentEmail'],
+            'token' => $token,
+        ]);
 
-            $message->to($data['studentEmail'])->subject('Accéder au formulaire d\'inscription');
-
-        });
+        Mail::to($data['studentEmail'])
+            ->send(new Contact($data));
 
         return redirect('preregister')->with('message', 'Nous vous avons envoyé un email de confirmation. Veuillez vérifier vos mails.');
+    }
+
+    private function isUserAlreadyExist($studentAdress){
+        $user = DB::table('user_preregister')->where('email', $studentAdress)->get();
+        if(!empty($user->all())){
+            return true;
+        }else return false;
     }
 }

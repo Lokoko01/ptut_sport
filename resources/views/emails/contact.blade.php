@@ -4,6 +4,7 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <p>Pour vous inscrire veuillez <a href="http://tygrysko.sytes.net/register">cliquer ici</a>.</p>
+    Bonjour {{$contact['studentEmail']}},
+    <p>Pour vous inscrire veuillez <a href="http://tygrysko.sytes.net/register/{{$contact['studentEmail']}}/{{$contact['token']}}">cliquer ici</a>.</p>
 </body>
 </html>

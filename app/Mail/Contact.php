@@ -34,7 +34,8 @@ class Contact extends Mailable
      */
     public function build()
     {
-        return $this->from('univ.sport.lyon@gmail.com')
+        return $this->from('univ.sport.lyon@gmail.com', 'Sport Lyon')
+            ->subject('Accès au formulaire d\'inscription')
             ->view('emails.contact');
     }
 }
