@@ -77,7 +77,7 @@
     <div class="content">
         <img src="images/UDL_logo_couleur-01.png" style="width: 30%;">
         <div class="title m-b-md">
-            Gestion des activités
+            Gestion des activités sportives
         </div>
 
         <div class="links">
