@@ -93,7 +93,7 @@ class RegisterController extends Controller
             'ufr' => 'required',
             'privateEmail' => 'required|email|max:255|unique:students',
             'password' => 'required|min:8|confirmed',
-            'token' => 'required',
+            //'token' => 'required',
         ]);
     }
 
