@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                     Connecté !
+                    {{ dump(Auth::user()->isStudent()) }}
                 </div>
             </div>
         </div>

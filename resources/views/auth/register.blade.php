@@ -15,7 +15,6 @@
 
                         {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
 
-                        {!! BootForm::text('Numéro étudiant', 'studentNumber') !!}
                         {!! BootForm::text('Nom', 'lastname') !!}
                         {!! BootForm::text('Prénom', 'firstname') !!}
 
