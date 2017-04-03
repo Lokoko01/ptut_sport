@@ -14,7 +14,7 @@
                     ?>
 
                         {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
-                        {!! BootForm::hidden('Token','token')->value($token) !!}
+                        {!! BootForm::hidden('token')->value($token) !!}
                         {!! BootForm::text('Numéro étudiant', 'studentNumber') !!}
 
                         {!! BootForm::text('Nom', 'lastname') !!}
