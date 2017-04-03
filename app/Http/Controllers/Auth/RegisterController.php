@@ -55,10 +55,11 @@ class RegisterController extends Controller
         $isTokenRight = $this->verifyToken($token, $email);
         if ($isTokenRight) {
             $ufrs = Ufr::orderBy('label', 'asc')
-                ->pluck('label', 'code');
+                ->pluck('label', 'id');
 
             return view('auth.register')
-                ->with('ufrs', $ufrs);
+                ->with('ufrs', $ufrs)
+                ->with('token', $token);
         } else {
             abort(404);
         }
@@ -92,7 +93,7 @@ class RegisterController extends Controller
             'ufr' => 'required',
             'privateEmail' => 'required|email|max:255|unique:students',
             'password' => 'required|min:8|confirmed',
-            'token'=> 'required',
+            'token' => 'required',
         ]);
     }
 
