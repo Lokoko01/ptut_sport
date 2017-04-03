@@ -15,10 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/preregister', function (){
+Route::get('/preregister/', function (){
     return view('auth.preregister');
 })->name('preregister');
 
+
 Auth::routes();
 
+Route::get('/register/{studentEmail}/{token}', 'Auth\RegisterController@showRegistrationForm')->name('register_with_token');
+
 Route::get('/home', 'HomeController@index');
+
+Route::post('/sendmail', 'ContactController@store')->name('sendmail');

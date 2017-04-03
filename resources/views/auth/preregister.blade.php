@@ -5,6 +5,17 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+                        @if(session()->has('error'))
+                        <div class="alert alert-warning">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
+
                     <div class="panel-heading">Se préinscrire</div>
                     <div class="panel-body">
                         <?php
@@ -13,7 +24,7 @@
                         ];
                         ?>
 
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('register')) !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('sendmail')) !!}
                         {!! BootForm::email('Email étudiant', 'studentEmail') !!}
 
                         <p>
@@ -29,6 +40,7 @@
                         </p>
 
                         {!! BootForm::submit("Envoyer")->class('btn btn-primary') !!}
+                        {!! BootForm::close() !!}
                     </div>
                 </div>
             </div>
