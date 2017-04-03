@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function isProfessor (){
         return $this->hasRole('professor');
     }
+
+    public function student() {
+        return $this->hasOne(Student::class);
+    }
 }

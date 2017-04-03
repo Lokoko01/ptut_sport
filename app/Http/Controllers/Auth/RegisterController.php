@@ -56,11 +56,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'lastname' => 'required|max:255',
             'firstname' => 'required|max:255',
-            //'studentNumber' => 'required|unique:users|max:8',
+            'studentNumber' => 'required|unique:students|max:8',
             'sex' => 'required',
             'ufr' => 'required',
-            'email' => 'required|email|max:255|unique:users',
+            'privateEmail' => 'required|email|max:255|unique:students',
             'password' => 'required|min:8|confirmed',
+            'token'=> 'required',
         ]);
     }
 
@@ -72,18 +73,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $emailEtu = DB::table('user_preregister')->where('token', $data['token'])->value('email');
+
         $user = User::create([
             'lastname' => $data['lastname'],
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
-           // 'studentNumber' => $data['studentNumber'],
-            'email' => $data['email'],
+            'email' => $emailEtu,
             'password' => bcrypt($data['password']),
         ]);
+
+        $user->student()->create([
+            'studentNumber' => $data['studentNumber'],
+            'privateEmail' => $data['privateEmail'],
+            'ufr_id' => $data['ufr']
+        ]);
+
         $idStudentRole = Role::where('name', 'student')->first();
         $user->attachRole($idStudentRole);
-        return $user;
 
+        return $user;
     }
 
     /**
@@ -96,10 +105,13 @@ class RegisterController extends Controller
         $isTokenRight = $this->verifyToken($token, $email);
         if($isTokenRight){
             $ufrs = Ufr::orderBy('label', 'asc')
-                ->pluck('label', 'code');
+                ->pluck('label', 'id');
 
             return view('auth.register')
-                ->with('ufrs', $ufrs);
+                ->with('ufrs', $ufrs)
+                ->with('token',$token);
+
+
         }
         else{
             abort(404);
