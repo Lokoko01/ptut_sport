@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Role;
 use App\Ufr;
 use App\User;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Role;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
-
+use Illuminate\Support\Facades\Validator;
 
 
 class RegisterController extends Controller
@@ -46,9 +44,42 @@ class RegisterController extends Controller
     }
 
     /**
+     * Show the application registration form.
+     *
+     * @param string email
+     * @param string token
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm($email, $token)
+    {
+        $isTokenRight = $this->verifyToken($token, $email);
+        if ($isTokenRight) {
+            $ufrs = Ufr::orderBy('label', 'asc')
+                ->pluck('label', 'code');
+
+            return view('auth.register')
+                ->with('ufrs', $ufrs);
+        } else {
+            abort(404);
+        }
+    }
+
+    private function verifyToken($token, $email)
+    {
+        $tokens = DB::table('user_preregister')->where([
+            ['email', $email],
+            ['token', $token],
+        ])->get();
+
+        if (!empty($tokens->all())) {
+            return true;
+        } else return false;
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -67,7 +98,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -76,7 +107,7 @@ class RegisterController extends Controller
             'lastname' => $data['lastname'],
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
-           // 'studentNumber' => $data['studentNumber'],
+            // 'studentNumber' => $data['studentNumber'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
@@ -84,36 +115,5 @@ class RegisterController extends Controller
         $user->attachRole($idStudentRole);
         return $user;
 
-    }
-
-    /**
-     * Show the application registration form.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showRegistrationForm($email, $token)
-    {
-        $isTokenRight = $this->verifyToken($token, $email);
-        if($isTokenRight){
-            $ufrs = Ufr::orderBy('label', 'asc')
-                ->pluck('label', 'code');
-
-            return view('auth.register')
-                ->with('ufrs', $ufrs);
-        }
-        else{
-            abort(404);
-        }
-    }
-
-    private function verifyToken($token, $email){
-        $tokens = DB::table('user_preregister')->where([
-            ['email', $email],
-            ['token', $token],
-        ])->get();
-
-        if(!empty($tokens->all())){
-            return true;
-        }else return false;
     }
 }

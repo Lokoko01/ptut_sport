@@ -16,6 +16,10 @@
                     {!! BootForm::email('Email', 'email') !!}
                     {!! BootForm::password('Mot de passe', 'password') !!}
                     {!! BootForm::submit("S'identifier")->class('btn btn-primary')  !!}
+
+                    <div class="col-md-8 col-md-offset-4">
+                        <a class="btn btn-link" href="{{ route('password.request') }}">Mot de passe oublié ?</a>
+                    </div>
                     {!! BootForm::close() !!}
                 </div>
             </div>
