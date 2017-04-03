@@ -93,7 +93,7 @@ class RegisterController extends Controller
             'ufr' => 'required',
             'privateEmail' => 'required|email|max:255|unique:students',
             'password' => 'required|min:8|confirmed',
-            //'token' => 'required',
+            'token' => 'required',
         ]);
     }
 
@@ -105,7 +105,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $emailEtu = DB::table('user_preregister')->where('token', $data['Token'])->value('email');
+        $emailEtu = DB::table('user_preregister')->where('token', $data['token'])->value('email');
 
         $user = User::create([
             'lastname' => $data['lastname'],
