@@ -28,7 +28,7 @@
                         {!! BootForm::email('Email étudiant', 'studentEmail') !!}
 
                         <p>
-                            Merci de renseigner votre adresse mail étudiantepour vérifier que vous êtes bien étudiant.
+                            Merci de renseigner votre adresse mail étudiante pour vérifier que vous êtes bien étudiant.
                             Un email vous sera envoyé à cette adresse contenant un lien vers le formulaire
                             d'inscription.
                             Vous pourrez choisir à ce moment là quelle adresses mail vous souhaitez utiliser pour
