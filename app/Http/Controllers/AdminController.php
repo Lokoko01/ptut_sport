@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
-class SuperAdminController extends Controller
+class AdminController extends Controller
 {
     public function __construct() {
-        $this->middleware('superadmin');
+        $this->middleware('admin');
     }
     public function index(){
         return view('home');

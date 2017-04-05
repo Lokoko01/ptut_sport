@@ -18,7 +18,7 @@ class AuthAdmin {
             } else {
                 return redirect()->guest('/login');
             }
-        } else if(! $request->user()->hasRole('superadmin')) {
+        } else if(! $request->user()->hasRole('admin')) {
             return abort(404); //Or redirect() or whatever you want
         }
         return $next($request);
