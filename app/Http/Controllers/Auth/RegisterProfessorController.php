@@ -10,8 +10,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
-
-
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterProfessorController extends Controller
 {
@@ -21,7 +21,7 @@ class RegisterProfessorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('admin');
     }
 
     protected function validator(array $data){
@@ -35,6 +35,17 @@ class RegisterProfessorController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //$this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?:redirect('/admin/professor')->with('message_sucess_professor','Le professeur '.$user->lastname.' '.$user->firstname.' à bien été ajouté.');
+    }
 
     protected function create(array $data)
     {
