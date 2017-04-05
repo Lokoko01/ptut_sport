@@ -12,7 +12,6 @@
                             'md' => [4, 6]
                         ];
                         ?>
-
                         {!! BootForm::openHorizontal($columnSizes)->action(route('register_professor')) !!}
 
                         {!! BootForm::text('Nom', 'lastname') !!}
