@@ -22,6 +22,7 @@ Route::get('/preregister/', function (){
 Route::group(['prefix' => 'admin', 'roles' => 'superadmin'], function() {
     Route::get('/home', 'SuperAdminController@index');
     Route::get('/professor','SuperAdminController@registerprofessor');
+    Route::get('/assignnote','SuperAdminController@assignnote');
     });
 
 Auth::routes();

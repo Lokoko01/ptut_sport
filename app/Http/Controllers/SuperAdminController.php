@@ -17,4 +17,8 @@ class SuperAdminController extends Controller
         return view('auth.registerprofessor');
     }
 
+    public function assignnote(){
+        return view('admin.assignnote');
+    }
+
 }
