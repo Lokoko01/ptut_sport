@@ -19,17 +19,18 @@ Route::get('/preregister/', function (){
     return view('auth.preregister');
 })->name('preregister');
 
+Route::group(['prefix' => 'admin', 'roles' => 'superadmin'], function() {
+    Route::get('/home', 'SuperAdminController@index');
+    Route::get('/professor','SuperAdminController@registerprofessor');
+    Route::get('/assignnote','SuperAdminController@assignnote');
+    });
 
 Auth::routes();
+
+Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
 
 Route::get('/register/{studentEmail}/{token}', 'Auth\RegisterController@showRegistrationForm')->name('register_with_token');
 
 Route::get('/home', 'HomeController@index');
 
 Route::post('/sendmail', 'ContactController@store')->name('sendmail');
-
-Route::get('/professor', function (){
-    return view('auth.registerprofessor');
-});
-
-Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
