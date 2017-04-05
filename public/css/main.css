@@ -1,0 +1,12 @@
+.button-professor {
+    height: 50%;
+    text-align: center;
+}
+
+.message-table {
+    border: 1px solid black;
+}
+
+.message-table tr{
+    border-bottom: 1px dotted #adadad;
+}

@@ -24,7 +24,7 @@ Auth::routes();
 
 Route::get('/register/{studentEmail}/{token}', 'Auth\RegisterController@showRegistrationForm')->name('register_with_token');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
@@ -33,3 +33,7 @@ Route::get('/professor', function (){
 });
 
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
+
+Route::get('/professor/main', function(){
+    return view('professor.main');
+});
