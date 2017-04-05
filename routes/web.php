@@ -33,3 +33,5 @@ Route::get('/professor', function (){
 });
 
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
+
+Route::get('/checkAbsences', 'AbsencesController@check');
