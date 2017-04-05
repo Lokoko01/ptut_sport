@@ -19,10 +19,10 @@ Route::get('/preregister/', function (){
     return view('auth.preregister');
 })->name('preregister');
 
-Route::group(['prefix' => 'admin', 'roles' => 'superadmin'], function() {
-    Route::get('/home', 'SuperAdminController@index');
-    Route::get('/professor','SuperAdminController@registerprofessor');
-    Route::get('/assignnote','SuperAdminController@assignnote');
+Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
+    Route::get('/home', 'AdminController@index');
+    Route::get('/professor','AdminController@registerprofessor');
+    Route::get('/assignnote','AdminController@assignnote');
     });
 
 Auth::routes();

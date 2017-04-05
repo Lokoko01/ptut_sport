@@ -21,7 +21,7 @@ class RegisterProfessorController extends Controller
 
     public function __construct()
     {
-        $this->middleware('superadmin');
+        $this->middleware('admin');
     }
 
     protected function validator(array $data){
