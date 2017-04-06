@@ -19,19 +19,24 @@ Route::get('/preregister/', function (){
     return view('auth.preregister');
 })->name('preregister');
 
+Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
+    Route::get('/home', 'AdminController@index');
+    Route::get('/professor','AdminController@registerprofessor');
+    Route::get('/assignnote','AdminController@assignnote');
+    });
 
 Auth::routes();
 
+Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
+
 Route::get('/register/{studentEmail}/{token}', 'Auth\RegisterController@showRegistrationForm')->name('register_with_token');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
-Route::get('/professor', function (){
-    return view('auth.registerprofessor');
-});
-
-Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
-
 Route::get('/checkAbsences', 'AbsencesController@check');
+
+Route::get('/professor/main', function(){
+    return view('professor.main');
+});

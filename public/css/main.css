@@ -1,0 +1,57 @@
+.button-professor {
+    width: 50%;
+    text-align: center;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.message-table {
+    border: 1px solid black;
+    margin: 10px;
+
+}
+
+.message-table tr {
+    border-bottom: 1px dotted #adadad;
+}
+
+.informations-messages {
+    width: 50%;
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.informations-messages h3 {
+    text-align: center;
+}
+
+.panel-professor {
+    /* instaure la flexbox */
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+
+    display: flex;
+    flex-direction: row;
+}
+
+@media (max-width: 767px) {
+    .panel-professor {
+        flex-direction: column; /* affichage vertical */
+    }
+
+    .button-professor {
+        width: auto;
+    }
+
+    .informations-messages {
+        width: auto;
+    }
+}
+
+.button-professor a {
+    margin: 10px;
+}
+
+.message-table td{
+    padding: 7px;
+}
