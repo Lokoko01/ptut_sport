@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Accueil - Professeur</div>
-                    <div class="panel-body">
+                    <div class="panel-body panel-professor">
                         <div class="button-professor">
                             <a href="{{ route('home') }}" class="btn btn-default">Faire l'appel</a><br>
                             <a href="{{ route('home') }}" class="btn btn-default">Générer la feuille d'appel au format
