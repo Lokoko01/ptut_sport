@@ -16,8 +16,12 @@ class AdminController extends Controller
         return view('auth.registerprofessor');
     }
 
-    public function assignnote(){
-        return view('admin.assignnote');
+    public function addsport(){
+        return view('sport.addsport');
+    }
+
+    public function addufr(){
+        return view('ufr.addufr');
     }
 
 }
