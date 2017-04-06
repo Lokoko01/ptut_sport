@@ -20,4 +20,7 @@ class AdminController extends Controller
         return view('admin.assignnote');
     }
 
+    public function addAdmin(){
+        return view('auth.registeradmin');
+    }
 }

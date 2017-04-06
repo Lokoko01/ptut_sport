@@ -21,9 +21,10 @@ Route::get('/preregister/', function (){
 
 Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/home', 'AdminController@index');
-    Route::get('/professor','AdminController@registerprofessor');
+    Route::get('/addProfessor','AdminController@registerprofessor');
     Route::get('/assignnote','AdminController@assignnote');
-    });
+    Route::get('/addAdmin', 'AdminController@addAdmin');
+});
 
 Auth::routes();
 
@@ -38,3 +39,5 @@ Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 Route::get('/professor/main', function(){
     return view('professor.main');
 });
+
+Route::post('/adminRegister', 'Auth\RegisterAdminController@register')->name('register_admin');

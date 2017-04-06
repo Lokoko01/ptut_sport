@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Ufr;
-use App\User;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Role;
-use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Support\Facades\Validator;
+use App\Role;
 use Illuminate\Auth\Events\Registered;
 
-class RegisterProfessorController extends Controller
+
+
+class RegisterAdminController extends Controller
 {
     use RegistersUsers;
 
@@ -30,7 +29,6 @@ class RegisterProfessorController extends Controller
             'firstname' => 'required|max:255',
             'sex' => 'required',
             'email' => 'required|email|max:255|unique:users',
-            'phone_number' => 'required',
             'password' => 'required|min:8|confirmed',
         ]);
     }
@@ -44,26 +42,22 @@ class RegisterProfessorController extends Controller
         //$this->guard()->login($user);
 
         return $this->registered($request, $user)
-            ?:redirect('/admin/addProfessor')->with('message_sucess_professor','Le professeur '.$user->lastname.' '.$user->firstname.' à bien été ajouté.');
+            ?:redirect('/admin/addAdmin')->with('message_sucess_admin','L\'administrateur '.$user->lastname.' '.$user->firstname.' à bien été ajouté.');
     }
 
-    protected function create(array $data)
-    {
+    protected function create(array $data){
         $user = User::create([
             'lastname' => $data['lastname'],
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
             'email' => $data['email'],
-            'phone_number' => $data['phone_number'],
             'password' => bcrypt($data['password']),
         ]);
 
-        $user->professor()->create([
-            'phoneNumber' => $data['phone_number'],
-        ]);
+        $idAdminRole = Role::where('name', 'admin')->first();
+        $user->attachRole($idAdminRole);
 
-        $idProfessorRole = Role::where('name', 'professor')->first();
-        $user->attachRole($idProfessorRole);
+
         return $user;
     }
 }
