@@ -39,7 +39,7 @@ class RegisterProfessorController extends Controller
     protected function create(array $data)
     {
         $user = User::create([
-            'lastname' => $data['lastname'],
+            'lastname' => strtoupper($data['lastname']),
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
             'email' => $data['email'],

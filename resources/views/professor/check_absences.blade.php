@@ -7,16 +7,19 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Renseigner les absents</div>
                     <div class="panel-body">
-                        {!! BootForm::open() !!}
-                        {{--@foreach($students as $student)
-                            {!! BootForm::checkbox($student, 'check')->defaultCheckedState(null) !!}
-                        @endforeach
-                        {!! BootForm::close() !!}--}}
+                        <?php
+                        $columnSizes = [
+                            'md' => [4, 6]
+                        ];
+                        ?>
 
-                        {{ dump(DB::table('students')
-                                ->join('users', 'users.id', '=', 'students.user_id')
-                                ->select('users.lastname', 'users.firstname')
-                                ->get()) }}
+                        {!! BootForm::openHorizontal($columnSizes) !!}
+                        @foreach($students as $student)
+                            {!! BootForm::checkbox($student->full_name, 'check')->defaultCheckedState(null) !!}
+                        @endforeach
+                        {!! BootForm::close() !!}
+
+                        {{--{{ dump(Auth::user()->professor->id) }}--}}
                     </div>
                 </div>
             </div>

@@ -108,7 +108,7 @@ class RegisterController extends Controller
         $emailEtu = DB::table('user_preregister')->where('token', $data['token'])->value('email');
 
         $user = User::create([
-            'lastname' => $data['lastname'],
+            'lastname' => strtoupper($data['lastname']),
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
             'email' => $emailEtu,
