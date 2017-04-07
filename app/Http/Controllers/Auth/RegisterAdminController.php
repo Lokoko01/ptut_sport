@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
+use App\Role;
+use App\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Support\Facades\Validator;
-use App\Role;
-use Illuminate\Auth\Events\Registered;
-
 
 
 class RegisterAdminController extends Controller
@@ -23,7 +22,18 @@ class RegisterAdminController extends Controller
         $this->middleware('admin');
     }
 
-    protected function validator(array $data){
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        return $this->registered($request, $user)
+            ?: redirect('/admin/addAdmin')->with('message_sucess_admin', 'L\'administrateur ' . $user->lastname . ' ' . $user->firstname . ' à bien été ajouté.');
+    }
+
+    protected function validator(array $data)
+    {
         return Validator::make($data, [
             'lastname' => 'required|max:255',
             'firstname' => 'required|max:255',
@@ -33,19 +43,8 @@ class RegisterAdminController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    protected function create(array $data)
     {
-        $this->validator($request->all())->validate();
-
-        event(new Registered($user = $this->create($request->all())));
-
-        //$this->guard()->login($user);
-
-        return $this->registered($request, $user)
-            ?:redirect('/admin/addAdmin')->with('message_sucess_admin','L\'administrateur '.$user->lastname.' '.$user->firstname.' à bien été ajouté.');
-    }
-
-    protected function create(array $data){
         $user = User::create([
             'lastname' => $data['lastname'],
             'firstname' => $data['firstname'],
