@@ -66,13 +66,21 @@ class UfrController extends Controller
             'ufrId' => $request->input('ufrId'),
             'ufrName' => $request->input('ufrName'),
             ];
-
         $this->validate($request, ['ufrId' => 'required|max:255']);
 
-        DB::table('ufr')->where('id', $data['ufrId'])->delete();
-        
-        return redirect('/admin/ufr')->with('message', $data['ufrName'] . ' a été supprimé');
+        if($this->isUfrAlreadyExist($data['ufrId'])){
+            DB::table('ufr')->where('id', $data['ufrId'])->delete();
+            return redirect('/admin/ufr')->with('message', $data['ufrName'] . ' a été supprimé');
+        }else{
+            return redirect('/admin/ufr')->with('message', $data['ufrName'] . ' ne peut être supprimé, car au moins un étudiant est inscrits avec cette UFR');
+        }
 
+    }
+    private function isUfrCantDelete($ufrId){
+        $students = DB::table('students')->where('ufr_id', $ufrId)->get();
+        if (empty($students->all())) {
+            return true;
+        } else return false;
     }
 }
 
