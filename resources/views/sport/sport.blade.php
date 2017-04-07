@@ -57,15 +57,15 @@
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">{{$sport}}</h4>
                                                     </div>
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('updateSport')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::openHorizontal($columnSizes)->action(route('updateSport')) !!}
                                                         {!! BootForm::text('Sport', 'sportNew')->value($sport) !!}
                                                         {!! BootForm::hidden('sportOld')->value($sport) !!}
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
-                                                        {!! BootForm::close() !!}
                                                     </div>
+                                                    {!! BootForm::close() !!}
                                                 </div>
                                             </div>
                                         </div>
