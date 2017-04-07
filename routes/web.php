@@ -37,6 +37,8 @@ Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
 Route::get('/checkAbsences', 'AbsencesController@check');
 
+Route::post('/professor/main', 'AbsencesController@addAbsences')->name('makeCall');
+
 Route::get('/professor/main', function(){
     return view('professor.main');
 });

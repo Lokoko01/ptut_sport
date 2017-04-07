@@ -9,17 +9,18 @@
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
-                            'md' => [4, 6]
+                            'md' => [2, 8]
                         ];
                         ?>
 
-                        {!! BootForm::openHorizontal($columnSizes) !!}
-                        @foreach($students as $student)
-                            {!! BootForm::checkbox($student->full_name, 'check')->defaultCheckedState(null) !!}
-                        @endforeach
-                        {!! BootForm::close() !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('makeCall')) !!}
 
-                        {{--{{ dump(Auth::user()->professor->id) }}--}}
+                        @foreach($students as $student)
+                                {!! BootForm::checkbox($student->full_name . ' -> ' . $student->label_ufr, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
+                        @endforeach
+                        {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
+
+                        {!! BootForm::close() !!}
                     </div>
                 </div>
             </div>
