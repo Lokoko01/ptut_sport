@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/home', 'AdminController@index');
     Route::get('/professor','AdminController@registerprofessor');
     Route::get('/assignnote','AdminController@assignnote');
+    Route::get('/addSession', 'AdminController@addsession');
     });
 
 Auth::routes();
@@ -38,3 +39,5 @@ Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 Route::get('/professor/main', function(){
     return view('professor.main');
 });
+
+Route::post('/newSession', 'AddSessionController@add')->name('add_session');
