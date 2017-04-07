@@ -61,19 +61,47 @@
                                                         {!! BootForm::openHorizontal($columnSizes)->action(route('updateSport')) !!}
                                                         {!! BootForm::text('Sport', 'sportNew')->value($sport) !!}
                                                         {!! BootForm::hidden('sportOld')->value($sport) !!}
-                                                    </div>
-                                                    <div class="modal-footer">
                                                         {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
                                                         {!! BootForm::close() !!}
+                                                    </div>
+                                                    <div class="modal-footer">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-danger">
-                                            <span class="glyphicon glyphicon-trash"></span> Supprimer
+                                        <button
+                                                type="button"
+                                                class="btn btn-primary"
+                                                data-toggle="modal"
+                                                data-target="#{{$sport}}ModalDelete">
+                                            Supprimer
                                         </button>
+                                        <div class="modal fade" id="{{$sport}}ModalDelete"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="favoritesModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title"
+                                                            id="favoritesModalLabel">{{$sport}}</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {!! BootForm::openHorizontal($columnSizes)->action(route('deleteSport')) !!}
+                                                        {!! BootForm::hidden('sport')->value($sport) !!}
+                                                        {!! BootForm::submit("Supprimer")->class('btn btn-primary') !!}
+                                                        {!! BootForm::close() !!}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
 

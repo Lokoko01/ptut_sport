@@ -33,6 +33,7 @@ Route::post('/ufrRegister','UfrController@addUfr')->name('ufrRegister');
 Route::post('/sportRegister','SportController@addSport')->name('sportRegister');
 
 Route::post('/updateSport','SportController@updateSport')->name('updateSport');
+Route::post('/deleteSport','SportController@deleteSport')->name('deleteSport');
 
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
 
