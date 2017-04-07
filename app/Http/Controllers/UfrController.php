@@ -21,7 +21,7 @@ class UfrController extends Controller
         ]);
 
         if($this->isUfrAlreadyExist($data['label'])){
-            return redirect('/admin/addufr')->with('ufrAlreadyExist', 'UFR '.$data['label'].' est déjà dans la base de donnée');
+            return redirect('/admin/ufr')->with('ufrAlreadyExist', 'UFR '.$data['label'].' est déjà dans la base de donnée');
 
         } else {
             Ufr::create([
@@ -29,9 +29,27 @@ class UfrController extends Controller
                 'label' => $data['label']
             ]);
 
-            return redirect('/admin/addufr')->with('message', $data['label'].' ajouté');
+            return redirect('/admin/ufr')->with('message', $data['label'].' ajouté');
         }
 
+    }
+
+    public function updateUfr(Request $request)
+    {
+        $data = [
+            'labelNew' => $request->input('labelNew'),
+            'codeNew' => $request->input('codeNew'),
+            'idUfr'   => $request->input('idUfr')
+        ];
+
+        $this->validate($request, [
+            'labelNew' => 'required|max:255',
+            'codeNew' => 'required|max:255'
+        ]);
+        DB::table('ufr')
+            ->where('id', $data['idUfr'])
+            ->update(['label' => $data['labelNew'], 'code' => $data['codeNew']]);
+        return redirect('/admin/ufr')->with('message', $data['codeNew'] . ' mise à jour');
     }
 
     private function isUfrAlreadyExist($ufrName){
@@ -39,6 +57,22 @@ class UfrController extends Controller
         if(!empty($ufr->all())){
             return true;
         }else return false;
+    }
+
+
+    public function deleteUfr(Request $request)
+    {
+        $data = [
+            'ufrId' => $request->input('ufrId'),
+            'ufrName' => $request->input('ufrName'),
+            ];
+
+        $this->validate($request, ['ufrId' => 'required|max:255']);
+
+        DB::table('ufr')->where('id', $data['ufrId'])->delete();
+        
+        return redirect('/admin/ufr')->with('message', $data['ufrName'] . ' a été supprimé');
+
     }
 }
 

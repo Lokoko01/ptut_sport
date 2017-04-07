@@ -14,7 +14,7 @@
                             {{ session()->get('sportAlreadyExist') }}
                         </div>
                     @endif
-                    <div class="panel-heading">Accueil - {{ Auth::user()->afficheRole() }}</div>
+                    <div class="panel-heading">Liste des sports - {{ Auth::user()->afficheRole() }}</div>
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
@@ -66,7 +66,6 @@
                                                     <div class="modal-footer">
                                                     </div>
                                                     {!! BootForm::close() !!}
-
                                                 </div>
                                             </div>
                                         </div>
