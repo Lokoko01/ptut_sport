@@ -68,7 +68,7 @@ class UfrController extends Controller
             ];
         $this->validate($request, ['ufrId' => 'required|max:255']);
 
-        if($this->isUfrAlreadyExist($data['ufrId'])){
+        if($this->isUfrCantDelete($data['ufrId'])){
             DB::table('ufr')->where('id', $data['ufrId'])->delete();
             return redirect('/admin/ufr')->with('message', $data['ufrName'] . ' a été supprimé');
         }else{
