@@ -42,3 +42,5 @@ Route::post('/professor/main', 'AbsencesController@addAbsences')->name('makeCall
 Route::get('/professor/main', function(){
     return view('professor.main');
 });
+
+Route::get('/professor/listStuents', 'ProfessorController@showList');
