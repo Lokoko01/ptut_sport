@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Sport;
 
 class AdminController extends Controller
 {
@@ -17,7 +17,10 @@ class AdminController extends Controller
     }
 
     public function addsport(){
-        return view('sport.addsport');
+            $sports = Sport::orderBy('label', 'asc')
+                ->pluck('label', 'id');
+        return view('sport.sport')
+                ->with('sports', $sports);
     }
 
     public function addufr(){
