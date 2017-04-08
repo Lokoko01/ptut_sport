@@ -22,7 +22,7 @@ Route::get('/preregister/', function (){
 Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/home', 'AdminController@index');
     Route::get('/professor','AdminController@registerprofessor');
-    Route::get('/sport','AdminController@sport')->name('sport');
+    Route::get('/sports','AdminController@sport')->name('sport');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
     });
 

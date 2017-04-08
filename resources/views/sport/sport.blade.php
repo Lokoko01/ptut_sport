@@ -111,6 +111,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{--<div class="text-center">
+                            {!! $sports->render() !!}
+                        </div>--}}
                     </div>
                 </div>
             </div>

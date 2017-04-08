@@ -24,7 +24,7 @@
                         {!! BootForm::openHorizontal($columnSizes)->action(route('ufrRegister')) !!}
                         {!! BootForm::text('Code', 'code') !!}
                         {!! BootForm::text('Label', 'label') !!}
-                        {!! BootForm::submit("Ajouter UFR")->class('btn btn-success') !!}
+                        {!! BootForm::submit("Ajouter l'UFR")->class('btn btn-success') !!}
                         {!! BootForm::close() !!}
                         <table class="table">
                             <tbody>
@@ -120,6 +120,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            {!! $ufrs->render() !!}
+                        </div>
                     </div>
                 </div>
             </div>
