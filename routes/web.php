@@ -43,4 +43,4 @@ Route::get('/professor/main', function(){
     return view('professor.main');
 });
 
-Route::get('/professor/listStuents', 'ProfessorController@showList');
+Route::get('/professor/listStudents', 'ProfessorController@showList');

@@ -9,18 +9,32 @@
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
-                            'md' => [2, 8]
+                            'md' => [0, 8]
                         ];
                         ?>
-
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('makeCall')) !!}
-
-                        @foreach($students as $student)
-                                {!! BootForm::checkbox($student->full_name . ' -> ' . $student->label_ufr, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
-                        @endforeach
+                        <table class="table">
+                            <th>
+                                Étudiant
+                            </th>
+                            <th>
+                                UFR
+                            </th>
+                            {!! BootForm::openHorizontal($columnSizes)->action(route('makeCall')) !!}
+                            @foreach($students as $student)
+                                <tr>
+                                    <td>
+                                        {!! BootForm::checkbox($student->full_name, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
+                                    </td>
+                                    <td>
+                                        {{$student->label_ufr}}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
-
                         {!! BootForm::close() !!}
+
+
                     </div>
                 </div>
             </div>
