@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class ProfessorController extends Controller
 {
     public function showList() {
-        
+
     }
 }
