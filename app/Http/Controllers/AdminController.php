@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Sport;
 use App\Ufr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+
 class AdminController extends Controller
 {
     public function __construct() {
@@ -26,7 +28,7 @@ class AdminController extends Controller
     }
 
     public function ufr(){
-        $ufrs = DB::table('ufr')->get();
+        $ufrs = DB::table('ufr')->orderBy('code', 'asc')->get();
         return view('ufr.ufr')->with('ufrs', $ufrs);
     }
 

@@ -23,19 +23,22 @@
                         ?>
                         {!! BootForm::openHorizontal($columnSizes)->action(route('sportRegister')) !!}
                         {!! BootForm::text('Sport', 'sport') !!}
-                        {!! BootForm::submit("Ajouter le sport")->class('btn btn-primary') !!}
+                        {!! BootForm::submit("Ajouter le sport")->class('btn btn-success') !!}
                         {!! BootForm::close() !!}
                         <table class="table">
                             <tbody>
                             <tr>
-                                <th>Sport</th>
-                                <th>Modifer</th>
-                                <th>Supprimer</th>
+                                <th>
+                                    Sport
+                                </th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             @foreach($sports as $sport)
-
                                 <tr>
-                                    <td>{{ $sport }}</td>
+                                    <td>
+                                        {{$sport}}
+                                    </td>
                                     <td>
                                         <button
                                                 type="button"
@@ -61,9 +64,9 @@
                                                     <div class="modal-body">
                                                         {!! BootForm::text('Sport', 'sportNew')->value($sport) !!}
                                                         {!! BootForm::hidden('sportOld')->value($sport) !!}
-                                                        {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
                                                     </div>
                                                     <div class="modal-footer">
+                                                        {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
                                                     </div>
                                                     {!! BootForm::close() !!}
                                                 </div>
@@ -73,7 +76,7 @@
                                     <td>
                                         <button
                                                 type="button"
-                                                class="btn btn-primary"
+                                                class="btn btn-danger"
                                                 data-toggle="modal"
                                                 data-target="#{{$sport}}ModalDelete">
                                             Supprimer
@@ -91,20 +94,20 @@
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">{{$sport}}</h4>
                                                     </div>
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('deleteSport')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::openHorizontal($columnSizes)->action(route('deleteSport')) !!}
                                                         {!! BootForm::hidden('sport')->value($sport) !!}
-                                                        {!! BootForm::submit("Supprimer")->class('btn btn-primary') !!}
-                                                        {!! BootForm::close() !!}
+                                                        <p>Voulez-vous vraiment supprimer ce sport ?</p>
                                                     </div>
                                                     <div class="modal-footer">
+                                                        {!! BootForm::submit("Supprimer")->class('btn btn-danger') !!}
                                                     </div>
+                                                    {!! BootForm::close() !!}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-
                             @endforeach
                             </tbody>
                         </table>
