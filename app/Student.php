@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $fillable =[
-        'ufr_id', 'studentNumber','privateEmail',
+    protected $fillable = [
+        'ufr_id', 'studentNumber', 'privateEmail',
     ];
 
-    public function ufr() {
+    public function ufr()
+    {
         return $this->hasOne(Ufr::class);
     }
 }

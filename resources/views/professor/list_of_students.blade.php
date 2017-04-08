@@ -16,103 +16,64 @@
                     @endif
                     <div class="panel-heading">Liste des étudiants - {{ Auth::user()->afficheRole() }}</div>
                     <div class="panel-body">
+
                         <?php
                         $columnSizes = [
-                            'md' => [4, 6]
+                            'md' => [0, 8]
                         ];
                         ?>
-                        
+
+                        {{-- Search bar --}}
+                        {{--{!! BootForm::open($columnSizes)  !!}
+
+                        <div class="input-group custom-search-form">
+                            <input type="text" class="form-control" name="search" placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                        {!! BootForm::close() !!}--}}
+
                         <table class="table">
                             <tbody>
                             <tr>
                                 <th>
-                                    Code
+                                    Numéro étudiant
                                 </th>
                                 <th>
-                                    label
+                                    Nom
+                                </th>
+                                <th>
+                                    Prénom
+                                </th>
+                                <th>
+                                    E-mail étudiant
                                 </th>
                             </tr>
-                            @foreach($ufrs as $ufr)
+                            @foreach($students as $student)
                                 <tr>
                                     <td>
-                                        {{$ufr->code}}
+                                        {{$student->studentNumber}}
                                     </td>
                                     <td>
-                                        {{$ufr->label}}
+                                        {{$student->lastname}}
                                     </td>
                                     <td>
-                                        <button
-                                                type="button"
-                                                class="btn btn-primary"
-                                                data-toggle="modal"
-                                                data-target="#{{$ufr->label}}Modal">
-                                            Modifier
-                                        </button>
-                                        <div class="modal fade" id="{{$ufr->label}}Modal"
-                                             tabindex="-1" role="dialog"
-                                             aria-labelledby="favoritesModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close"
-                                                                data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title"
-                                                            id="favoritesModalLabel">{{$ufr->label}}</h4>
-                                                    </div>
-                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('updateUfr')) !!}
-                                                    <div class="modal-body">
-                                                        {!! BootForm::text('Label', 'labelNew')->value($ufr->label) !!}
-                                                        {!! BootForm::text('Code', 'codeNew')->value($ufr->code) !!}
-                                                        {!! BootForm::hidden('idUfr')->value($ufr->id) !!}
-                                                        {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    </div>
-                                                    {!! BootForm::close() !!}
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {{$student->firstname}}
                                     </td>
                                     <td>
-                                        <button
-                                                type="button"
-                                                class="btn btn-primary"
-                                                data-toggle="modal"
-                                                data-target="#{{$ufr->label}}ModalDelete">
-                                            Supprimer
-                                        </button>
-                                        <div class="modal fade" id="{{$ufr->label}}ModalDelete"
-                                             tabindex="-1" role="dialog"
-                                             aria-labelledby="favoritesModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close"
-                                                                data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title"
-                                                            id="favoritesModalLabel">{{$ufr->label}}</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        {!! BootForm::openHorizontal($columnSizes)->action(route('deleteUfr')) !!}
-                                                        {!! BootForm::hidden('ufrId')->value($ufr->id) !!}
-                                                        {!! BootForm::hidden('ufrName')->value($ufr->label) !!}
-                                                        {!! BootForm::submit("Supprimer")->class('btn btn-primary') !!}
-                                                        {!! BootForm::close() !!}
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {{$student->email}}
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            {{ $students->render() }}
+                        </div>
                     </div>
                 </div>
             </div>
