@@ -19,14 +19,14 @@ class SportController extends Controller
         ]);
 
         if ($this->isSportAlreadyExist($data['sport'])) {
-            return redirect('/admin/sport')->with('sportAlreadyExist', 'Le sport ' . $data['sport'] . ' est déjà dans la base de données.');
+            return redirect('/admin/sports')->with('sportAlreadyExist', 'Le sport ' . $data['sport'] . ' est déjà dans la base de données.');
 
         } else {
             Sport::create([
                 'label' => $data['sport']
             ]);
 
-            return redirect('/admin/sport')->with('message', $data['sport'] . ' ajouté.');
+            return redirect('/admin/sports')->with('message', $data['sport'] . ' ajouté.');
         }
 
     }
@@ -57,7 +57,7 @@ class SportController extends Controller
             ->where('label', $data['sportOld'])
             ->update(['label' => $data['sportNew']]);
 
-        return redirect('/admin/sport')->with('message', $data['sportOld'] . ' mis à jour en ' . $data['sportNew'] . '.');
+        return redirect('/admin/sports')->with('message', $data['sportOld'] . ' mis à jour en ' . $data['sportNew'] . '.');
     }
 
     public function deleteSport(Request $request)
@@ -68,9 +68,9 @@ class SportController extends Controller
 
         if ($this->isSportCantDelete($data['sport'])) {
             DB::table('sports')->where('label', $data['sport'])->delete();
-            return redirect('/admin/sport')->with('message', $data['sport'] . ' a été supprimé.');
+            return redirect('/admin/sports')->with('message', $data['sport'] . ' a été supprimé.');
         } else {
-            return redirect('/admin/sport')->with('message', $data['sport'] . ' est utilisé dans un créneau, il ne peut donc pas être supprimé.');
+            return redirect('/admin/sports')->with('message', $data['sport'] . ' est utilisé dans un créneau, il ne peut donc pas être supprimé.');
         }
     }
 
