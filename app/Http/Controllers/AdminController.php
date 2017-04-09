@@ -24,8 +24,7 @@ class AdminController extends Controller
 
     public function sport()
     {
-        $sports = Sport::orderBy('label', 'asc')
-            ->pluck('label', 'id');
+        $sports = DB::table('sports')->orderBy('label', 'asc')->paginate(2);
         return view('sport.sport')->with('sports', $sports);
     }
 

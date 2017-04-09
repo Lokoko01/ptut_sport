@@ -37,17 +37,17 @@
                             @foreach($sports as $sport)
                                 <tr>
                                     <td>
-                                        {{$sport}}
+                                        {{$sport->label}}
                                     </td>
                                     <td>
                                         <button
                                                 type="button"
                                                 class="btn btn-primary"
                                                 data-toggle="modal"
-                                                data-target="#{{$sport}}Modal">
+                                                data-target="#{{$sport->label}}Modal">
                                             Modifier
                                         </button>
-                                        <div class="modal fade" id="{{$sport}}Modal"
+                                        <div class="modal fade" id="{{$sport->label}}Modal"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -58,12 +58,12 @@
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
-                                                            id="favoritesModalLabel">{{$sport}}</h4>
+                                                            id="favoritesModalLabel">{{$sport->label}}</h4>
                                                     </div>
                                                     {!! BootForm::openHorizontal($columnSizes)->action(route('updateSport')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::text('Sport', 'sportNew')->value($sport) !!}
-                                                        {!! BootForm::hidden('sportOld')->value($sport) !!}
+                                                        {!! BootForm::text('Sport', 'sportNew')->value($sport->label) !!}
+                                                        {!! BootForm::hidden('sportOld')->value($sport->label) !!}
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
@@ -78,10 +78,10 @@
                                                 type="button"
                                                 class="btn btn-danger"
                                                 data-toggle="modal"
-                                                data-target="#{{$sport}}ModalDelete">
+                                                data-target="#{{$sport->label}}ModalDelete">
                                             Supprimer
                                         </button>
-                                        <div class="modal fade" id="{{$sport}}ModalDelete"
+                                        <div class="modal fade" id="{{$sport->label}}ModalDelete"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -92,11 +92,11 @@
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
-                                                            id="favoritesModalLabel">{{$sport}}</h4>
+                                                            id="favoritesModalLabel">{{$sport->label}}</h4>
                                                     </div>
                                                     {!! BootForm::openHorizontal($columnSizes)->action(route('deleteSport')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::hidden('sport')->value($sport) !!}
+                                                        {!! BootForm::hidden('sport')->value($sport->label) !!}
                                                         <p>Voulez-vous vraiment supprimer ce sport ?</p>
                                                     </div>
                                                     <div class="modal-footer">
@@ -111,9 +111,9 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{--<div class="text-center">
-                            {!! $sports->render() !!}
-                        </div>--}}
+                            <div class="text-center">
+                                {!! $sports->render() !!}
+                            </div>
                     </div>
                 </div>
             </div>
