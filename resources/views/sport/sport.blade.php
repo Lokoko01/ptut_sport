@@ -35,6 +35,7 @@
                                     Professeur
                                 </th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             @foreach($sports as $sport)
                                 <tr>
