@@ -31,7 +31,9 @@
                                 <th>
                                     Sport
                                 </th>
-                                <th></th>
+                                <th>
+                                    Professeur
+                                </th>
                                 <th></th>
                             </tr>
                             @foreach($sports as $sport)
@@ -40,14 +42,18 @@
                                         {{$sport->label}}
                                     </td>
                                     <td>
+                                        {{$sport->lastname}}
+                                        {{$sport->firstname}}
+                                    </td>
+                                    <td>
                                         <button
                                                 type="button"
                                                 class="btn btn-primary"
                                                 data-toggle="modal"
-                                                data-target="#{{$sport->label}}Modal">
+                                                data-target="#{{$sport->id}}Modal">
                                             Modifier
                                         </button>
-                                        <div class="modal fade" id="{{$sport->label}}Modal"
+                                        <div class="modal fade" id="{{$sport->id}}Modal"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
