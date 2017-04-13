@@ -41,7 +41,7 @@ class AdminController extends Controller
         $students = DB::table('students')
             ->join('users', 'users.id', '=', 'students.user_id')
             ->orderBy('students.studentNumber', 'asc')
-            ->paginate(15);
+            ->paginate(10);
         return view('professor.list_of_students')->with('students', $students);
     }
 
