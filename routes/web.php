@@ -26,11 +26,17 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
     });
 
+Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
+    Route::get('/choose_sport', 'StudentController@chooseSport')->name('chooseSport');
+});
+Route::post('/addWishesAsStudent','WishesController@addWishesAsStudent')->name('addWishesAsStudent');
+
 Auth::routes();
 
 Route::post('/ufrRegister','UfrController@addUfr')->name('ufrRegister');
 Route::post('/updateUfr','UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr','UfrController@deleteUfr')->name('deleteUfr');
+
 
 
 Route::post('/sportRegister','SportController@addSport')->name('sportRegister');
