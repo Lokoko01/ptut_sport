@@ -30,7 +30,7 @@
                                 <input type="search" name="q" class="form-control"
                                        value="{{Request::hasSession() ? old('q') : ''}}">
                             </div>
-                            <button type="submit" class="btn btn-primary">Rechercher</button>
+                            <button type="submit" class="btn btn-primary">Rechercher un étudiant</button>
                         </form>
 
                         <table class="table">

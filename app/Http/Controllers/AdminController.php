@@ -52,15 +52,21 @@ class AdminController extends Controller
 
         if ($searchterm){
 
-            $results = DB::table('students')
+            $students = DB::table('students')
                 ->join('users', 'users.id', '=', 'students.user_id')
                 ->where('users.lastname', 'LIKE', '%'. $searchterm .'%')
                 ->orWhere('users.firstname', 'LIKE', '%'. $searchterm .'%')
                 ->orWhere('students.studentNumber', 'LIKE', '%'. $searchterm .'%')
-                ->get();
+                ->paginate(10);
 
-            return view('professor.list_of_students_search')->with('results', $results);
+            return view('professor.list_of_students')->with('students', $students);
 
+        } else {
+            $students = DB::table('students')
+                ->join('users', 'users.id', '=', 'students.user_id')
+                ->orderBy('students.studentNumber', 'asc')
+                ->paginate(10);
+            return view('professor.list_of_students')->with('students', $students);
         }
     }
 
