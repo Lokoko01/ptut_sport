@@ -49,27 +49,24 @@
                                     E-mail étudiant
                                 </th>
                             </tr>
-                            @foreach($students as $student)
+                            @foreach($results as $result)
                                 <tr>
                                     <td>
-                                        {{$student->studentNumber}}
+                                        {{$result->studentNumber}}
                                     </td>
                                     <td>
-                                        {{$student->lastname}}
+                                        {{$result->lastname}}
                                     </td>
                                     <td>
-                                        {{$student->firstname}}
+                                        {{$result->firstname}}
                                     </td>
                                     <td>
-                                        {{$student->email}}
+                                        {{$result->email}}
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <div class="text-center">
-                            {{ $students->render() }}
-                        </div>
                     </div>
                 </div>
             </div>

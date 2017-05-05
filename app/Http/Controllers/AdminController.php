@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sport;
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -48,17 +48,18 @@ class AdminController extends Controller
 
     public function showStudentsBySearch(Request $request)
     {
-        $searchterm = Input::get('searchinput');
+        $searchterm = $request->input('q');
 
         if ($searchterm){
 
-            $students = DB::table('students');
-            $results = $students->where('name', 'LIKE', '%'. $searchterm .'%')
-                ->orWhere('description', 'LIKE', '%'. $searchterm .'%')
-                ->orWhere('brand', 'LIKE', '%'. $searchterm .'%')
+            $results = DB::table('students')
+                ->join('users', 'users.id', '=', 'students.user_id')
+                ->where('users.lastname', 'LIKE', '%'. $searchterm .'%')
+                ->orWhere('users.firstname', 'LIKE', '%'. $searchterm .'%')
+                ->orWhere('students.studentNumber', 'LIKE', '%'. $searchterm .'%')
                 ->get();
 
-            return view('professor.list_of_students_search')->with('students', $results);
+            return view('professor.list_of_students_search')->with('results', $results);
 
         }
     }
