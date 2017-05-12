@@ -22,6 +22,7 @@ Route::get('/preregister/', function (){
 Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/home', 'AdminController@index');
     Route::get('/assignnote','AdminController@assignnote');
+    Route::get('/addSession', 'AdminController@addsession');
     Route::get('/addAdmin', 'AdminController@addAdmin');
     Route::get('/professor','AdminController@registerprofessor');
     Route::get('/sports','AdminController@sport')->name('sport');
@@ -52,6 +53,8 @@ Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 Route::get('/professor/main', function(){
     return view('professor.main');
 });
+
+Route::post('/newSession', 'AddSessionController@add')->name('add_session');
 
 Route::post('/adminRegister', 'Auth\RegisterAdminController@register')->name('register_admin');
 
