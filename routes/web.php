@@ -21,8 +21,12 @@ Route::get('/preregister/', function (){
 
 Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/home', 'AdminController@index');
-    Route::get('/professor','AdminController@registerprofessor');
     Route::get('/assignnote','AdminController@assignnote');
+    Route::get('/addSession', 'AdminController@addsession');
+    Route::get('/addAdmin', 'AdminController@addAdmin');
+    Route::get('/professor','AdminController@registerprofessor');
+    Route::get('/sports','AdminController@sport')->name('sport');
+    Route::get('/ufr','AdminController@ufr')->name('Ufr');
     });
 
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
@@ -34,6 +38,16 @@ Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
 
 Auth::routes();
 
+Route::post('/ufrRegister','UfrController@addUfr')->name('ufrRegister');
+Route::post('/updateUfr','UfrController@updateUfr')->name('updateUfr');
+Route::post('/deleteUfr','UfrController@deleteUfr')->name('deleteUfr');
+
+Route::post('/sportRegister','SportController@addSport')->name('sportRegister');
+
+Route::post('/updateSport','SportController@updateSport')->name('updateSport');
+
+Route::post('/deleteSport','SportController@deleteSport')->name('deleteSport');
+
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
 
 Route::get('/register/{studentEmail}/{token}', 'Auth\RegisterController@showRegistrationForm')->name('register_with_token');
@@ -42,8 +56,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
-
-
 Route::post('/professor/main', 'AbsencesController@addAbsences')->name('makeCall');
+
+Route::post('/newSession', 'AddSessionController@add')->name('add_session');
+
+Route::post('/adminRegister', 'Auth\RegisterAdminController@register')->name('register_admin');
 
 
