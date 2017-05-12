@@ -22,6 +22,11 @@ class AdminController extends Controller
         return view('auth.registerprofessor');
     }
 
+    public function assignnote()
+    {
+        return view('admin.assignnote');
+    }
+  
     public function sport()
     {
        // $sports = DB::table('sports')->orderBy('label', 'asc')->paginate(10);
@@ -42,4 +47,8 @@ class AdminController extends Controller
         return view('ufr.ufr')->with('ufrs', $ufrs);
     }
 
+    public function addAdmin()
+    {
+        return view('auth.register_admin');
+    }
 }
