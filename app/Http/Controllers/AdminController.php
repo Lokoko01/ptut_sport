@@ -32,6 +32,26 @@ class AdminController extends Controller
 
         return view('admin.assignnote')->with('students', $students);
     }
+  
+    public function sport()
+    {
+       // $sports = DB::table('sports')->orderBy('label', 'asc')->paginate(10);
+
+        $sports = DB::table('sports')
+            ->leftJoin('sessions', 'sports.id', '=', 'sessions.sport_id')
+            ->leftJoin('professors', 'professors.id', '=', 'professor_id')
+            ->leftJoin('users', 'users.id', '=', 'user_id')
+            ->select('sports.id', 'sports.label', 'lastname', 'firstname')
+            ->paginate(10);
+
+        return view('sport.sport')->with('sports', $sports);
+    }
+
+    public function ufr()
+    {
+        $ufrs = DB::table('ufr')->orderBy('code', 'asc')->paginate(10);
+        return view('ufr.ufr')->with('ufrs', $ufrs);
+    }
 
     public function addAdmin()
     {
