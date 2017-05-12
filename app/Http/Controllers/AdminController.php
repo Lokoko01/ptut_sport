@@ -7,6 +7,7 @@ use App\Professor;
 use App\Session;
 use App\Sport;
 use App\TimeSlots;
+
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
@@ -28,7 +29,14 @@ class AdminController extends Controller
 
     public function assignnote()
     {
-        return view('admin.assignnote');
+        $students = DB::table('students')
+            ->join('users', 'users.id', '=', 'students.user_id')
+            ->join('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->join('users', 'users.id', '=', 'students.user_id')
+            ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name"))
+            ->get();
+
+        return view('admin.assignnote')->with('students', $students);
     }
   
     public function sport()

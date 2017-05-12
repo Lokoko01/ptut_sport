@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Renseigner les absents</div>
+                    <div class="panel-heading">Ajouter une note</div>
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
@@ -15,7 +15,8 @@
 
                         {!! BootForm::openHorizontal($columnSizes) !!}
                         @foreach($students as $student)
-                            {!! BootForm::checkbox($student->full_name, 'check')->defaultCheckedState(null) !!}
+                            {!! BootForm::label($student->full_name) !!}
+                            {!! BootForm::text('', 'note') !!}
                         @endforeach
                         {!! BootForm::close() !!}
                     </div>
