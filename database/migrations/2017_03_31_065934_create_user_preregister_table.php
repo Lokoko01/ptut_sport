@@ -15,7 +15,7 @@ class CreateUserPreregisterTable extends Migration
     {
         Schema::create('user_preregister', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email')->unique();
+            $table->string('email', 191)->unique();
             $table->string('token');
             $table->timestamps();
         });

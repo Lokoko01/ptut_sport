@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Ufr extends Model
+class Sport extends Model
 {
-    protected $table = 'ufr';
+    protected $table = 'sports';
 
     protected $fillable =[
-        'code','label'
+        'label'
     ];
 }
