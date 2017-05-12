@@ -77,13 +77,17 @@
     <div class="content">
         <img src="images/UDL_logo_couleur-01.png" style="width: 30%;">
         <div class="title m-b-md">
-            Gestion des activités sportives
+            Sport App
         </div>
 
-        <div class="links">
-            <a href="{{ url('/login') }}">S'identifier</a>
-            <a href="{{ url('/preregister') }}">S'inscrire</a>
-        </div>
+        @if (Route::has('login'))
+            @if (!Auth::check())
+                <div class="links">
+                    <a href="{{ url('/login') }}">S'identifier</a>
+                    <a href="{{ url('/preregister') }}">S'inscrire</a>
+                </div>
+            @endif
+        @endif
     </div>
 </div>
 </body>
