@@ -24,10 +24,11 @@ class AdminController extends Controller
     public function assignnote()
     {
         $students = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->join('student_sport', 'student_sport.student_id', '=', 'students.id')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct CONCAT(users.lastname,' ',users.firstname) as full_name, sports.label as sport_label"))
             ->get();
 
         return view('admin.assignnote')->with('students', $students);

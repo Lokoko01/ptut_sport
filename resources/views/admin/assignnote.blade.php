@@ -9,14 +9,17 @@
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
-                            'md' => [4, 6]
+                            'xs' => [5, 4],
+                            'sm' => [3, 2],
+                            'md' => [3, 2],
+                            'lg' => [3, 2]
                         ];
                         ?>
 
                         {!! BootForm::openHorizontal($columnSizes) !!}
                         @foreach($students as $student)
                             {!! BootForm::label($student->full_name) !!}
-                            {!! BootForm::text('', 'note') !!}
+                            {!! BootForm::text($student->sport_label, 'note') !!}
                         @endforeach
                         {!! BootForm::close() !!}
                     </div>
