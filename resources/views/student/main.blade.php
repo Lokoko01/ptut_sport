@@ -10,7 +10,7 @@
                         <div class="flex-div student-container">
                             <div class="student-sports flex-div">
                                 <h3>
-                                    Mes sports
+                                    {!! Auth::user()->displaySportOrWish() !!}
                                 </h3>
                                 <table class="main-table">
                                     {!! Auth::user()->displaySessions() !!}
@@ -29,49 +29,41 @@
                                     Mes absences
                                 </h3>
                                 <table class="main-table">
-                                    <tr>
-                                        <td>Absence 1 (date) : Justifiée</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Absence 2 (date) : Non Justifiée</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Absence 3 (date) : Justifiée</td>
-                                    </tr>
+                                    {!! Auth::user()->displayMissings() !!}
                                 </table>
                             </div>
                         </div>
-                        <div class="informations-messages flex-div">
-                            <h3>
-                                Informations
-                            </h3>
-                            <table class="main-table">
-                                <tr>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh
-                                        tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.
-                                        Quisque sed justo odio. Aliquam laoreet.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh
-                                        tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.
-                                        Quisque sed justo odio. Aliquam laoreet.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh
-                                        tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.
-                                        Quisque sed justo odio. Aliquam laoreet.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh
-                                        tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.
-                                        Quisque sed justo odio. Aliquam laoreet.
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                        {{--<div class="informations-messages flex-div">--}}
+                            {{--<h3>--}}
+                                {{--Informations--}}
+                            {{--</h3>--}}
+                            {{--<table class="main-table">--}}
+                                {{--<tr>--}}
+                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
+                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
+                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
+                                    {{--</td>--}}
+                                {{--</tr>--}}
+                                {{--<tr>--}}
+                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
+                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
+                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
+                                    {{--</td>--}}
+                                {{--</tr>--}}
+                                {{--<tr>--}}
+                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
+                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
+                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
+                                    {{--</td>--}}
+                                {{--</tr>--}}
+                                {{--<tr>--}}
+                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
+                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
+                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
+                                    {{--</td>--}}
+                                {{--</tr>--}}
+                            {{--</table>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
             </div>

@@ -71,115 +71,140 @@ class User extends Authenticatable
 
     public function displaySessions()
     {
-        if ($this->isStudent()) {
-            $userId = Auth::id();
-            $studentIdField = DB::select('select id from students where user_id = :userId', ['userId' => $userId]);
+        $studentId = $this->_getStudentId();
 
-            if (count($studentIdField) == 1) {
-                $studentId = $studentIdField[0]->id;
-                if (!empty($studentId)) {
-                    $sessions = DB::table('student_sport')
-                        ->join('sessions', 'student_sport.session_id', '=', 'sessions.id')
-                        ->select('sessions.timeSlot_id', 'sessions.sport_id', 'sessions.location_id')
-                        ->where('student_sport.student_id', '=', $studentId)
-                        ->get();
+        if ($studentId) {
+            if ($this->_haveWishes($studentId)) {
+                $wishes = DB::table('student_wishes')
+                    ->join('sessions', 'student_wishes.session_id', '=', 'sessions.id')
+                    ->join('sports', 'sessions.sport_id', "=", "sports.id")
+                    ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
+                    ->join('locations', 'sessions.location_id', '=', 'locations.id')
+                    ->select('sports.label', 'locations.name', 'locations.city', 'timeSlots.*')
+                    ->where('student_wishes.student_id', '=', $studentId)
+                    ->get();
 
-                    $sessionsReady = array();
-                    $sessions = $sessions->all();
+                $wishes = $wishes->all();
+                $wishesHtml = "";
 
-                    for ($i = 0; $i < count($sessions); $i++) {
-                        //TODO: optimiser cette requete en une seule avec des jointures
-                        $sportName = DB::select('select label from sports where id = :sportId', ['sportId' => $sessions[$i]->sport_id])[0]->label;
-                        $timeSlot = DB::select("select CONCAT(dayOfWeek, ' ',startTime, ':',endTime) as time from timeSlots where id = :timeSlotId", ['timeSlotId' => $sessions[$i]->timeSlot_id])[0]->time;
-                        $place = DB::select("select concat(name,' (', city, ')') as place from locations where id = :locationId", ['locationId' => $sessions[$i]->location_id])[0]->place;
+                foreach ($wishes as $wish) {
+                    $wishesHtml .= "<tr><td>" . $wish->label . " - " . $wish->dayOfWeek . " " . $wish->startTime . ":" . $wish->endTime . " - " . $wish->name . " (" . $wish->city . ") " . "</td></tr>";
+                }
+                $wishesHtml .= "<tr><td><a href='#'>Modifier mes voeux</a></td></tr>";
+                return $wishesHtml;
+            } else {
+                $sessions = DB::table('student_sport')
+                    ->join('sessions', 'student_sport.session_id', '=', 'sessions.id')
+                    ->join('sports', 'sessions.sport_id', "=", "sports.id")
+                    ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
+                    ->join('locations', 'sessions.location_id', '=', 'locations.id')
+                    ->select('sports.label', 'locations.name', 'locations.city', 'timeSlots.*')
+                    ->where('student_sport.student_id', '=', $studentId)
+                    ->get();
 
-                        if (!empty($sportName) && !empty($timeSlot) && !empty($place)) {
-                            $sessionsReady[$i] = $sportName . " - " . $timeSlot . " - " . $place;
-                        } else {
-                            return "Erreur : impossible de récupérer les sports";
-                        }
+                $sessions = $sessions->all();
+                $sessionsHtml = "";
+
+                if (count($sessions) == 0) {
+                    $sessionsHtml = "<tr><td><a href='#'> Faire une demande d'inscription pour un ou plusieurs sports</a></td></tr>";
+                } else {
+                    foreach ($sessions as $session) {
+                        $sessionsHtml .= "<tr><td>" . $session->label . " - " . $session->dayOfWeek . " " . $session->startTime . ":" . $session->endTime . " - " . $session->name . " (" . $session->city . ") " . "</td></tr>";
                     }
-
-                    $sessionsHtml = "";
-                    foreach ($sessionsReady as $session) {
-                        $sessionsHtml = $sessionsHtml . "<tr><td>" . $session . "</td></tr>";
-                    }
-
-                    return $sessionsHtml;
-                } else return "Erreur: impossible de récupérer les sports (problème d'authentification)";
-            } else return "Erreur: impossible de récupérer les sports (problème d'authentification)";
-        } else return "Erreur: impossible de récupérer les notes (problème d'authentification)";
+                }
+                return $sessionsHtml;
+            }
+        } else return "Erreur: impossible de récupérer les sports (problème d'authentification)";
     }
 
 
     public function displayMarks()
     {
-        if ($this->isStudent()) {
-            $userId = Auth::id();
-            $studentIdField = DB::select('select id from students where user_id = :userId', ['userId' => $userId]);
+        $studentId = $this->_getStudentId();
+        if ($studentId) {
+            $marks = DB::table('marks')
+                ->join('sessions', 'marks.session_id', '=', 'sessions.id')
+                ->join('sports', 'sports.id', '=', 'sessions.sport_id')
+                ->select('marks.mark', 'sports.label')
+                ->where('marks.student_id', '=', $studentId)
+                ->get();
 
-            $studentId = $studentIdField[0]->id;
-            if (!empty($studentId)) {
-                if (count($studentIdField) == 1) {
-                    $marks = DB::table('marks')
-                        ->select('session_id', 'mark')
-                        ->where('student_id', '=', $studentId)
-                        ->get();
+            $marks = $marks->all();
+            $marksHtml = "";
 
-                    $marks = $marks->all();
-                    $marksReady = array();
+            if (count($marks) == 0) {
+                $marksHtml = "<tr><td>Pas de notes</td></tr>";
+            } else {
+                foreach ($marks as $mark) {
+                    $marksHtml .= "<tr><td>" . $mark->label . " : " . $mark->mark . "</td></tr>";
+                }
+            }
+            return $marksHtml;
 
-                    for ($i = 0; $i < count($marks); $i++) {
-                        $sportName = DB::table('sports')
-                            ->join('sessions', 'sessions.sport_id', '=', 'sports.id')
-                            ->join('marks', 'marks.session_id', '=', 'sessions.id')
-                            ->select('sports.label')
-                            ->where('marks.session_id', '=', $marks[$i]->session_id)
-                            ->get();
-
-                        $sportName = $sportName->all()[0]->label;
-
-                        if (!empty($sportName) && !empty($marks)) {
-                            $marksReady[$i] = $sportName . ' : ' . $marks[$i]->mark;
-                        } else return "Erreur: Impossible de récupérer les notes";
-                    }
-
-                    $marksHtml = "";
-
-                    foreach ($marksReady as $mark) {
-                        $marksHtml = $marksHtml . "<tr><td>" . $mark . "</td></tr>";
-                    }
-                    return $marksHtml;
-
-                } else return "Erreur: impossible de récuperer les notes (problème d'authentification)";
-            } else return "Erreur: impossible de récuperer les notes (problème d'authentification)";
-        } else return "Erreur: impossible de récupérer les notes (problème d'authentification)";
+        } else return "Erreur: impossible de récuperer les notes (problème d'authentification)";
     }
 
     public function displayMissings()
+    {
+        $studentId = $this->_getStudentId();
+        if ($studentId) {
+            $missings = DB::table('absences')
+                ->join('student_sport', 'student_sport.id', '=', 'absences.student_sport_id')
+                ->join('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                ->join('sports', 'sports.id', '=', 'sessions.sport_id')
+                ->select('sports.label', 'absences.date', 'absences.isJustified')
+                ->where('student_sport.student_id', "=", $studentId)
+                ->get();
+
+            $missings = $missings->all();
+            $missingsHtml = "";
+
+            if (count($missings) == 0) {
+                $missingsHtml = "<tr><td>Pas d'absences</td></tr>";
+            } else {
+                foreach ($missings as $missing) {
+                    //todo: ajouter une coloration si justifiée ou non
+                    if ($missing->isJustified == 0) {
+                        $missingsHtml .= "<tr><td style='color: #ff0000'>" . $missing->label . " (" . $missing->date . ") : Non justifiée" . "</td></tr>";
+                    } else if ($missing->isJustified == 1) {
+                        $missingsHtml .= "<tr><td>" . $missing->label . " (" . $missing->date . ") : Justifiée" . "</td></tr>";
+                    } else $missingsHtml .= "Erreur sur cette absence : données invalides";
+                }
+            }
+            return $missingsHtml;
+        } else return "Erreur: impossible de récupérer les notes (problème d'authentification)";
+    }
+
+    public function displaySportOrWish()
+    {
+
+        if ($this->_haveWishes($this->_getStudentId())) {
+            return "Mes voeux";
+        } else return "Mes sports";
+    }
+
+    private function _getStudentId()
     {
         if ($this->isStudent()) {
             $userId = Auth::id();
             $studentIdField = DB::select('select id from students where user_id = :userId', ['userId' => $userId]);
 
             $studentId = $studentIdField[0]->id;
-            if (!empty($studentId)) {
-                if (count($studentIdField) == 1) {
-                    $missings = DB::table('absences')
-                        ->join('student_sports', 'student_sport.id', '=', 'absences.studentSport_id')
-                        ->join('sessions', 'sessions.id', '=', 'student_sport.session_id')
-                        ->join('sports', 'sports.id', '=', 'sessions.sport_id')
-                        ->select('sports.label', 'absences.date')
-                        ->get();
+            if (!empty($studentId) && count($studentIdField) == 1) {
+                return $studentId;
+            } else return false;
+        } else return false;
+    }
 
-                    $missings = $missings->all();
-                    $missingsReady = array();
+    private function _haveWishes($studentId)
+    {
+        $wishes = DB::table('student_wishes')
+            ->select('*')
+            ->where('student_id', '=', $studentId)
+            ->get();
 
-                    for($i = 0; $i<count($missings); $i++){
-                        //todo: continuer
-                    }
-                }
-            }
-        }
+        if (empty($wishes->all())) {
+            return false;
+        } else return true;
     }
 }
