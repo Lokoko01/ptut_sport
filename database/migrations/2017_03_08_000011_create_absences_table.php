@@ -18,6 +18,7 @@ class CreateAbsencesTable extends Migration
             $table->integer('student_sport_id')->unsigned();
             $table->foreign('student_sport_id')->references('id')->on('student_sport');
             $table->date('date');
+            $table->boolean('isJustified');
             $table->timestamps();
         });
     }

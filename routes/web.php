@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/ufr', 'AdminController@ufr')->name('Ufr');
     Route::get('/listStudents', 'AdminController@showListOfStudents')->name('students');
     Route::get('/listStudents', 'AdminController@showStudentsBySearch')->name('students_by_search');
+    Route::get('/downloadExcel/{type}', 'AdminController@downloadExcel');
 });
 
 Auth::routes();
