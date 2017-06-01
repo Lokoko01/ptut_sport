@@ -33,8 +33,6 @@
                         </table>
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
                         {!! BootForm::close() !!}
-
-
                     </div>
                 </div>
             </div>

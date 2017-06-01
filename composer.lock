@@ -1753,6 +1753,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/console/zipball/a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
                 "reference": "a7a17e0c6c3c4d70a211f80782e4b90ddadeaa38",
+
                 "shasum": ""
             },
             "require": {
@@ -1807,6 +1808,7 @@
         {
             "name": "symfony/css-selector",
             "version": "v3.2.8",
+
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1869,6 +1871,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/debug/zipball/fd6eeee656a5a7b384d56f1072243fe1c0e81686",
                 "reference": "fd6eeee656a5a7b384d56f1072243fe1c0e81686",
+
                 "shasum": ""
             },
             "require": {
@@ -1986,6 +1989,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/finder/zipball/9cf076f8f492f4b1ffac40aae9c2d287b4ca6930",
                 "reference": "9cf076f8f492f4b1ffac40aae9c2d287b4ca6930",
+
                 "shasum": ""
             },
             "require": {
@@ -2035,6 +2039,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-foundation/zipball/9de6add7f731e5af7f5b2e9c0da365e43383ebef",
                 "reference": "9de6add7f731e5af7f5b2e9c0da365e43383ebef",
+
                 "shasum": ""
             },
             "require": {
@@ -2088,6 +2093,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/http-kernel/zipball/46e8b209abab55c072c47d72d5cd1d62c0585e05",
                 "reference": "46e8b209abab55c072c47d72d5cd1d62c0585e05",
+
                 "shasum": ""
             },
             "require": {
@@ -2157,6 +2163,7 @@
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
             "time": "2017-05-01T17:46:48+00:00"
+
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2337,6 +2344,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/process/zipball/999c2cf5061e627e6cd551dc9ebf90dd1d11d9f0",
                 "reference": "999c2cf5061e627e6cd551dc9ebf90dd1d11d9f0",
+
                 "shasum": ""
             },
             "require": {

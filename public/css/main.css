@@ -1,31 +1,6 @@
-.button-professor {
-    width: 50%;
-    text-align: center;
-    -webkit-flex: 1 1 auto;
-    flex: 1 1 auto;
-}
+/*General*/
 
-.message-table {
-    border: 1px solid black;
-    margin: 10px;
-
-}
-
-.message-table tr {
-    border-bottom: 1px dotted #adadad;
-}
-
-.informations-messages {
-    width: 50%;
-    -webkit-flex: 1 1 auto;
-    flex: 1 1 auto;
-}
-
-.informations-messages h3 {
-    text-align: center;
-}
-
-.panel-professor {
+.panel-home {
     /* instaure la flexbox */
     display: -webkit-flex;
     -webkit-flex-direction: row;
@@ -34,8 +9,66 @@
     flex-direction: row;
 }
 
+.flex-div {
+    -webkit-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.main-table {
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.main-table tr {
+    border-bottom: 1px dotted #adadad;
+}
+
+.main-table td {
+    padding: 7px;
+}
+
+/*professor home page*/
+.button-professor {
+    width: 50%;
+    text-align: center;
+}
+
+.informations-messages {
+    width: 50%;
+}
+
+.button-professor a {
+    margin: 10px;
+}
+
+/*student home page*/
+
+.student-marks {
+    width: 50%;
+}
+
+.student-missings {
+    width: 50%;
+}
+
+.student-sports {
+    width: 50%;
+}
+
+.student-container {
+    /* instaure la flexbox */
+    display: -webkit-flex;
+    -webkit-flex-direction: row;
+
+    display: flex;
+    flex-direction: row;
+
+    flex-wrap: wrap;
+}
+
+/*responsive*/
 @media (max-width: 767px) {
-    .panel-professor {
+    .panel-home {
         flex-direction: column; /* affichage vertical */
     }
 
@@ -46,12 +79,18 @@
     .informations-messages {
         width: auto;
     }
+
+    /*student home page*/
+    .student-marks {
+        width: auto;
+    }
+
+    .student-missings {
+        width: auto;
+    }
+
+    .student-sports {
+        width: auto;
+    }
 }
 
-.button-professor a {
-    margin: 10px;
-}
-
-.message-table td{
-    padding: 7px;
-}

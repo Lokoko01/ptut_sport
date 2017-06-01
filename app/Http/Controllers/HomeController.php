@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Auth::user()->isStudent()){
+            return view('student.main');
+        }
+        if(Auth::user()->isProfessor()){
+            return view("professor.main");
+        }
     }
 }
