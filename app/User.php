@@ -89,6 +89,7 @@ class User extends Authenticatable
                     ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
                     ->join('locations', 'sessions.location_id', '=', 'locations.id')
                     ->select('sports.label', 'locations.name', 'locations.city', 'timeSlots.*')
+                    ->orderBy('student_wishes.rank')
                     ->where('student_wishes.student_id', '=', $studentId)
                     ->get();
 
@@ -98,7 +99,7 @@ class User extends Authenticatable
                 foreach ($wishes as $wish) {
                     $wishesHtml .= "<tr><td>" . $wish->label . " - " . $wish->dayOfWeek . " " . $wish->startTime . ":" . $wish->endTime . " - " . $wish->name . " (" . $wish->city . ") " . "</td></tr>";
                 }
-                $wishesHtml .= "<tr><td><a href='#'>Modifier mes voeux</a></td></tr>";
+                $wishesHtml .= "<tr><td><a href='student/choose_sport'>Modifier mes voeux</a></td></tr>";
                 return $wishesHtml;
             } else {
                 $sessions = DB::table('student_sport')
@@ -114,7 +115,7 @@ class User extends Authenticatable
                 $sessionsHtml = "";
 
                 if (count($sessions) == 0) {
-                    $sessionsHtml = "<tr><td><a href='#'> Faire une demande d'inscription pour un ou plusieurs sports</a></td></tr>";
+                    $sessionsHtml = "<tr><td><a href='student/choose_sport'> Faire une demande d'inscription pour un ou plusieurs sports</a></td></tr>";
                 } else {
                     foreach ($sessions as $session) {
                         $sessionsHtml .= "<tr><td>" . $session->label . " - " . $session->dayOfWeek . " " . $session->startTime . ":" . $session->endTime . " - " . $session->name . " (" . $session->city . ") " . "</td></tr>";
