@@ -28,9 +28,9 @@ class WishesController extends Controller
             )->get();
 
 
-        $selected1 = DB::table('student_wishes')->select('session_id', 'rank','spareTime')->where([['student_id', Auth::id()],['rank',1]])->get();
-        $selected2 = DB::table('student_wishes')->select('session_id', 'rank','spareTime')->where([['student_id', Auth::id()],['rank',2]])->get();
-        $selected3 = DB::table('student_wishes')->select('session_id', 'rank','spareTime')->where([['student_id', Auth::id()],['rank',3]])->get();
+        $selected1 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::id()],['rank',1]])->get();
+        $selected2 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::id()],['rank',2]])->get();
+        $selected3 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::id()],['rank',3]])->get();
 
 
         if(
@@ -63,7 +63,7 @@ class WishesController extends Controller
         } else {
             if (!$this->WishAlreadyExist($data['studentId'], $data['voeu1'],!Empty($data['isNotedFirstWish'])) && !$this->RankAlreadyExist($data['studentId'], 1)) {
                 DB::table('student_wishes')->insert([
-                    ['student_id' => $data['studentId'], 'session_id' => $data['voeu1'], 'rank' => '1', 'spareTime' => !Empty($data['isNotedFirstWish'])]
+                    ['student_id' => $data['studentId'], 'session_id' => $data['voeu1'], 'rank' => '1', 'isEvaluated' => !Empty($data['isNotedFirstWish'])]
                 ]);
             } else {
                 if (!$this->WishAlreadyExist($data['studentId'], $data['voeu1'],!Empty($data['isNotedFirstWish']))) {
@@ -90,7 +90,7 @@ class WishesController extends Controller
             if (!$this->WishAlreadyExist($data['studentId'], $data['voeu2'],!Empty($data['isNotedSecondWish'])) && !$this->RankAlreadyExist($data['studentId'], 2)) {
 
                 DB::table('student_wishes')->insert([
-                    ['student_id' => $data['studentId'], 'session_id' => $data['voeu2'], 'rank' => '2', 'spareTime' => !Empty($data['isNotedSecondWish'])]
+                    ['student_id' => $data['studentId'], 'session_id' => $data['voeu2'], 'rank' => '2', 'isEvaluated' => !Empty($data['isNotedSecondWish'])]
                 ]);
             } else {
                 if (!$this->WishAlreadyExist($data['studentId'], $data['voeu2'],!Empty($data['isNotedSecondWish']))) {
@@ -104,7 +104,7 @@ class WishesController extends Controller
             if (!$this->WishAlreadyExist($data['studentId'], $data['voeu3'],!Empty($data['isNotedThirdWish'])) && !$this->RankAlreadyExist($data['studentId'], 3)) {
 
                 DB::table('student_wishes')->insert([
-                    ['student_id' => $data['studentId'], 'session_id' => $data['voeu3'], 'rank' => '3', 'spareTime' => !Empty($data['isNotedThirdWish'])]
+                    ['student_id' => $data['studentId'], 'session_id' => $data['voeu3'], 'rank' => '3', 'isEvaluated' => !Empty($data['isNotedThirdWish'])]
                 ]);
             } else {
                 if (!$this->WishAlreadyExist($data['studentId'], $data['voeu3'],!Empty($data['isNotedThirdWish']))) {
@@ -122,12 +122,12 @@ class WishesController extends Controller
 
     }
 
-    private function WishAlreadyExist($studentID, $sessionID, $spareTime)
+    private function WishAlreadyExist($studentID, $sessionID, $isEvaluated)
     {
         $whish = DB::table('student_wishes')->where([
             ['student_id', '=', $studentID],
             ['session_id', '=', $sessionID],
-            ['spareTime', '=', $spareTime]])->get();
+            ['isEvaluated', '=', $isEvaluated]])->get();
 
         if (!empty($whish->all())) {
             return true;
@@ -150,11 +150,11 @@ class WishesController extends Controller
     }
 
 
-    private function WishUpdate($studentID, $sessionID, $rank, $spareTime)
+    private function WishUpdate($studentID, $sessionID, $rank, $isEvaluated)
     {
         DB::table('student_wishes')
             ->where([['student_id', $studentID], ['rank', $rank]])
-            ->update(['session_id' => $sessionID,'spareTime' => $spareTime]);
+            ->update(['session_id' => $sessionID,'isEvaluated' => $isEvaluated]);
     }
 
     private function WishDelete($studentID, $rank)

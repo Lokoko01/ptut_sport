@@ -6,7 +6,12 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     @if(session()->has('message_voeux_identiques'))
-                        <div class="alert alert-warning">
+
+                        @if(session()->get('message_voeux_identiques') == "Voeu(x) validé(s)")
+                            <div class="alert alert-success">
+                            @else
+                            <div class="alert alert-warning">
+                        @endif
                             {{ session()->get('message_voeux_identiques') }}
                         </div>
                     @endif
@@ -54,7 +59,7 @@
                             @forelse($selected1 as $select)
                                 @if( $select->rank == '1')
                                     <input type="checkbox"
-                                           @if($select->spareTime)
+                                           @if($select->isEvaluated)
                                            checked="selected"
                                            @endif
                                            id="isNotedFirstWish" name="isNotedFirstWish"><span> Je désire être noté</span>
@@ -98,7 +103,7 @@
                             @forelse($selected2 as $select)
                                 @if( $select->rank == '2')
                                     <input type="checkbox"
-                                           @if($select->spareTime)
+                                           @if($select->isEvaluated)
                                            checked="selected"
                                            @endif
                                            id="isNotedSecondWish" name="isNotedSecondWish"><span> Je désire être noté</span>
@@ -142,7 +147,7 @@
                             @forelse($selected3 as $select)
                                 @if( $select->rank == '3')
                                     <input type="checkbox"
-                                           @if($select->spareTime)
+                                           @if($select->isEvaluated)
                                            checked="selected"
                                            @endif
                                            id="isNotedThirdWish" name="isNotedThirdWish"><span> Je désire être noté</span>

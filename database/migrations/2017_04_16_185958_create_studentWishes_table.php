@@ -21,7 +21,7 @@ class CreateStudentWishesTable extends Migration
             $table->foreign('session_id')->references('id')->on('sessions');
             $table->integer('rank');
             $table->integer('sportNumber');
-            $table->boolean('spareTime');
+            $table->boolean('isEvaluated');
             $table->timestamps();
         });
     }
