@@ -71,7 +71,7 @@ class User extends Authenticatable
 
     public function displaySessions()
     {
-        $studentId = $this->_getStudentId();
+        $studentId = Auth::user()->student->id;
 
         if ($studentId) {
             if ($this->_haveWishes($studentId)) {
@@ -120,7 +120,7 @@ class User extends Authenticatable
 
     public function displayMarks()
     {
-        $studentId = $this->_getStudentId();
+        $studentId = Auth::user()->student->id;
         if ($studentId) {
             $marks = DB::table('marks')
                 ->join('sessions', 'marks.session_id', '=', 'sessions.id')
@@ -146,7 +146,7 @@ class User extends Authenticatable
 
     public function displayMissings()
     {
-        $studentId = $this->_getStudentId();
+        $studentId = Auth::user()->student->id;
         if ($studentId) {
             $missings = DB::table('absences')
                 ->join('student_sport', 'student_sport.id', '=', 'absences.student_sport_id')
@@ -177,23 +177,11 @@ class User extends Authenticatable
 
     public function displaySportOrWish()
     {
+        $studentId = Auth::user()->student->id;
 
-        if ($this->_haveWishes($this->_getStudentId())) {
+        if ($this->_haveWishes($studentId)) {
             return "Mes voeux";
         } else return "Mes sports";
-    }
-
-    private function _getStudentId()
-    {
-        if ($this->isStudent()) {
-            $userId = Auth::id();
-            $studentIdField = DB::select('select id from students where user_id = :userId', ['userId' => $userId]);
-
-            $studentId = $studentIdField[0]->id;
-            if (!empty($studentId) && count($studentIdField) == 1) {
-                return $studentId;
-            } else return false;
-        } else return false;
     }
 
     private function _haveWishes($studentId)
