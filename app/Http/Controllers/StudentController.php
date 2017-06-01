@@ -36,9 +36,9 @@ class StudentController extends Controller
                 'sessions.id'
             )->get();
 
-        $selected1 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::id()],['rank',1]])->get();
-        $selected2 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::id()],['rank',2]])->get();
-        $selected3 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::id()],['rank',3]])->get();
+        $selected1 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::user()->student->id],['rank',1]])->get();
+        $selected2 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::user()->student->id],['rank',2]])->get();
+        $selected3 = DB::table('student_wishes')->select('session_id', 'rank','isEvaluated')->where([['student_id', Auth::user()->student->id],['rank',3]])->get();
 
         return view('student.chooseSport')
             ->with('creneaux', $creneaux)
