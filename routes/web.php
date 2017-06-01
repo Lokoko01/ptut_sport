@@ -15,12 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/preregister/', function (){
+Route::get('/preregister/', function () {
     return view('auth.preregister');
 })->name('preregister');
 
-Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
+Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/home', 'AdminController@index');
+    Route::get('/listStudents', 'AdminController@showListOfStudents')->name('students');
+    Route::get('/listStudents', 'AdminController@showStudentsBySearch')->name('students_by_search');
+    Route::get('/downloadExcel/{type}', 'AdminController@downloadExcel');
     Route::get('/assignnote','AdminController@assignnote');
     Route::get('/addSession', 'AdminController@addsession');
     Route::get('/addAdmin', 'AdminController@addAdmin');
@@ -43,15 +46,15 @@ Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
 
 Auth::routes();
 
-Route::post('/ufrRegister','UfrController@addUfr')->name('ufrRegister');
-Route::post('/updateUfr','UfrController@updateUfr')->name('updateUfr');
-Route::post('/deleteUfr','UfrController@deleteUfr')->name('deleteUfr');
+Route::post('/ufrRegister', 'UfrController@addUfr')->name('ufrRegister');
+Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
+Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
 
-Route::post('/sportRegister','SportController@addSport')->name('sportRegister');
+Route::post('/sportRegister', 'SportController@addSport')->name('sportRegister');
 
-Route::post('/updateSport','SportController@updateSport')->name('updateSport');
+Route::post('/updateSport', 'SportController@updateSport')->name('updateSport');
 
-Route::post('/deleteSport','SportController@deleteSport')->name('deleteSport');
+Route::post('/deleteSport', 'SportController@deleteSport')->name('deleteSport');
 
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
 

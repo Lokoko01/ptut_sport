@@ -10,7 +10,6 @@ use App\StudentSport;
 
 class AbsencesController extends Controller
 {
-
     public function addAbsences(Request $request)
     {
         // Récupérer l'id du professeur connecté
