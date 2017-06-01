@@ -61,5 +61,3 @@ Route::post('/professor/main', 'AbsencesController@addAbsences')->name('makeCall
 Route::post('/newSession', 'AddSessionController@add')->name('add_session');
 
 Route::post('/adminRegister', 'Auth\RegisterAdminController@register')->name('register_admin');
-
-

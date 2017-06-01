@@ -6,8 +6,8 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Accueil - Professeur</div>
-                    <div class="panel-body panel-professor">
-                        <div class="button-professor">
+                    <div class="panel-body panel-professor panel-home">
+                        <div class="button-professor flex-div">
                             <a href="{{ route('checkAbsences') }}" class="btn btn-default">Faire l'appel</a><br>
                             <a href="{{ route('home') }}" class="btn btn-default">Générer la feuille d'appel au format
                                 PDF</a><br>
@@ -18,11 +18,11 @@
                             <a href="{{ route('home') }}" class="btn btn-default">Envoyer un message aux
                                 étudiants</a><br>
                         </div>
-                        <div class="informations-messages">
+                        <div class="informations-messages flex-div">
                             <h3>
                                 Informations
                             </h3>
-                            <table class="message-table">
+                            <table class="main-table">
                                 <tr>
                                     <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et. Quisque sed justo odio. Aliquam laoreet.</td>
                                 </tr>
@@ -41,4 +41,5 @@
                 </div>
             </div>
         </div>
+    </div>
 @endsection
