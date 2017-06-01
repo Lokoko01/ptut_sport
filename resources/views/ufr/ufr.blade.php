@@ -51,10 +51,10 @@
                                                 type="button"
                                                 class="btn btn-primary"
                                                 data-toggle="modal"
-                                                data-target="#{{$ufr->label}}Modal">
+                                                data-target="#{{$ufr->code}}Modal">
                                             Modifier
                                         </button>
-                                        <div class="modal fade" id="{{$ufr->label}}Modal"
+                                        <div class="modal fade" id="{{$ufr->code}}Modal"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">

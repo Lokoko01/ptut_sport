@@ -44,13 +44,13 @@ class RegisterProfessorController extends Controller
         //$this->guard()->login($user);
 
         return $this->registered($request, $user)
-            ?:redirect('/admin/professor')->with('message_sucess_professor','Le professeur '.$user->lastname.' '.$user->firstname.' à bien été ajouté.');
+            ?:redirect('/admin/addProfessor')->with('message_sucess_professor','Le professeur '.$user->lastname.' '.$user->firstname.' à bien été ajouté.');
     }
 
     protected function create(array $data)
     {
         $user = User::create([
-            'lastname' => $data['lastname'],
+            'lastname' => strtoupper($data['lastname']),
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
             'email' => $data['email'],
