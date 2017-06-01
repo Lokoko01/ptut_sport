@@ -69,10 +69,13 @@ class User extends Authenticatable
             echo "Professeur";
         }
     }
-    public function afficheStudentID(){
-        if($this->hasRole('student')){
+
+    public function afficheStudentID()
+    {
+        if ($this->hasRole('student')) {
             return $this->Student->myId();
         }
+    }
 
     public function displaySessions()
     {
