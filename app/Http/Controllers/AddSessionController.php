@@ -14,7 +14,8 @@ class AddSessionController extends Controller
             'sport' => $request->input('sport'),
             'timeSlot' => $request->input('timeSlot'),
             'professor' => $request->input('professor'),
-            'location' => $request->input('location')
+            'location' => $request->input('location'),
+            'max_seat' => $request->input('max_seat')
         ];
 
         $this->validator($request->all())->validate();
@@ -26,7 +27,8 @@ class AddSessionController extends Controller
                 'timeSlot_id' => $data['timeSlot'],
                 'sport_id' => $data['sport'],
                 'professor_id' => $data['professor'],
-                'location_id' => $data['location']
+                'location_id' => $data['location'],
+                'max_seat' => $data['max_seat']
             ]);
 
             return redirect('/admin/addSession')->with('succeed_message_session', 'Le créneau à bien été ajouté');
@@ -40,6 +42,7 @@ class AddSessionController extends Controller
             'timeSlot' => 'required',
             'professor' => 'required',
             'location' => 'required',
+            'max_seat' => 'required',
         ]);
     }
 
