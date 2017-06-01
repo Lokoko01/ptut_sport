@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
 Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
     Route::get('/choose_sport', 'StudentController@chooseSport')->name('chooseSport');
 });
-Route::post('/addWishesAsStudent','WishesController@addWishesAsStudent')->name('addWishesAsStudent');
+Route::post('/addWishesToStudent','WishesController@addWishesToStudent')->name('addWishesToStudent');
 
 Auth::routes();
 
