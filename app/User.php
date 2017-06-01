@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use App\Student;
 
 class User extends Authenticatable
 {
@@ -68,6 +69,10 @@ class User extends Authenticatable
             echo "Professeur";
         }
     }
+    public function afficheStudentID(){
+        if($this->hasRole('student')){
+            return $this->Student->myId();
+        }
 
     public function displaySessions()
     {

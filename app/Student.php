@@ -13,4 +13,8 @@ class Student extends Model
     public function ufr() {
         return $this->hasOne(Ufr::class);
     }
+    public function myId(){
+        return $this->id;
+    }
+
 }

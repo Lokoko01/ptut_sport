@@ -29,6 +29,11 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
     });
 
+Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
+    Route::get('/choose_sport', 'StudentController@chooseSport')->name('chooseSport');
+});
+Route::post('/addWishesToStudent','WishesController@addWishesToStudent')->name('addWishesToStudent');
+
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
     Route::get('/main', function(){
