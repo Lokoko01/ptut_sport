@@ -12,11 +12,23 @@
                             'md' => [2, 8]
                         ];
                         ?>
+                        {!! BootForm::openHorizontal($columnSizes)->action(route(#)) !!}
+                        <select name="select_sessions">
+                            @foreach($sessions as $session)
+                                <option name="{{$session->id}}">{{$session->id}}</option>
+                            @endforeach
+                        </select>
+
+                        {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
+
+                        {!! BootForm::close() !!}
+
+
 
                         {!! BootForm::openHorizontal($columnSizes)->action(route('makeCall')) !!}
 
                         @foreach($students as $student)
-                                {!! BootForm::checkbox($student->full_name . ' -> ' . $student->label_ufr, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
+                            {!! BootForm::checkbox($student->full_name . ' -> ' . $student->label_ufr, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
                         @endforeach
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
 
