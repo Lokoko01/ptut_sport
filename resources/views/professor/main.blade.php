@@ -13,7 +13,7 @@
                                 PDF</a><br>
                             <a href="{{ route('home') }}" class="btn btn-default">Générer la feuille d'appel au format
                                 Excel</a><br>
-                            <a href="{{ route('home') }}" class="btn btn-default">Rentrer les notes des
+                            <a href="{{ route('assignMark') }}" class="btn btn-default">Rentrer les notes des
                                 étudiants</a><br>
                             <a href="{{ route('home') }}" class="btn btn-default">Envoyer un message aux
                                 étudiants</a><br>

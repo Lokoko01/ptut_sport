@@ -16,7 +16,7 @@
                         {!! BootForm::openHorizontal($columnSizes)->action(route('makeCall')) !!}
 
                         @foreach($students as $student)
-                                {!! BootForm::checkbox($student->full_name . ' -> ' . $student->label_ufr, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
+                            {!! BootForm::checkbox($student->full_name . ' -> ' . $student->label_ufr, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
                         @endforeach
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
 

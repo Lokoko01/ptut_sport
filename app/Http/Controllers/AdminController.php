@@ -26,24 +26,9 @@ class AdminController extends Controller
     {
         return view('auth.registerprofessor');
     }
-
-    public function assignnote()
-    {
-        $students = DB::table('students')
-            ->leftJoin('users', 'users.id', '=', 'students.user_id')
-            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
-            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
-            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
-            ->select(DB::raw("distinct CONCAT(users.lastname,' ',users.firstname) as full_name, sports.label as sport_label"))
-            ->get();
-
-        return view('admin.assignnote')->with('students', $students);
-    }
   
     public function sport()
     {
-       // $sports = DB::table('sports')->orderBy('label', 'asc')->paginate(10);
-
         $sports = DB::table('sports')
             ->leftJoin('sessions', 'sports.id', '=', 'sessions.sport_id')
             ->leftJoin('professors', 'professors.id', '=', 'professor_id')
@@ -53,6 +38,7 @@ class AdminController extends Controller
 
         return view('sport.sport')->with('sports', $sports);
     }
+
     public function addsession(){
         $sports = Sport::orderBy('label', 'asc')
             ->pluck('label', 'id');

@@ -21,7 +21,6 @@ Route::get('/preregister/', function (){
 
 Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
     Route::get('/home', 'AdminController@index');
-    Route::get('/assignnote','AdminController@assignnote');
     Route::get('/addSession', 'AdminController@addsession');
     Route::get('/addAdmin', 'AdminController@addAdmin');
     Route::get('/professor','AdminController@registerprofessor');
@@ -31,6 +30,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
 
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
+    Route::get('/assignMark', 'ProfessorController@assignMark')->name("assignMark");
     Route::get('/main', function(){
         return view('professor.main');
     });
@@ -56,7 +56,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
-Route::post('/professor/main', 'AbsencesController@addAbsences')->name('makeCall');
+Route::post('/professor/makeCall', 'AbsencesController@addAbsences')->name('makeCall');
+
+Route::post('/professor/addMarks', 'MarksController@addMarks')->name('addMarks');
 
 Route::post('/newSession', 'AddSessionController@add')->name('add_session');
 
