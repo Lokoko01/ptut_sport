@@ -131,12 +131,12 @@ class User extends Authenticatable
     {
         $studentId = Auth::user()->student->id;
         if ($studentId) {
-            $marks = DB::table('marks')
-                ->join('sessions', 'marks.session_id', '=', 'sessions.id')
-                ->join('sports', 'sports.id', '=', 'sessions.sport_id')
+            $marks = DB::table('student_sport')
+                ->join('marks', 'marks.studentSport_id', '=', 'student_sport.id')
                 ->select('marks.mark', 'sports.label')
-                ->where('marks.student_id', '=', $studentId)
+                ->where('student_sport.student_id', '=', $studentId)
                 ->get();
+
 
             $marks = $marks->all();
             $marksHtml = "";
