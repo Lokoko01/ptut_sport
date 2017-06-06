@@ -132,7 +132,7 @@ class User extends Authenticatable
         $studentId = Auth::user()->student->id;
         if ($studentId) {
             $marks = DB::table('student_sport')
-                ->join('marks', 'marks.studentSport_id', '=', 'student_sport.id')
+                ->join('marks', 'marks.student_sport_id', '=', 'student_sport.id')
                 ->join('sessions', 'sessions.id', '=', 'student_sport.session_id')
                 ->join('sports', 'sports.id', '=', 'sessions.sport_id')
                 ->select('marks.mark', 'sports.label')
