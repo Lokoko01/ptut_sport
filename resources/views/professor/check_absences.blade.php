@@ -32,7 +32,6 @@
                             @endforeach
                         </select>
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
-
                         {!! BootForm::close() !!}
                         @isset($students)
                         {!! BootForm::openHorizontal($columnSizes)->action(route('addAbsences')) !!}
