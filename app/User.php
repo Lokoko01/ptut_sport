@@ -190,9 +190,9 @@ class User extends Authenticatable
     {
         $studentId = Auth::user()->student->id;
 
-        if ($this->_haveWishes($studentId)) {
-            return "Mes voeux";
-        } else return "Mes sports";
+        if ($this->_haveSport($studentId)) {
+            return "Mes sports";
+        } else return "Mes voeux";
     }
 
     private function _haveWishes($studentId)
@@ -208,7 +208,7 @@ class User extends Authenticatable
     }
 
     private function _haveSport($studentId){
-        $sports = DB::table('student_sports')
+        $sports = DB::table('student_sport')
             ->select('*')
             ->where('student_id', '=', $studentId)
             ->get();
