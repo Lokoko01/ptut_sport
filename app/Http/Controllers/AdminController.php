@@ -57,7 +57,7 @@ class AdminController extends Controller
             ->join('users', 'users.id', '=', 'students.user_id')
             ->orderBy('users.lastname', 'asc')
             ->paginate(10);
-        return view('professor.list_of_students')->with('students', $students);
+        return view('admin.list_of_students')->with('students', $students);
     }
 
     public function showStudentsBySearch(Request $request)
@@ -73,14 +73,14 @@ class AdminController extends Controller
                 ->orWhere('students.studentNumber', 'LIKE', '%' . $searchterm . '%')
                 ->paginate(10);
 
-            return view('professor.list_of_students')->with('students', $students);
+            return view('admin.list_of_students')->with('students', $students);
 
         } else {
             $students = DB::table('students')
                 ->join('users', 'users.id', '=', 'students.user_id')
                 ->orderBy('users.lastname', 'asc')
                 ->paginate(10);
-            return view('professor.list_of_students')->with('students', $students);
+            return view('admin.list_of_students')->with('students', $students);
         }
     }
 
