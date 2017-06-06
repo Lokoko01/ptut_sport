@@ -22,30 +22,22 @@
                         ];
                         ?>
                         {!! BootForm::openHorizontal($columnSizes)->action(route('timeSlotRegister')) !!}
-                        {!! BootForm::text('Code Postal', 'postCode') !!}
-                        {!! BootForm::text('Nom de la rue', 'streetName') !!}
-                        {!! BootForm::text('Numéro de la rue', 'streetNumber') !!}
-                        {!! BootForm::text('Ville', 'city') !!}
-                        {!! BootForm::text('Salle', 'name') !!}
-                        {!! BootForm::submit("Ajouter le lieu")->class('btn btn-success') !!}
+                        {!! BootForm::text('Jour de la semaine', 'dayOfWeek') !!}
+                        {!! BootForm::text('Heure de début', 'startTime') !!}
+                        {!! BootForm::text('Heure de fin', 'endTime') !!}
+                        {!! BootForm::submit("Ajouter le créneau")->class('btn btn-success') !!}
                         {!! BootForm::close() !!}
                         <table class="table">
                             <tbody>
                             <tr>
                                 <th>
-                                    Code Postal
+                                    Jour de la semaine
                                 </th>
                                 <th>
-                                    Nom de la rue
+                                    Heure de début
                                 </th>
                                 <th>
-                                    Numéro de la rue
-                                </th>
-                                <th>
-                                    Ville
-                                </th>
-                                <th>
-                                    Salle
+                                    Heure de fin
                                 </th>
                                 <th></th>
                                 <th></th>
@@ -53,19 +45,13 @@
                             @foreach($timeSlots as $timeSlot)
                                 <tr>
                                     <td>
-                                        {{$timeSlot->postCode}}
+                                        {{$timeSlot->dayOfWeek}}
                                     </td>
                                     <td>
-                                        {{$timeSlot->streetName}}
+                                        {{$timeSlot->startTime}}
                                     </td>
                                     <td>
-                                        {{$timeSlot->streetNumber}}
-                                    </td>
-                                    <td>
-                                        {{$timeSlot->city}}
-                                    </td>
-                                    <td>
-                                        {{$timeSlot->name}}
+                                        {{$timeSlot->endTime}}
                                     </td>
                                     <td>
                                         <button
@@ -87,21 +73,17 @@
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">
-                                                            {{$timeSlot->streetNumber . ' ' . $timeSlot->streetName . ', ' . $timeSlot->postCode . ' ' . $timeSlot->city}}
+                                                            {{$timeSlot->dayOfWeek . ' ' . $timeSlot->startTime . '-' . $timeSlot->endTime}}
                                                         </h4>
                                                     </div>
-                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('updateLocation')) !!}
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('updateTimeSlot')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::text('Code Postal', 'postCodeNew')->attribute('type', 'number')->value($timeSlot->postCode) !!}
-                                                        {!! BootForm::hidden('postCodeOld')->value($timeSlot->postCode) !!}
-                                                        {!! BootForm::text('Nom de la rue', 'streetNameNew')->value($timeSlot->streetName) !!}
-                                                        {!! BootForm::hidden('streetNameOld')->value($timeSlot->streetName) !!}
-                                                        {!! BootForm::text('Numéro de la rue', 'streetNumberNew')->attribute('type', 'number')->value($timeSlot->streetNumber) !!}
-                                                        {!! BootForm::hidden('streetNumberOld')->value($timeSlot->streetNumber) !!}
-                                                        {!! BootForm::text('Ville', 'cityNew')->value($timeSlot->city) !!}
-                                                        {!! BootForm::hidden('cityOld')->value($timeSlot->city) !!}
-                                                        {!! BootForm::text('Salle', 'nameNew')->value($timeSlot->name) !!}
-                                                        {!! BootForm::hidden('nameOld')->value($timeSlot->name) !!}
+                                                        {!! BootForm::text('Jour de la semaine', 'dayOfWeekNew')->value($timeSlot->dayOfWeek) !!}
+                                                        {!! BootForm::hidden('dayOfWeekOld')->value($timeSlot->dayOfWeek) !!}
+                                                        {!! BootForm::text('Heure de début', 'startTimeNew')->value($timeSlot->startTime) !!}
+                                                        {!! BootForm::hidden('startTimeOld')->value($timeSlot->startTime) !!}
+                                                        {!! BootForm::text('Heure de fin', 'endTimeNew')->value($timeSlot->endTime) !!}
+                                                        {!! BootForm::hidden('endTimeOld')->value($timeSlot->endTime) !!}
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
@@ -131,17 +113,15 @@
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">
-                                                            {{$timeSlot->streetNumber . ' ' . $timeSlot->streetName . ', ' . $timeSlot->postCode . ' ' . $timeSlot->city}}
+                                                            {{$timeSlot->dayOfWeek . ' ' . $timeSlot->startTime . '-' . $timeSlot->endTime}}
                                                         </h4>
                                                     </div>
-                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('deleteLocation')) !!}
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('deleteTimeSlot')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::hidden('postCode')->value($timeSlot->postCode) !!}
-                                                        {!! BootForm::hidden('streetName')->value($timeSlot->streetName) !!}
-                                                        {!! BootForm::hidden('streetNumber')->value($timeSlot->streetNumber) !!}
-                                                        {!! BootForm::hidden('city')->value($timeSlot->city) !!}
-                                                        {!! BootForm::hidden('name')->value($timeSlot->name) !!}
-                                                        <p>Voulez-vous vraiment supprimer ce lieu ?</p>
+                                                        {!! BootForm::hidden('dayOfWeek')->value($timeSlot->dayOfWeek) !!}
+                                                        {!! BootForm::hidden('startTime')->value($timeSlot->startTime) !!}
+                                                        {!! BootForm::hidden('endTime')->value($timeSlot->endTime) !!}
+                                                        <p>Voulez-vous vraiment supprimer ce créneau ?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Supprimer")->class('btn btn-danger') !!}
