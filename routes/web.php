@@ -30,7 +30,8 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
 
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
-    Route::get('/assignMark', 'ProfessorController@assignMark')->name("assignMark");
+    Route::get('/assignMark', 'ProfessorController@mark')->name("assignMark");
+    Route::post('/getStudentsBySessions', 'ProfessorController@getStudentsBySessions')->name("getStudentsBySessions");
     Route::get('/main', function(){
         return view('professor.main');
     });
@@ -58,7 +59,7 @@ Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
 Route::post('/professor/makeCall', 'AbsencesController@addAbsences')->name('makeCall');
 
-Route::post('/professor/addMarks', 'MarksController@addMarks')->name('addMarks');
+Route::post('/professor/addMarks', 'ProfessorController@addMarks')->name('addMarks');
 
 Route::post('/newSession', 'AddSessionController@add')->name('add_session');
 

@@ -9,7 +9,7 @@ class Mark extends Model
     protected $table = 'marks';
 
     protected $fillable =[
-        'student_id', 'session_id', 'mark', 'comment'
+        'student_sport_id', 'mark', 'comment'
     ];
 
     public function mark() {
