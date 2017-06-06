@@ -41,6 +41,20 @@
     margin: 10px;
 }
 
+/*admin home page*/
+.button-admin {
+    width: 50%;
+    text-align: center;
+}
+
+.informations-messages {
+    width: 50%;
+}
+
+.button-admin a {
+    margin: 10px;
+}
+
 /*student home page*/
 
 .student-marks {
@@ -73,6 +87,10 @@
     }
 
     .button-professor {
+        width: auto;
+    }
+
+    .button-admin {
         width: auto;
     }
 

@@ -31,5 +31,8 @@ class HomeController extends Controller
         if(Auth::user()->isProfessor()){
             return view("professor.main");
         }
+        if(Auth::user()->isAdmin()){
+            return view("admin.main");
+        }
     }
 }
