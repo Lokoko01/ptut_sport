@@ -82,7 +82,7 @@ class User extends Authenticatable
         $studentId = Auth::user()->student->id;
 
         if ($studentId) {
-            if ($this->_haveWishes($studentId)) {
+            if (!$this->_haveSport($studentId)) {
                 $wishes = DB::table('student_wishes')
                     ->join('sessions', 'student_wishes.session_id', '=', 'sessions.id')
                     ->join('sports', 'sessions.sport_id', "=", "sports.id")
@@ -203,6 +203,17 @@ class User extends Authenticatable
             ->get();
 
         if (empty($wishes->all())) {
+            return false;
+        } else return true;
+    }
+
+    private function _haveSport($studentId){
+        $sports = DB::table('student_sports')
+            ->select('*')
+            ->where('student_id', '=', $studentId)
+            ->get();
+
+        if (empty($sports->all())) {
             return false;
         } else return true;
     }
