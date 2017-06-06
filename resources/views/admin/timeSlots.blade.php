@@ -9,19 +9,19 @@
                             {{ session()->get('message') }}
                         </div>
                     @endif
-                    @if(session()->has('locationAlreadyExist'))
+                    @if(session()->has('timeSlotAlreadyExist'))
                         <div class="alert alert-warning">
-                            {{ session()->get('locationAlreadyExist') }}
+                            {{ session()->get('timeSlotAlreadyExist') }}
                         </div>
                     @endif
-                    <div class="panel-heading">Liste des lieux - {{ Auth::user()->afficheRole() }}</div>
+                    <div class="panel-heading">Liste des créneaux - {{ Auth::user()->afficheRole() }}</div>
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
                             'md' => [4, 6]
                         ];
                         ?>
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('locationRegister')) !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('timeSlotRegister')) !!}
                         {!! BootForm::text('Code Postal', 'postCode') !!}
                         {!! BootForm::text('Nom de la rue', 'streetName') !!}
                         {!! BootForm::text('Numéro de la rue', 'streetNumber') !!}
@@ -50,32 +50,32 @@
                                 <th></th>
                                 <th></th>
                             </tr>
-                            @foreach($locations as $location)
+                            @foreach($timeSlots as $timeSlot)
                                 <tr>
                                     <td>
-                                        {{$location->postCode}}
+                                        {{$timeSlot->postCode}}
                                     </td>
                                     <td>
-                                        {{$location->streetName}}
+                                        {{$timeSlot->streetName}}
                                     </td>
                                     <td>
-                                        {{$location->streetNumber}}
+                                        {{$timeSlot->streetNumber}}
                                     </td>
                                     <td>
-                                        {{$location->city}}
+                                        {{$timeSlot->city}}
                                     </td>
                                     <td>
-                                        {{$location->name}}
+                                        {{$timeSlot->name}}
                                     </td>
                                     <td>
                                         <button
                                                 type="button"
                                                 class="btn btn-primary"
                                                 data-toggle="modal"
-                                                data-target="#{{$location->id}}Modal">
+                                                data-target="#{{$timeSlot->id}}Modal">
                                             <i class="fa fa-edit"></i>
                                         </button>
-                                        <div class="modal fade" id="{{$location->id}}Modal"
+                                        <div class="modal fade" id="{{$timeSlot->id}}Modal"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -87,21 +87,21 @@
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">
-                                                            {{$location->streetNumber . ' ' . $location->streetName . ', ' . $location->postCode . ' ' . $location->city}}
+                                                            {{$timeSlot->streetNumber . ' ' . $timeSlot->streetName . ', ' . $timeSlot->postCode . ' ' . $timeSlot->city}}
                                                         </h4>
                                                     </div>
                                                     {!! BootForm::openHorizontal($columnSizes)->action(route('updateLocation')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::text('Code Postal', 'postCodeNew')->attribute('type', 'number')->value($location->postCode) !!}
-                                                        {!! BootForm::hidden('postCodeOld')->value($location->postCode) !!}
-                                                        {!! BootForm::text('Nom de la rue', 'streetNameNew')->value($location->streetName) !!}
-                                                        {!! BootForm::hidden('streetNameOld')->value($location->streetName) !!}
-                                                        {!! BootForm::text('Numéro de la rue', 'streetNumberNew')->attribute('type', 'number')->value($location->streetNumber) !!}
-                                                        {!! BootForm::hidden('streetNumberOld')->value($location->streetNumber) !!}
-                                                        {!! BootForm::text('Ville', 'cityNew')->value($location->city) !!}
-                                                        {!! BootForm::hidden('cityOld')->value($location->city) !!}
-                                                        {!! BootForm::text('Salle', 'nameNew')->value($location->name) !!}
-                                                        {!! BootForm::hidden('nameOld')->value($location->name) !!}
+                                                        {!! BootForm::text('Code Postal', 'postCodeNew')->attribute('type', 'number')->value($timeSlot->postCode) !!}
+                                                        {!! BootForm::hidden('postCodeOld')->value($timeSlot->postCode) !!}
+                                                        {!! BootForm::text('Nom de la rue', 'streetNameNew')->value($timeSlot->streetName) !!}
+                                                        {!! BootForm::hidden('streetNameOld')->value($timeSlot->streetName) !!}
+                                                        {!! BootForm::text('Numéro de la rue', 'streetNumberNew')->attribute('type', 'number')->value($timeSlot->streetNumber) !!}
+                                                        {!! BootForm::hidden('streetNumberOld')->value($timeSlot->streetNumber) !!}
+                                                        {!! BootForm::text('Ville', 'cityNew')->value($timeSlot->city) !!}
+                                                        {!! BootForm::hidden('cityOld')->value($timeSlot->city) !!}
+                                                        {!! BootForm::text('Salle', 'nameNew')->value($timeSlot->name) !!}
+                                                        {!! BootForm::hidden('nameOld')->value($timeSlot->name) !!}
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
@@ -116,10 +116,10 @@
                                                 type="button"
                                                 class="btn btn-danger"
                                                 data-toggle="modal"
-                                                data-target="#{{$location->id}}ModalDelete">
+                                                data-target="#{{$timeSlot->id}}ModalDelete">
                                             <i class="fa fa-trash"></i>
                                         </button>
-                                        <div class="modal fade" id="{{$location->id}}ModalDelete"
+                                        <div class="modal fade" id="{{$timeSlot->id}}ModalDelete"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -131,16 +131,16 @@
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">
-                                                            {{$location->streetNumber . ' ' . $location->streetName . ', ' . $location->postCode . ' ' . $location->city}}
+                                                            {{$timeSlot->streetNumber . ' ' . $timeSlot->streetName . ', ' . $timeSlot->postCode . ' ' . $timeSlot->city}}
                                                         </h4>
                                                     </div>
                                                     {!! BootForm::openHorizontal($columnSizes)->action(route('deleteLocation')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::hidden('postCode')->value($location->postCode) !!}
-                                                        {!! BootForm::hidden('streetName')->value($location->streetName) !!}
-                                                        {!! BootForm::hidden('streetNumber')->value($location->streetNumber) !!}
-                                                        {!! BootForm::hidden('city')->value($location->city) !!}
-                                                        {!! BootForm::hidden('name')->value($location->name) !!}
+                                                        {!! BootForm::hidden('postCode')->value($timeSlot->postCode) !!}
+                                                        {!! BootForm::hidden('streetName')->value($timeSlot->streetName) !!}
+                                                        {!! BootForm::hidden('streetNumber')->value($timeSlot->streetNumber) !!}
+                                                        {!! BootForm::hidden('city')->value($timeSlot->city) !!}
+                                                        {!! BootForm::hidden('name')->value($timeSlot->name) !!}
                                                         <p>Voulez-vous vraiment supprimer ce lieu ?</p>
                                                     </div>
                                                     <div class="modal-footer">
@@ -156,7 +156,7 @@
                             </tbody>
                         </table>
                         <div class="text-center">
-                            {!! $locations->render() !!}
+                            {!! $timeSlots->render() !!}
                         </div>
                     </div>
                 </div>

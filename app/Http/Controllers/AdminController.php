@@ -298,4 +298,12 @@ class AdminController extends Controller
 
         return view('admin.location')->with('locations', $locations);
     }
+
+    public function timeSlots()
+    {
+        $timeSlots = DB::table('timeSlots')
+            ->paginate(10);
+
+        return view('admin.timeSlots')->with('timeSlots', $timeSlots);
+    }
 }
