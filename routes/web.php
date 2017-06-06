@@ -29,6 +29,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/addAdmin', 'AdminController@addAdmin');
     Route::get('/professor','AdminController@registerprofessor');
     Route::get('/sports','AdminController@sport')->name('sport');
+    Route::get('/locations','AdminController@locations')->name('location');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
     });
 
@@ -53,10 +54,12 @@ Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
 
 Route::post('/sportRegister', 'SportController@addSport')->name('sportRegister');
-
 Route::post('/updateSport', 'SportController@updateSport')->name('updateSport');
-
 Route::post('/deleteSport', 'SportController@deleteSport')->name('deleteSport');
+
+Route::post('/locationRegister', 'LocationController@addLocation')->name('locationRegister');
+Route::post('/updateLocation', 'LocationController@updateLocation')->name('updateLocation');
+Route::post('/deleteLocation', 'LocationController@deleteLocation')->name('deleteLocation');
 
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
 

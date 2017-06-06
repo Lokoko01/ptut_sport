@@ -9,52 +9,73 @@
                             {{ session()->get('message') }}
                         </div>
                     @endif
-                    @if(session()->has('ufrAlreadyExist'))
+                    @if(session()->has('locationAlreadyExist'))
                         <div class="alert alert-warning">
-                            {{ session()->get('ufrAlreadyExist') }}
+                            {{ session()->get('locationAlreadyExist') }}
                         </div>
                     @endif
-                    <div class="panel-heading">Liste des UFR - {{ Auth::user()->afficheRole() }}</div>
+                    <div class="panel-heading">Liste des lieux - {{ Auth::user()->afficheRole() }}</div>
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
                             'md' => [4, 6]
                         ];
                         ?>
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('ufrRegister')) !!}
-                        {!! BootForm::text('Code', 'code') !!}
-                        {!! BootForm::text('Label', 'label') !!}
-                        {!! BootForm::submit("Ajouter l'UFR")->class('btn btn-success') !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('locationRegister')) !!}
+                        {!! BootForm::text('Code Postal', 'postCode') !!}
+                        {!! BootForm::text('Nom de la rue', 'streetName') !!}
+                        {!! BootForm::text('Numéro de la rue', 'streetNumber') !!}
+                        {!! BootForm::text('Ville', 'city') !!}
+                        {!! BootForm::text('Salle', 'name') !!}
+                        {!! BootForm::submit("Ajouter le lieu")->class('btn btn-success') !!}
                         {!! BootForm::close() !!}
                         <table class="table">
                             <tbody>
                             <tr>
                                 <th>
-                                    Code
+                                    Code Postal
                                 </th>
                                 <th>
-                                    Label
+                                    Nom de la rue
+                                </th>
+                                <th>
+                                    Numéro de la rue
+                                </th>
+                                <th>
+                                    Ville
+                                </th>
+                                <th>
+                                    Salle
                                 </th>
                                 <th></th>
                                 <th></th>
                             </tr>
-                            @foreach($ufrs as $ufr)
+                            @foreach($locations as $location)
                                 <tr>
                                     <td>
-                                        {{$ufr->code}}
+                                        {{$location->postCode}}
                                     </td>
                                     <td>
-                                        {{$ufr->label}}
+                                        {{$location->streetName}}
+                                    </td>
+                                    <td>
+                                        {{$location->streetNumber}}
+                                    </td>
+                                    <td>
+                                        {{$location->city}}
+                                    </td>
+                                    <td>
+                                        {{$location->name}}
                                     </td>
                                     <td>
                                         <button
                                                 type="button"
                                                 class="btn btn-primary"
                                                 data-toggle="modal"
-                                                data-target="#{{$ufr->code}}Modal">
+                                                data-target="#{{$location->id}}Modal">
                                             <i class="fa fa-edit"></i>
                                         </button>
-                                        <div class="modal fade" id="{{$ufr->code}}Modal"
+                                        <div class="modal fade" id="{{$location->id}}Modal"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -65,13 +86,22 @@
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
-                                                            id="favoritesModalLabel">{{$ufr->label}}</h4>
+                                                            id="favoritesModalLabel">
+                                                            {{$location->streetNumber . ' ' . $location->streetName . ', ' . $location->postCode . ' ' . $location->city}}
+                                                        </h4>
                                                     </div>
-                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('updateUfr')) !!}
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('updateLocation')) !!}
                                                     <div class="modal-body">
-                                                        {!! BootForm::text('Label', 'labelNew')->value($ufr->label) !!}
-                                                        {!! BootForm::text('Code', 'codeNew')->value($ufr->code) !!}
-                                                        {!! BootForm::hidden('idUfr')->value($ufr->id) !!}
+                                                        {!! BootForm::text('Code Postal', 'postCodeNew')->attribute('type', 'number')->value($location->postCode) !!}
+                                                        {!! BootForm::hidden('postCodeOld')->value($location->postCode) !!}
+                                                        {!! BootForm::text('Nom de la rue', 'streetNameNew')->value($location->streetName) !!}
+                                                        {!! BootForm::hidden('streetNameOld')->value($location->streetName) !!}
+                                                        {!! BootForm::text('Numéro de la rue', 'streetNumberNew')->attribute('type', 'number')->value($location->streetNumber) !!}
+                                                        {!! BootForm::hidden('streetNumberOld')->value($location->streetNumber) !!}
+                                                        {!! BootForm::text('Ville', 'cityNew')->value($location->city) !!}
+                                                        {!! BootForm::hidden('cityOld')->value($location->city) !!}
+                                                        {!! BootForm::text('Salle', 'nameNew')->value($location->name) !!}
+                                                        {!! BootForm::hidden('nameOld')->value($location->name) !!}
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Modifier")->class('btn btn-primary') !!}
@@ -86,10 +116,10 @@
                                                 type="button"
                                                 class="btn btn-danger"
                                                 data-toggle="modal"
-                                                data-target="#{{$ufr->label}}ModalDelete">
+                                                data-target="#{{$location->id}}ModalDelete">
                                             <i class="fa fa-trash"></i>
                                         </button>
-                                        <div class="modal fade" id="{{$ufr->label}}ModalDelete"
+                                        <div class="modal fade" id="{{$location->id}}ModalDelete"
                                              tabindex="-1" role="dialog"
                                              aria-labelledby="favoritesModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -100,13 +130,18 @@
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title"
-                                                            id="favoritesModalLabel">{{$ufr->label}}</h4>
+                                                            id="favoritesModalLabel">
+                                                            {{$location->streetNumber . ' ' . $location->streetName . ', ' . $location->postCode . ' ' . $location->city}}
+                                                        </h4>
                                                     </div>
-                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('deleteUfr')) !!}
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('deleteLocation')) !!}
                                                     <div class="modal-body">
-                                                        <p>Voulez-vous vraiment supprimé cette UFR ?</p>
-                                                        {!! BootForm::hidden('ufrId')->value($ufr->id) !!}
-                                                        {!! BootForm::hidden('ufrName')->value($ufr->label) !!}
+                                                        {!! BootForm::hidden('postCode')->value($location->postCode) !!}
+                                                        {!! BootForm::hidden('streetName')->value($location->streetName) !!}
+                                                        {!! BootForm::hidden('streetNumber')->value($location->streetNumber) !!}
+                                                        {!! BootForm::hidden('city')->value($location->city) !!}
+                                                        {!! BootForm::hidden('name')->value($location->name) !!}
+                                                        <p>Voulez-vous vraiment supprimer ce lieu ?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         {!! BootForm::submit("Supprimer")->class('btn btn-danger') !!}
@@ -121,7 +156,7 @@
                             </tbody>
                         </table>
                         <div class="text-center">
-                            {!! $ufrs->render() !!}
+                            {!! $locations->render() !!}
                         </div>
                     </div>
                 </div>

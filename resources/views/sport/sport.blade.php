@@ -52,7 +52,7 @@
                                                 class="btn btn-primary"
                                                 data-toggle="modal"
                                                 data-target="#{{$sport->id}}Modal">
-                                            Modifier
+                                            <i class="fa fa-edit"></i>
                                         </button>
                                         <div class="modal fade" id="{{$sport->id}}Modal"
                                              tabindex="-1" role="dialog"
@@ -86,7 +86,7 @@
                                                 class="btn btn-danger"
                                                 data-toggle="modal"
                                                 data-target="#{{$sport->label}}ModalDelete">
-                                            Supprimer
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                         <div class="modal fade" id="{{$sport->label}}ModalDelete"
                                              tabindex="-1" role="dialog"
