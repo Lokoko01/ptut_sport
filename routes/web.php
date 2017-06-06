@@ -31,9 +31,11 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function() {
 
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
+    Route::post('/getStudentsBySessions', 'ProfessorController@getStudentsBySessions')->name("getStudentsBySessions");
     Route::get('/main', function(){
         return view('professor.main');
     });
+    Route::post('/addAbsences', 'AbsencesController@addAbsences')->name('addAbsences');
 });
 
 Auth::routes();
@@ -56,7 +58,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
-Route::post('/professor/main', 'AbsencesController@addAbsences')->name('makeCall');
 
 Route::post('/newSession', 'AddSessionController@add')->name('add_session');
 
