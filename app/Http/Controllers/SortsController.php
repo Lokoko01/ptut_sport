@@ -21,6 +21,17 @@ class SortsController extends Controller
 
         if ($this->validatePassword($data['password'])) {
 
+
+            if ($data['semestre']) {
+                DB::table('backup')->delete();
+
+            }else{
+                $listOfStudentSportS1=DB::table('student_sport')->get();
+                foreach ($listOfStudentSportS1 as $studentSportS1){
+                    DB::table("backup")->insert(['student_id' => $studentSportS1->student_id,
+                        'session_id' => $studentSportS1->session_id,'semester' =>1]);
+                }
+            }
             //reset des tables
             DB::table('student_sport')->delete();
             DB::table('result_weights')->delete();
@@ -203,10 +214,14 @@ class SortsController extends Controller
 
                 }
             }
+            return redirect(route('home'))
+                ->with('message', "La répartition a été effectué ");
 
+        }else{
+            return redirect(route('home'))
+                ->with('message', "Erreur");
         }
-        return redirect(route('home'))
-            ->with('message', "La répartition a été effectué ");
+
     }
 
     public function validatePassword($passsword)
