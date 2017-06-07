@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/professor','AdminController@registerprofessor');
     Route::get('/sports','AdminController@sport')->name('sport');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
+    Route::get('/sortsWishes','AdminController@sortsWishes');
     });
 
 Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
@@ -49,6 +50,8 @@ Auth::routes();
 Route::post('/ufrRegister', 'UfrController@addUfr')->name('ufrRegister');
 Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
+
+Route::post('/sortsWishesConfirm', 'SortsController@validateSorts')->name('sortsWishesConfirm');
 
 Route::post('/sportRegister', 'SportController@addSport')->name('sportRegister');
 

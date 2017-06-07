@@ -82,7 +82,7 @@ class User extends Authenticatable
         $studentId = Auth::user()->student->id;
 
         if ($studentId) {
-            if ($this->_haveWishes($studentId)) {
+            if (!$this->_haveSport($studentId)) {
                 $wishes = DB::table('student_wishes')
                     ->join('sessions', 'student_wishes.session_id', '=', 'sessions.id')
                     ->join('sports', 'sessions.sport_id', "=", "sports.id")
@@ -131,11 +131,12 @@ class User extends Authenticatable
     {
         $studentId = Auth::user()->student->id;
         if ($studentId) {
-            $marks = DB::table('marks')
-                ->join('sessions', 'marks.session_id', '=', 'sessions.id')
+            $marks = DB::table('student_sport')
+                ->join('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                ->join('sessions', 'sessions.id', '=', 'student_sport.session_id')
                 ->join('sports', 'sports.id', '=', 'sessions.sport_id')
                 ->select('marks.mark', 'sports.label')
-                ->where('marks.student_id', '=', $studentId)
+                ->where('student_sport.student_id', '=', $studentId)
                 ->get();
 
             $marks = $marks->all();
@@ -188,9 +189,9 @@ class User extends Authenticatable
     {
         $studentId = Auth::user()->student->id;
 
-        if ($this->_haveWishes($studentId)) {
-            return "Mes voeux";
-        } else return "Mes sports";
+        if ($this->_haveSport($studentId)) {
+            return "Mes sports";
+        } else return "Mes voeux";
     }
 
     private function _haveWishes($studentId)
@@ -201,6 +202,16 @@ class User extends Authenticatable
             ->get();
 
         if (empty($wishes->all())) {
+            return false;
+        } else return true;
+    }
+
+    private function _haveSport($studentId){
+        $sports = DB::table('student_sport')
+            ->select('*')
+            ->where('student_id', '=', $studentId)
+            ->get();
+        if (empty($sports->all())) {
             return false;
         } else return true;
     }

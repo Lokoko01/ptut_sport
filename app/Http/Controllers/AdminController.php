@@ -291,4 +291,8 @@ class AdminController extends Controller
     {
         return view('auth.register_admin');
     }
+
+    public function sortsWishes(){
+       return view('admin.sort_wishes');
+    }
 }
