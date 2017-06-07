@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('ufr_id')->unsigned();
             $table->foreign('ufr_id')->references('id')->on('ufr');
+            $table->integer('studyLevel');
             $table->string('studentNumber');
             $table->string('privateEmail');
             $table->timestamps();

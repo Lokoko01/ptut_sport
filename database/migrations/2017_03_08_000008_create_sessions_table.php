@@ -23,6 +23,7 @@ class CreateSessionsTable extends Migration
             $table->foreign('professor_id')->references('id')->on('professors');
             $table->integer('location_id')->unsigned();
             $table->foreign('location_id')->references('id')->on('locations');
+            $table->integer('max_seat');
             $table->timestamps();
         });
     }

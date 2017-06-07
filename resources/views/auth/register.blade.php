@@ -20,6 +20,9 @@
                         {!! BootForm::text('Nom', 'lastname') !!}
                         {!! BootForm::text('Prénom', 'firstname') !!}
 
+                        {!! BootForm::select('Niveau d\'étude', 'studyLevel')
+                            ->options(['1' => '1ère année', '2' => '2ème année', '3' => '3ème année', '4' => '4ème année', '5' => '5ème année']) !!}
+
                         {!! BootForm::inlineRadio('Homme', 'sex', 'male') !!}
                         {!! BootForm::inlineRadio('Femme', 'sex', 'female') !!}
 

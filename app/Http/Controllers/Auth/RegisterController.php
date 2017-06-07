@@ -91,6 +91,7 @@ class RegisterController extends Controller
             'studentNumber' => 'required|unique:students|max:8',
             'sex' => 'required',
             'ufr' => 'required',
+            'studyLevel' => 'required',
             'privateEmail' => 'required|email|max:255|unique:students',
             'password' => 'required|min:8|confirmed',
             'token' => 'required',
@@ -108,7 +109,7 @@ class RegisterController extends Controller
         $emailEtu = DB::table('user_preregister')->where('token', $data['token'])->value('email');
 
         $user = User::create([
-            'lastname' => strtoupper($data['lastname']),
+            'lastname' => mb_strtoupper($data['lastname'],'UTF-8'),
             'firstname' => $data['firstname'],
             'sex' => $data['sex'],
             'email' => $emailEtu,
@@ -116,6 +117,7 @@ class RegisterController extends Controller
         ]);
 
         $user->student()->create([
+            'studyLevel' => $data['studyLevel'],
             'studentNumber' => $data['studentNumber'],
             'privateEmail' => $data['privateEmail'],
             'ufr_id' => $data['ufr']

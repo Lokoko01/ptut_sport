@@ -29,7 +29,6 @@ class AdminController extends Controller
         return view('auth.registerprofessor');
     }
 
-
     public function sport()
     {
         $sports = DB::table('sports')
@@ -41,7 +40,6 @@ class AdminController extends Controller
 
         return view('sport.sport')->with('sports', $sports);
     }
-
 
     public function ufr()
     {

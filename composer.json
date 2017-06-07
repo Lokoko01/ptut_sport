@@ -14,7 +14,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "swiftmailer/swiftmailer": "^5.4",
-        "zizaco/entrust": "^1.7"
+        "zizaco/entrust": "^1.7",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
