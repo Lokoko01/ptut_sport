@@ -80,12 +80,15 @@ class SortsController extends Controller
                 }
             }
             foreach ($listOfSession as $session) {
+
                 $listOfStudent = DB::table('result_weights')
                     ->join('student_wishes', 'student_wishes.id', '=', 'result_weights.student_wishes_id')
                     ->where([['session_id', $session->id], ['rank', 1]])
-                    ->orderBy('weight', 'desc')
+                    ->orderBy('weight','DESC')
+                    ->orderBy(DB::raw('RAND()'))
                     ->limit($session->max_seat)
                     ->get();
+                    echo "voeux 1";
 
                 foreach ($listOfStudent as $student) {
                     DB::table("student_sport")->insert(['student_id' => $student->student_id,
@@ -130,10 +133,12 @@ class SortsController extends Controller
                 }
             }
             foreach ($listOfSession as $session) {
+
                 $listOfStudent = DB::table('result_weights')
                     ->join('student_wishes', 'student_wishes.id', '=', 'result_weights.student_wishes_id')
                     ->where([['session_id', $session->id], ['rank', 2]])
-                    ->orderBy('weight', 'desc')
+                    ->orderBy('weight','DESC')
+                    ->orderBy(DB::raw('RAND()'))
                     ->limit($this->numberRemainingSeats($session->id))
                     ->get();
 
@@ -182,12 +187,17 @@ class SortsController extends Controller
                 }
             }
             foreach ($listOfSession as $session) {
+
+
                 $listOfStudent = DB::table('result_weights')
                     ->join('student_wishes', 'student_wishes.id', '=', 'result_weights.student_wishes_id')
                     ->where([['session_id', $session->id], ['rank', 3]])
-                    ->orderBy('weight', 'desc')
+                    ->orderBy('weight','DESC')
+                    ->orderBy(DB::raw('RAND()'))
                     ->limit($this->numberRemainingSeats($session->id))
                     ->get();
+
+
                 foreach ($listOfStudent as $student) {
                     DB::table("student_sport")->insert(['student_id' => $student->student_id,
                         'session_id' => $session->id]);
@@ -235,4 +245,5 @@ class SortsController extends Controller
         $numberRemainingSeats = $numberSeatsmax[0]->max_seat - $numberSeatsTake;
         return $numberRemainingSeats;
     }
+
 }
