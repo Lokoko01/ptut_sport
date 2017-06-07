@@ -59,7 +59,7 @@ Route::post('/sendmail', 'ContactController@store')->name('sendmail');
 
 Route::post('/professor/makeCall', 'AbsencesController@addAbsences')->name('makeCall');
 
-Route::post('/professor/addMarks', 'ProfessorController@addMarks')->name('addMarks');
+Route::post('/professor/addMarks', 'MarkController@addMarks')->name('addMarks');
 
 Route::post('/newSession', 'AddSessionController@add')->name('add_session');
 
