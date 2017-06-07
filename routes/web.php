@@ -29,6 +29,8 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/addAdmin', 'AdminController@addAdmin');
     Route::get('/professor','AdminController@registerprofessor');
     Route::get('/sports','AdminController@sport')->name('sport');
+    Route::get('/locations','AdminController@locations')->name('location');
+    Route::get('/timeSlots','AdminController@timeSlots')->name('timeSlot');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
     });
 
@@ -54,10 +56,16 @@ Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
 
 Route::post('/sportRegister', 'SportController@addSport')->name('sportRegister');
-
 Route::post('/updateSport', 'SportController@updateSport')->name('updateSport');
-
 Route::post('/deleteSport', 'SportController@deleteSport')->name('deleteSport');
+
+Route::post('/locationRegister', 'LocationController@addLocation')->name('locationRegister');
+Route::post('/updateLocation', 'LocationController@updateLocation')->name('updateLocation');
+Route::post('/deleteLocation', 'LocationController@deleteLocation')->name('deleteLocation');
+
+Route::post('/timeSlotRegister', 'TimeSlotController@addTimeSlot')->name('timeSlotRegister');
+Route::post('/updateTimeSlot', 'TimeSlotController@updateTimeSlot')->name('updateTimeSlot');
+Route::post('/deleteTimeSlot', 'TimeSlotController@deleteTimeSlot')->name('deleteTimeSlot');
 
 Route::post('/professorRegister', 'Auth\RegisterProfessorController@register')->name('register_professor');
 
