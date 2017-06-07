@@ -24,6 +24,8 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/listStudents', 'AdminController@showListOfStudents')->name('students');
     Route::get('/listStudents/search', 'AdminController@showStudentsBySearch')->name('students_by_search');
     Route::get('/downloadExcel/{type}', 'AdminController@downloadExcel');
+    Route::get('/downloadExcel', 'AdminController@exportStudentsBySportExcel')->name('students_by_sport_excel');
+    Route::get('/downloadPdf', 'AdminController@exportStudentsBySportPdf')->name('students_by_sport_pdf');
     Route::get('/assignnote','AdminController@assignnote');
     Route::get('/addSession', 'AdminController@addsession')->name('add_session');
     Route::get('/addAdmin', 'AdminController@addAdmin')->name('add_admin');

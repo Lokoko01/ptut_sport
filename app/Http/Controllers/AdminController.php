@@ -356,30 +356,93 @@ class AdminController extends Controller
             $dataLyon3Lvl1, $dataLyon3Lvl2, $dataLyon3Lvl3, $dataLyon3Lvl4, $dataLyon3Lvl5
         ) {
             $excel->sheet('liste_etudiants', function ($sheet) use ($dataAll) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataAll);
             });
             $excel->sheet('liste_etudiants_lyon_1', function ($sheet) use ($dataLyon1) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon1);
             });
             $excel->sheet('liste_etudiants_lyon_2', function ($sheet) use ($dataLyon2) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon2);
             });
             $excel->sheet('liste_etudiants_lyon_3', function ($sheet) use ($dataLyon3) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon3);
             });
             $excel->sheet('liste_etudiants_lyon_3_lvl_1', function ($sheet) use ($dataLyon3Lvl1) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon3Lvl1);
             });
             $excel->sheet('liste_etudiants_lyon_3_lvl_2', function ($sheet) use ($dataLyon3Lvl2) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon3Lvl2);
             });
             $excel->sheet('liste_etudiants_lyon_3_lvl_3', function ($sheet) use ($dataLyon3Lvl3) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon3Lvl3);
             });
             $excel->sheet('liste_etudiants_lyon_3_lvl_4', function ($sheet) use ($dataLyon3Lvl4) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon3Lvl4);
             });
             $excel->sheet('liste_etudiants_lyon_3_lvl_5', function ($sheet) use ($dataLyon3Lvl5) {
+                $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Email_privé',
+                    'Date_inscription', 'Sport', 'Note', 'Commentaire']);
+                $sheet->row(1, function ($row) {
+                    $row->setBackground('#CCCCCC');;
+                });
                 $sheet->fromArray($dataLyon3Lvl5);
             });
         })->download('xls');
@@ -442,5 +505,102 @@ class AdminController extends Controller
             ->paginate(10);
             
         return view('admin.timeSlots')->with('timeSlots', $timeSlots);
+    }
+
+    public function exportStudentsBySportExcel()
+    {
+        return Excel::create('listes_etudiants_par_sport', function ($excel) {
+            $sports = DB::table('sports')->get();
+
+            foreach ($sports as $sport) {
+                /* Tous les étudiants par sport */
+                $allStudents = DB::table('students')
+                    ->leftJoin('users', 'users.id', '=', 'students.user_id')
+                    ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+                    ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                    ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                    ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+                    ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études,
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
+                    ->where('sports.label', $sport->label)
+                    ->orderBy('users.lastname', 'asc')
+                    ->get();
+
+                $datas = array();
+                foreach ($allStudents as $student) {
+                    $datas[] = (array)$student;
+                }
+
+                $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+
+                    $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                    $sheet->row(1, function ($row) {
+                        $row->setBackground('#CCCCCC');;
+                    });
+                    $sheet->fromArray($datas);
+                });
+            }
+        })->download('xls');
+    }
+
+    public function exportStudentsBySportPdf()
+    {
+        return Excel::create('listes_etudiants_par_sport', function ($excel) {
+            $sports = DB::table('sports')->get();
+
+            foreach ($sports as $sport) {
+                /* Tous les étudiants par sport */
+                $allStudents = DB::table('students')
+                    ->leftJoin('users', 'users.id', '=', 'students.user_id')
+                    ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+                    ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                    ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                    ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+                    ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom,
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études,
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
+                    ->where('sports.label', $sport->label)
+                    ->orderBy('users.lastname', 'asc')
+                    ->get();
+
+                $datas = array();
+                foreach ($allStudents as $student) {
+                    $datas[] = (array)$student;
+                }
+
+                $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+                    $sheet->setOrientation('landscape');
+                    $sheet->setAllBorders('thin');
+                    $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                    'Prénom', 'Email_inscription',
+                    'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                    $sheet->row(1, function ($row) {
+                        $row->setBackground('#CCCCCC');;
+                    });
+                    $sheet->fromArray($datas, null, 'A1', true, true);
+                });
+            }
+        })->download('pdf');
     }
 }
