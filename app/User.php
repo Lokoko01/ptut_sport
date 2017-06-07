@@ -139,6 +139,7 @@ class User extends Authenticatable
                 ->where('student_sport.student_id', '=', $studentId)
                 ->get();
 
+
             $marks = $marks->all();
             $marksHtml = "";
 
@@ -211,6 +212,7 @@ class User extends Authenticatable
             ->select('*')
             ->where('student_id', '=', $studentId)
             ->get();
+
         if (empty($sports->all())) {
             return false;
         } else return true;

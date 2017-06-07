@@ -15,10 +15,8 @@ class CreateStudentWishesTable extends Migration
     {
         Schema::create('student_wishes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students');
-            $table->integer('session_id')->unsigned();
-            $table->foreign('session_id')->references('id')->on('sessions');
+            $table->integer('student_id');
+            $table->integer('session_id');
             $table->integer('rank');
             $table->boolean('isEvaluated');
             $table->timestamps();

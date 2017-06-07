@@ -18,8 +18,6 @@ class CreateLevelsTable extends Migration
             $table->string('code');
             $table->string('label');
             $table->float('maxMark');
-            $table->integer('studentSport_id')->unsigned();
-            $table->foreign('studentSport_id')->references('id')->on('student_sport');
             $table->timestamps();
         });
     }

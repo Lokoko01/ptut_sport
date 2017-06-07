@@ -5,13 +5,16 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Renseigner les absents</div>
+                    {{--                    <div class="panel-heading">Ajout des notes pour le sport : {!! $students[0]->sport_label !!}</div>--}}
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
-                            'md' => [0, 8]
+                            'sm' => [5, 4],
+                            'md' => [5, 4],
+                            'lg' => [5, 4]
                         ];
                         ?>
+
                         {!! BootForm::openHorizontal($columnSizes)->action(route('getStudentsBySessions')) !!}
                         <label for="select_sessions">Choisir la séance</label>
                         <br>
@@ -31,34 +34,25 @@
                                 @endif
                             @endforeach
                         </select>
+                        {!! BootForm::hidden('view')->value('assignMark') !!}
+
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
                         {!! BootForm::close() !!}
+
+
                         @isset($students)
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('addAbsences')) !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('addMarks')) !!}
+                        @foreach($students as $student)
+                            <div style="float: left">
+                                {!! BootForm::hidden('students[' . $loop->index . '][student_id]')->value($student->student_id) !!}
+                                {!! BootForm::text($student->full_name, 'students[' . $loop->index . '][mark]')->attribute('type', 'number')->max(20)->required(true) !!}
+                            </div>
+                            <div style="margin-bottom: 20px">
+                                {!! Form::textarea('students[' . $loop->index . '][comment]', null, ['class' => 'form-control', 'size' => '20x3', 'placeholder' => 'Commentaire']) !!}
+                            </div>
+                        @endforeach
                         {!! BootForm::hidden('sessionId')->value($sessionId) !!}
-                        {!! BootForm::radio("Aujourd'hui", "isToday")->attribute('id', 'today')->onChange('displayDate()')->defaultCheckedState(1)->value(1) !!}
-                        {!! BootForm::radio("Une autre date", "isToday")->attribute('id', 'otherDate')->onChange('displayDate()')->value(0) !!}
-                        {!! BootForm::text('', "dateSelector")->attribute('type', 'date')->id('dateSelector')->attribute('style', 'display: none')!!}
-                        <table class="table">
-                            <caption>Cocher les étudiants absents</caption>
-                            <th>
-                                Étudiant
-                            </th>
-                            <th>
-                                UFR
-                            </th>
-                            @foreach($students as $student)
-                                <tr>
-                                    <td>
-                                        {!! BootForm::checkbox($student->full_name, 'check[]')->defaultCheckedState(null)->value($student->student_id) !!}
-                                    </td>
-                                    <td>
-                                        {{$student->label_ufr}}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                        {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
+                        {!! BootForm::submit("Ajouter les notes")->class('btn btn-primary') !!}
                         {!! BootForm::close() !!}
                         @endisset
                     </div>
@@ -66,17 +60,4 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        function displayDate(){
-            var otherDate = document.getElementById('otherDate');
-            var dateSelector = document.getElementById('dateSelector');
-            console.log('test');
-
-            if(otherDate.checked == true){
-                dateSelector.style.display = 'initial';
-            } else {
-                dateSelector.style.display = 'none';
-            }
-        }
-    </script>
 @endsection

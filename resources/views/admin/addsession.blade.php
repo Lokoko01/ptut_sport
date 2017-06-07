@@ -27,6 +27,7 @@
                         {!! BootForm::select('Créneau', 'timeSlot')->options($timeSlots) !!}
                         {!! BootForm::select('Professeur', 'professor')->options($professors) !!}
                         {!! BootForm::select('Lieu', 'location')->options($locations) !!}
+                        {!! BootForm::text('Nombre de places max', 'max_seat')->attribute('type', 'number')->max('50') !!}
                         {!! BootForm::submit("Ajouter")->class('btn btn-primary') !!}
                         {!! BootForm::close() !!}
                     </div>
