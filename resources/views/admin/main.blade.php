@@ -12,7 +12,6 @@
                                 {{ session()->get('message') }}
                             </div>
                         @endif
-                        <div class="panel-heading">Accueil - Professeur</div>
                         <div class="panel-body panel-admin panel-home">
                             <div class="button-admin flex-div">
                                 <a href="{{route('add_professor')}}" class="btn btn-default">Ajouter un
