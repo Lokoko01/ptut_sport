@@ -15,7 +15,8 @@
                             <a href="{{route('timeSlot')}}" class="btn btn-default">Ajouter un créneau</a><br>
                             <a href="{{route('add_session')}}" class="btn btn-default">Ajouter une séance</a><br>
                             <a href="{{ route('students')}}" class="btn btn-default">Afficher la liste des étudiants</a><br>
-                            <a href="{{ route('home')}}" class="btn btn-default">Générer la liste des étudiants par sport</a><br>
+                            <a href="{{ route('students_by_sport_excel')}}" class="btn btn-default">Liste des étudiants par sport <i class="fa fa-file-excel-o"></i></a><br>
+                            <a href="{{ route('students_by_sport_pdf')}}" class="btn btn-default">Liste des étudiants par sport <i class="fa fa-file-pdf-o"></i></a><br>
 
                             {{--<a href="{{ route('home') }}" class="btn btn-default">Editer une note</a><br>
                             <a href="{{ route('home') }}" class="btn btn-default">Désinscrire un étudiant</a><br>
