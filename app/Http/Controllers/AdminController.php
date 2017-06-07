@@ -86,49 +86,124 @@ class AdminController extends Controller
     {
         /* Tous les étudiants */
         $allStudents = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->orderBy('users.lastname', 'asc')
             ->get();
 
         /* Tous les étudiants de Lyon 1 */
         $studentsLyon1 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon1\.fr$')
             ->orderBy('users.lastname', 'asc')
             ->get();
 
         /* Tous les étudiants de Lyon 2 */
         $studentsLyon2 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon2\.fr$')
             ->orderBy('users.lastname', 'asc')
             ->get();
 
         /* Tous les étudiants de Lyon 3 */
         $studentsLyon3 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon3\.fr$')
             ->orderBy('users.lastname', 'asc')
             ->get();
 
         /* Tous les étudiants de Lyon 3 */
         $studentsLyon3Lvl1 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon3\.fr$')
             ->where('students.studyLevel', '1')
             ->orderBy('users.lastname', 'asc')
@@ -136,10 +211,25 @@ class AdminController extends Controller
 
         /* Tous les étudiants de Lyon 3 */
         $studentsLyon3Lvl2 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon3\.fr$')
             ->where('students.studyLevel', '2')
             ->orderBy('users.lastname', 'asc')
@@ -147,10 +237,25 @@ class AdminController extends Controller
 
         /* Tous les étudiants de Lyon 3 */
         $studentsLyon3Lvl3 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon3\.fr$')
             ->where('students.studyLevel', '3')
             ->orderBy('users.lastname', 'asc')
@@ -158,10 +263,25 @@ class AdminController extends Controller
 
         /* Tous les étudiants de Lyon 3 */
         $studentsLyon3Lvl4 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon3\.fr$')
             ->where('students.studyLevel', '4')
             ->orderBy('users.lastname', 'asc')
@@ -169,10 +289,25 @@ class AdminController extends Controller
 
         /* Tous les étudiants de Lyon 3 */
         $studentsLyon3Lvl5 = DB::table('students')
-            ->join('users', 'users.id', '=', 'students.user_id')
-            ->select(DB::raw("students.studentNumber as Numéroétudiant, users.lastname as Nom, users.firstname as Prénom, 
-                              users.email as Email_inscription, students.studyLevel as Niveau_études, students.privateEmail as Email_privé, 
-                              DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription"))
+            ->leftJoin('users', 'users.id', '=', 'students.user_id')
+            ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+            ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+            ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études, 
+                               students.privateEmail as Email_privé, 
+                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
             ->where('users.email', 'REGEXP', '^[a-z0-9](\.?[a-z0-9]){5,}@etu\.univ-lyon3\.fr$')
             ->where('students.studyLevel', '5')
             ->orderBy('users.lastname', 'asc')
