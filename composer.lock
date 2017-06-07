@@ -1756,6 +1756,7 @@
         },
         {
             "name": "symfony/console",
+
             "version": "v3.3.2",
             "source": {
                 "type": "git",
@@ -1821,11 +1822,13 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
+
             "time": "2017-06-02T19:24:58+00:00"
         },
         {
             "name": "symfony/css-selector",
             "version": "v3.3.2",
+
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
@@ -1930,6 +1933,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
+
             "time": "2017-06-01T21:01:25+00:00"
         },
         {
@@ -1944,6 +1948,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/4054a102470665451108f9b59305c79176ef98f0",
                 "reference": "4054a102470665451108f9b59305c79176ef98f0",
+
                 "shasum": ""
             },
             "require": {
@@ -2121,6 +2126,7 @@
             "conflict": {
                 "symfony/config": "<2.8",
                 "symfony/dependency-injection": "<3.3",
+
                 "symfony/var-dumper": "<3.3",
                 "twig/twig": "<1.34|<2.4,>=2"
             },
@@ -2181,6 +2187,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
+
             "time": "2017-06-06T03:59:58+00:00"
         },
         {
@@ -2544,6 +2551,7 @@
         },
         {
             "name": "symfony/var-dumper",
+
             "version": "v3.3.2",
             "source": {
                 "type": "git",
@@ -2929,12 +2937,12 @@
             "version": "0.9.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mockery/mockery.git",
+                "url": "https://github.com/padraic/mockery.git",
                 "reference": "6fdb61243844dc924071d3404bb23994ea0b6856"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/6fdb61243844dc924071d3404bb23994ea0b6856",
                 "reference": "6fdb61243844dc924071d3404bb23994ea0b6856",
                 "shasum": ""
             },

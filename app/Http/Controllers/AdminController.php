@@ -424,6 +424,10 @@ class AdminController extends Controller
         return view('auth.register_admin');
     }
 
+    public function sortsWishes(){
+       return view('admin.sort_wishes');
+     }
+     
     public function locations()
     {
         $locations = DB::table('locations')
@@ -436,7 +440,7 @@ class AdminController extends Controller
     {
         $timeSlots = DB::table('timeSlots')
             ->paginate(10);
-
+            
         return view('admin.timeSlots')->with('timeSlots', $timeSlots);
     }
 }
