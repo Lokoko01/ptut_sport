@@ -190,7 +190,6 @@ class SortsController extends Controller
             }
 
         }
-        exit;
         return redirect(route('home'))
             ->with('message', "La répartition a été effectué ");
     }
