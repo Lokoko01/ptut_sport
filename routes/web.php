@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/locations','AdminController@locations')->name('location');
     Route::get('/timeSlots','AdminController@timeSlots')->name('timeSlot');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
-    Route::get('/sortsWishes','AdminController@sortsWishes');
+    Route::get('/sortsWishes','AdminController@sortsWishes')->name('sortsWishes');
     });
 
 Route::group(['prefix' => 'student', 'roles' => 'student'], function() {

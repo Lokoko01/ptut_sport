@@ -88,7 +88,6 @@ class SortsController extends Controller
                     ->orderBy(DB::raw('RAND()'))
                     ->limit($session->max_seat)
                     ->get();
-                    echo "voeux 1";
 
                 foreach ($listOfStudent as $student) {
                     DB::table("student_sport")->insert(['student_id' => $student->student_id,
