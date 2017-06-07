@@ -29,11 +29,8 @@ class AdminController extends Controller
         return view('auth.registerprofessor');
     }
 
-  
     public function sport()
     {
-       // $sports = DB::table('sports')->orderBy('label', 'asc')->paginate(10);
-
         $sports = DB::table('sports')
             ->leftJoin('sessions', 'sports.id', '=', 'sessions.sport_id')
             ->leftJoin('professors', 'professors.id', '=', 'professor_id')
@@ -43,8 +40,7 @@ class AdminController extends Controller
 
         return view('sport.sport')->with('sports', $sports);
     }
-  
-   
+
     public function ufr()
     {
         $ufrs = DB::table('ufr')->get();
@@ -254,8 +250,8 @@ class AdminController extends Controller
             });
         })->download('xls');
     }
-  
-   public function addsession(){
+
+    public function addsession(){
         $sports = Sport::orderBy('label', 'asc')
             ->pluck('label', 'id');
 

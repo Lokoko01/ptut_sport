@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use App\Mark;
+use App\StudentSport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProfessorController extends Controller
 {
@@ -23,32 +25,6 @@ class ProfessorController extends Controller
         $sessions = $this->getSessions();
 
         return view('professor.check_absences')->with('sessions', $sessions);
-    }
-
-    public function getStudentsBySessions(Request $request)
-    {
-        $idSession = $request->input('select_sessions');
-        $sessions = $this->getSessions();
-
-        if ($idSession == 0 || !isset($idSession)) {
-            return view('professor.check_absences')->with('sessions', $sessions);
-        } else {
-            $students = DB::table('student_sport')
-                ->join('students', 'students.id', '=', 'student_sport.student_id')
-                ->join('users', 'users.id', '=', 'students.user_id')
-                ->join('ufr', 'ufr.id', '=', 'students.ufr_id')
-                ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name, students.id as student_id, ufr.label as label_ufr"))
-                ->where('student_sport.session_id', '=', $idSession)
-                ->get();
-
-
-            $students = $students->all();
-
-            return view('professor.check_absences')
-                ->with('students', $students)
-                ->with('sessions', $sessions)
-                ->with('sessionId', $idSession);
-        }
     }
 
     public function getSessions()
@@ -70,5 +46,38 @@ class ProfessorController extends Controller
                 return $sessions;
             } else return false;
         } else return false;
+    }
+
+    public function mark()
+    {
+        $sessions = $this->getSessions();
+
+        return view('professor.assignMark')->with('sessions', $sessions);
+    }
+
+    public function getStudentsBySessions(Request $request)
+    {
+        $idSession = $request->input('select_sessions');
+        $view = 'professor.' . $request->input('view');
+        $sessions = $this->getSessions();
+
+        if ($idSession == 0 || !isset($idSession)) {
+            return view($view)->with('sessions', $sessions);
+        } else {
+            $students = DB::table('student_sport')
+                ->join('students', 'students.id', '=', 'student_sport.student_id')
+                ->join('users', 'users.id', '=', 'students.user_id')
+                ->join('ufr', 'ufr.id', '=', 'students.ufr_id')
+                ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name, students.id as student_id, ufr.label as label_ufr"))
+                ->where('student_sport.session_id', '=', $idSession)
+                ->get();
+
+            $students = $students->all();
+
+            return view($view)
+                ->with('students', $students)
+                ->with('sessions', $sessions)
+                ->with('sessionId', $idSession);
+        }
     }
 }
