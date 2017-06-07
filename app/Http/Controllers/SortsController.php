@@ -20,6 +20,12 @@ class SortsController extends Controller
 
 
         if ($this->validatePassword($data['password'])) {
+
+            //reset des tables
+            DB::table('student_sport')->delete();
+            DB::table('result_weights')->delete();
+
+
             $weights = DB::table('weights')->get();
 
             $firstWishes = DB::table('student_wishes')
