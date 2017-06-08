@@ -31,6 +31,7 @@
                                 @endif
                             @endforeach
                         </select>
+                        {!! BootForm::hidden('view')->value('check_absences') !!}
                         {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
                         {!! BootForm::close() !!}
                         @isset($students)
@@ -67,12 +68,12 @@
         </div>
     </div>
     <script type="text/javascript">
-        function displayDate(){
+        function displayDate() {
             var otherDate = document.getElementById('otherDate');
             var dateSelector = document.getElementById('dateSelector');
             console.log('test');
 
-            if(otherDate.checked == true){
+            if (otherDate.checked == true) {
                 dateSelector.style.display = 'initial';
             } else {
                 dateSelector.style.display = 'none';
