@@ -2,7 +2,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     @if(session()->has('message'))
                         <div class="alert alert-success">
@@ -79,6 +79,7 @@
                                 <th>
                                     Editer
                                 </th>
+                                <th></th>
                             </tr>
                             @foreach($students as $student)
                                 <tr>
