@@ -5,6 +5,6 @@
 </head>
 <body>
     Bonjour {{$contact['studentEmail']}},
-    <p>Pour vous inscrire veuillez <a href="http://tygrysko.sytes.net/register/{{$contact['studentEmail']}}/{{$contact['token']}}">cliquer ici</a>.</p>
+    <p>Pour vous inscrire veuillez <a href="http://2017-gestionsport.iutinfobourg.fr/register/{{$contact['studentEmail']}}/{{$contact['token']}}">cliquer ici</a>.</p>
 </body>
 </html>
