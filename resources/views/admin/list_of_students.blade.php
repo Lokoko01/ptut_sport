@@ -8,8 +8,15 @@
                         <div class="alert alert-success">
                             {{ session()->get('message') }}
                         </div>
+                    @endif
+                    @if(session()->has('message_students_of_lyon_2_not_found'))
                         <div class="alert alert-danger">
                             {{ session()->get('message_students_of_lyon_2_not_found') }}
+                        </div>
+                    @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
                         </div>
                     @endif
                     @if(session()->has('ufrAlreadyExist'))
@@ -17,8 +24,20 @@
                             {{ session()->get('ufrAlreadyExist') }}
                         </div>
                     @endif
+                    @if(session()->has('warning'))
+                        <div class="alert alert-warning">
+                            {{ session()->get('warning') }}
+                        </div>
+                    @endif
                     <div class="panel-heading">Liste des étudiants - {{ Auth::user()->afficheRole() }}</div>
                     <div class="panel-body">
+                        <?php
+                        $columnSizes = [
+                            'sm' => [5, 4],
+                            'md' => [5, 4],
+                            'lg' => [5, 4]
+                        ];
+                        ?>
 
                         {{-- Search bar --}}
                         <form action="{{ route('students_by_search') }}" method="get"
@@ -56,6 +75,9 @@
                                 </th>
                                 <th>
                                     Détails
+                                </th>
+                                <th>
+                                    Editer
                                 </th>
                             </tr>
                             @foreach($students as $student)
@@ -124,6 +146,46 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <button
+                                                type="button"
+                                                class="btn btn-warning"
+                                                data-toggle="modal"
+                                                data-target="#{{$student->studentNumber}}ModalEditProfile">
+                                            <i class="fa fa-user"></i>
+                                        </button>
+                                        <div class="modal fade" id="{{$student->studentNumber}}ModalEditProfile"
+                                             tabindex="-1" role="dialog"
+                                             aria-labelledby="favoritesModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title"
+                                                            id="favoritesModalLabel">Modifier l'étudiant</h4>
+                                                    </div>
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('edit_student')) !!}
+                                                    {!! BootForm::hidden('user_id')->value($student->user_id) !!}
+                                                    {!! BootForm::text('Numéro étudiant', 'student_number')->value($student->studentNumber) !!}
+                                                    {!! BootForm::text('Nom', 'student_lastname')->value($student->lastname) !!}
+                                                    {!! BootForm::text('Prénom', 'student_firstname')->value($student->firstname) !!}
+                                                    {!! BootForm::text('Email d\'inscription', 'student_email')->value($student->email) !!}
+                                                    {!! BootForm::text('E-mail privé', 'student_private_email')->value($student->privateEmail) !!}
+                                                    {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
+                                                    {!! BootForm::close() !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form action="{{route('studentInfos')}}" method="get">
+                                            <input type="hidden" name="userId" value="{{$student->user_id}}">
+                                            <input type="submit" value="Plus d'informations" class="btn btn-default">
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

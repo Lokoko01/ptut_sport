@@ -20,6 +20,23 @@ class SortsController extends Controller
 
 
         if ($this->validatePassword($data['password'])) {
+
+
+            if ($data['semestre']) {
+                DB::table('backup')->delete();
+
+            }else{
+                $listOfStudentSportS1=DB::table('student_sport')->get();
+                foreach ($listOfStudentSportS1 as $studentSportS1){
+                    DB::table("backup")->insert(['student_id' => $studentSportS1->student_id,
+                        'session_id' => $studentSportS1->session_id,'semester' =>1]);
+                }
+            }
+            //reset des tables
+            DB::table('student_sport')->delete();
+            DB::table('result_weights')->delete();
+
+
             $weights = DB::table('weights')->get();
 
             $firstWishes = DB::table('student_wishes')
@@ -74,10 +91,12 @@ class SortsController extends Controller
                 }
             }
             foreach ($listOfSession as $session) {
+
                 $listOfStudent = DB::table('result_weights')
                     ->join('student_wishes', 'student_wishes.id', '=', 'result_weights.student_wishes_id')
                     ->where([['session_id', $session->id], ['rank', 1]])
-                    ->orderBy('weight', 'desc')
+                    ->orderBy('weight','DESC')
+                    ->orderBy(DB::raw('RAND()'))
                     ->limit($session->max_seat)
                     ->get();
 
@@ -124,10 +143,12 @@ class SortsController extends Controller
                 }
             }
             foreach ($listOfSession as $session) {
+
                 $listOfStudent = DB::table('result_weights')
                     ->join('student_wishes', 'student_wishes.id', '=', 'result_weights.student_wishes_id')
                     ->where([['session_id', $session->id], ['rank', 2]])
-                    ->orderBy('weight', 'desc')
+                    ->orderBy('weight','DESC')
+                    ->orderBy(DB::raw('RAND()'))
                     ->limit($this->numberRemainingSeats($session->id))
                     ->get();
 
@@ -176,19 +197,29 @@ class SortsController extends Controller
                 }
             }
             foreach ($listOfSession as $session) {
+
+
                 $listOfStudent = DB::table('result_weights')
                     ->join('student_wishes', 'student_wishes.id', '=', 'result_weights.student_wishes_id')
                     ->where([['session_id', $session->id], ['rank', 3]])
-                    ->orderBy('weight', 'desc')
+                    ->orderBy('weight','DESC')
+                    ->orderBy(DB::raw('RAND()'))
                     ->limit($this->numberRemainingSeats($session->id))
                     ->get();
+
+
                 foreach ($listOfStudent as $student) {
                     DB::table("student_sport")->insert(['student_id' => $student->student_id,
                         'session_id' => $session->id]);
 
                 }
             }
+            return redirect(route('home'))
+                ->with('message', "La répartition a été effectué ");
 
+        }else{
+            return redirect(route('home'))
+                ->with('message', "Erreur");
         }
         return redirect(route('home'))
             ->with('message', "La répartition a été effectué ");
@@ -229,4 +260,5 @@ class SortsController extends Controller
         $numberRemainingSeats = $numberSeatsmax[0]->max_seat - $numberSeatsTake;
         return $numberRemainingSeats;
     }
+
 }

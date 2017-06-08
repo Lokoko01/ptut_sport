@@ -26,7 +26,7 @@
                         {!! BootForm::inlineRadio('Homme', 'sex', 'male') !!}
                         {!! BootForm::inlineRadio('Femme', 'sex', 'female') !!}
 
-                        {!! BootForm::email('Email', 'privateEmail') !!}
+                        {!! BootForm::email('Email personnel', 'privateEmail') !!}
                         {!! BootForm::select('Unité de Formation de Recherche', 'ufr')->options($ufrs) !!}
                         {!! BootForm::password('Mot de passe', 'password') !!}
                         {!! BootForm::password('Confirmation du mot de passe', 'password_confirmation') !!}
