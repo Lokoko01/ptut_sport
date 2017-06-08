@@ -514,12 +514,25 @@ class AdminController extends Controller
             ->where('students.user_id', $userId)
             ->get();
 
+        $sessions = DB::table('sessions')
+            ->join('sports', 'sessions.sport_id', '=', 'sports.id')
+            ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
+            ->join('locations', 'sessions.location_id', '=', 'locations.id')
+            ->select(DB::raw('CONCAT(sports.label, " (",timeSlots.dayOfWeek," ", timeSlots.startTime,":" , timeSlots.endTime, ") ",locations.name," (", locations.postCode," ",locations.city, ") ") as session, sessions.id'))
+            ->get();
+
+
+        $sessionsFormated = array();
+        foreach ($sessions as $session) {
+            $sessionsFormated[$session->id] = $session->session;
+        }
 
         return view('admin.student_infos')
             ->with('userInfos', $userInfos)
             ->with('marks', $marks)
             ->with('absences', $absences)
-            ->with('sessions', $sports);
+            ->with('sessions', $sports)
+            ->with('allSessions', $sessionsFormated);
     }
 
     public function editAbsence(Request $request)
@@ -562,5 +575,25 @@ class AdminController extends Controller
         StudentSport::where('student_id', $studentId)->where('session_id', $sessionId)->delete();
 
         return redirect(route('students'))->with('message', 'L\'étudiant à bien été désinscrit');
+    }
+
+    public function affectSession(Request $request)
+    {
+        $sessionId = $request->input('session');
+        $studentId = $request->input('studentId');
+
+
+        if (!empty($sessionId) && !empty($studentId)) {
+           $studentSport = StudentSport::firstOrCreate([
+                    'student_id' => $studentId,
+                    'session_id' => $sessionId
+                ]);
+
+           if($studentSport->wasRecentlyCreated){
+               return redirect(route('students'))->with('message', 'L\'étudiant a bien été inscrit au sport');
+           } else return redirect(route('students'))->with('warning', 'L\'étudiant est déjà inscrit au sport');
+        } else {
+            return redirect(route('students'))->with('error', 'L\'étudiant n\'a pas été inscrit');
+        }
     }
 }

@@ -13,6 +13,12 @@
                             'md' => [5, 4],
                             'lg' => [5, 4]
                         ];
+
+                        $columsSizesLarge = [
+                            'sm' => [2, 9],
+                            'md' => [2, 9],
+                            'lg' => [2, 9]
+                        ]
                         ?>
                         <table class="table">
                             <caption>Absences</caption>
@@ -20,6 +26,7 @@
                                 <th>Date</th>
                                 <th>Sport</th>
                                 <th>Justifiée</th>
+                                <th></th>
                             </tr>
                             @isset($absences)
                             @foreach($absences as $absence)
@@ -36,9 +43,8 @@
                                     <td>
                                         <button
                                                 type="button"
-                                                class="btn btn-primary"
+                                                class="btn btn-warning"
                                                 data-toggle="modal"
-                                                style="background-color: #f39c12; border-color: #d35400"
                                                 data-target="#{{$absence->id}}AbsenceModal">
                                             <i class="fa fa-edit"></i>
                                         </button>
@@ -78,6 +84,7 @@
                                 <th>Note</th>
                                 <th>Sport</th>
                                 <th>Commentaire</th>
+                                <th></th>
                             </tr>
                             @isset($marks)
                             @foreach($marks as $mark)
@@ -88,9 +95,8 @@
                                     <td>
                                         <button
                                                 type="button"
-                                                class="btn btn-primary"
+                                                class="btn btn-warning"
                                                 data-toggle="modal"
-                                                style="background-color: #f39c12; border-color: #d35400"
                                                 data-target="#{{$mark->id}}MarkModal">
                                             <i class="fa fa-edit"></i>
                                         </button>
@@ -128,6 +134,7 @@
                                 <th>Séance</th>
                                 <th>Lieu</th>
                                 <th>Professeur</th>
+                                <th></th>
                             </tr>
                             @isset($sessions)
                             @foreach($sessions as $session)
@@ -139,10 +146,10 @@
                                     <td>
                                         <button
                                                 type="button"
-                                                class="btn btn-primary button-delete"
+                                                class="btn btn-danger"
                                                 data-toggle="modal"
                                                 data-target="#{{$session->id}}SessionModal">
-                                            <i class="fa fa-eraser"></i>
+                                            <i class="fa fa-remove"></i>
                                         </button>
                                         <div class="modal fade" id="{{$session->id}}SessionModal"
                                              tabindex="-1" role="dialog"
@@ -161,7 +168,7 @@
                                                     {!! BootForm::hidden('sessionId')->value($session->id) !!}
                                                     {!! BootForm::hidden('studentId')->value($userInfos->id) !!}
                                                     {!! BootForm::label('Voulez-vraiment supprimer cet étudiant de ce sport ?') !!}
-                                                    {!! BootForm::submit("Supprimer")->class('btn btn-primary button-delete') !!}
+                                                    {!! BootForm::submit("Supprimer")->class('btn btn-danger') !!}
                                                     {!! BootForm::close() !!}
                                                 </div>
                                             </div>
@@ -171,6 +178,37 @@
                             @endforeach
                             @endisset
                         </table>
+                        @isset($allSessions)
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#AddSessionModal">
+                            <i class="fa fa-plus"></i>
+                            Ajouter un sport
+                        </button>
+                        <div class="modal fade" id="AddSessionModal"
+                             tabindex="-1" role="dialog"
+                             aria-labelledby="favoritesModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close"
+                                                data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title"
+                                            id="favoritesModalLabel">Ajouter un sport</h4>
+                                    </div>
+                                    {!! BootForm::openHorizontal($columsSizesLarge)->action(route('affect_session')) !!}
+                                    {!! BootForm::select('Sport', 'session')->options($allSessions)!!}
+                                    {!! BootForm::hidden('studentId')->value($userInfos->id) !!}
+                                    {!! BootForm::submit("Ajouter")->class('btn btn-primary') !!}
+                                    {!! BootForm::close() !!}
+                                </div>
+                            </div>
+                        </div>
+                        @endisset
                     </div>
                 </div>
             </div>

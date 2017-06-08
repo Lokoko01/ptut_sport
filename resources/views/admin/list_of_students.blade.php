@@ -14,9 +14,19 @@
                             {{ session()->get('message_students_of_lyon_2_not_found') }}
                         </div>
                     @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
                     @if(session()->has('ufrAlreadyExist'))
                         <div class="alert alert-warning">
                             {{ session()->get('ufrAlreadyExist') }}
+                        </div>
+                    @endif
+                    @if(session()->has('warning'))
+                        <div class="alert alert-warning">
+                            {{ session()->get('warning') }}
                         </div>
                     @endif
                     <div class="panel-heading">Liste des étudiants - {{ Auth::user()->afficheRole() }}</div>
@@ -67,7 +77,7 @@
                                     Détails
                                 </th>
                                 <th>
-                                    Editer le profil
+                                    Editer
                                 </th>
                             </tr>
                             @foreach($students as $student)
@@ -140,10 +150,9 @@
                                     <td>
                                         <button
                                                 type="button"
-                                                class="btn btn-primary"
+                                                class="btn btn-warning"
                                                 data-toggle="modal"
-                                                data-target="#{{$student->studentNumber}}ModalEditProfile"
-                                                style="background-color: #f39c12; border-color: #d35400">
+                                                data-target="#{{$student->studentNumber}}ModalEditProfile">
                                             <i class="fa fa-user"></i>
                                         </button>
                                         <div class="modal fade" id="{{$student->studentNumber}}ModalEditProfile"
@@ -175,7 +184,7 @@
                                     <td>
                                         <form action="{{route('studentInfos')}}" method="get">
                                             <input type="hidden" name="userId" value="{{$student->user_id}}">
-                                            <input type="submit" value="Plus d'informations">
+                                            <input type="submit" value="Plus d'informations" class="btn btn-default">
                                         </form>
                                     </td>
                                 </tr>

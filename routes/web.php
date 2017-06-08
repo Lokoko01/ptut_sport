@@ -92,4 +92,6 @@ Route::post('/editMark', 'AdminController@editMark')->name('edit_mark');
 
 Route::post('/deleteSession', 'AdminController@deleteSession')->name('delete_session');
 
+Route::post('/affectSession', 'AdminController@affectSession')->name('affect_session');
+
 //Route::post('/editStudentSports', 'AdminController@editStudentSports')->name('edit_student_sports');
