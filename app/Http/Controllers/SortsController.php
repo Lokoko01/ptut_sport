@@ -221,7 +221,8 @@ class SortsController extends Controller
             return redirect(route('home'))
                 ->with('message', "Erreur");
         }
-
+        return redirect(route('home'))
+            ->with('message', "La répartition a été effectué ");
     }
 
     public function validatePassword($passsword)
