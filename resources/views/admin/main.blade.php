@@ -25,9 +25,9 @@
                                 <a href="{{route('add_session')}}" class="btn btn-default">Ajouter une séance</a><br>
                                 <a href="{{ route('students')}}" class="btn btn-default">Afficher la liste des
                                     étudiants</a><br>
-                                <a href="{{ route('students_by_sport_excel')}}" class="btn btn-default">Liste des
+                                <a href="{{ route('students_by_sport_excel_admin')}}" class="btn btn-default">Liste des
                                     étudiants par sport <i class="fa fa-file-excel-o"></i></a><br>
-                                <a href="{{ route('students_by_sport_pdf')}}" class="btn btn-default">Liste des
+                                <a href="{{ route('students_by_sport_pdf_admin')}}" class="btn btn-default">Liste des
                                     étudiants par sport <i class="fa fa-file-pdf-o"></i></a><br>
                                 <a href="{{route('sortsWishes')}}" class="btn btn-default">Lancer l'attribution des
                                     sports</a><br>

@@ -7,6 +7,7 @@ use App\StudentSport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProfessorController extends Controller
 {
@@ -80,7 +81,9 @@ class ProfessorController extends Controller
                 ->with('sessionId', $idSession);
         }
     }
-    public function Message(){
+
+    public function Message()
+    {
         $sessions = DB::table('sessions')
             ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
             ->join('locations', 'sessions.location_id', '=', 'locations.id')
@@ -102,5 +105,102 @@ class ProfessorController extends Controller
             ->with('typeOfUser', $typeOfUser)
             ->with('messages', $messages)
             ->with('sessions', $sessions);
+    }
+
+    public function exportStudentsBySportExcel()
+    {
+        return Excel::create('listes_etudiants_par_sport', function ($excel) {
+            $sports = DB::table('sports')->get();
+
+            foreach ($sports as $sport) {
+                /* Tous les étudiants par sport */
+                $allStudents = DB::table('students')
+                    ->leftJoin('users', 'users.id', '=', 'students.user_id')
+                    ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+                    ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                    ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                    ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+                    ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études,
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
+                    ->where('sports.label', $sport->label)
+                    ->orderBy('users.lastname', 'asc')
+                    ->get();
+
+                $datas = array();
+                foreach ($allStudents as $student) {
+                    $datas[] = (array)$student;
+                }
+
+                $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+
+                    $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                        'Prénom', 'Email_inscription',
+                        'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                    $sheet->row(1, function ($row) {
+                        $row->setBackground('#CCCCCC');;
+                    });
+                    $sheet->fromArray($datas);
+                });
+            }
+        })->download('xls');
+    }
+
+    public function exportStudentsBySportPdf()
+    {
+        return Excel::create('listes_etudiants_par_sport', function ($excel) {
+            $sports = DB::table('sports')->get();
+
+            foreach ($sports as $sport) {
+                /* Tous les étudiants par sport */
+                $allStudents = DB::table('students')
+                    ->leftJoin('users', 'users.id', '=', 'students.user_id')
+                    ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+                    ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                    ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                    ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+                    ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom,
+                               users.email as Email_inscription,
+                               case 
+                                  when students.studyLevel like '1' then '1ère année'
+                                  when students.studyLevel like '2' then '2ème année'
+                                  when students.studyLevel like '3' then '3ème année'
+                                  when students.studyLevel like '4' then '4ème année'
+                                  when students.studyLevel like '5' then '5ème année'
+                               end as Niveau_études,
+                               sports.label as Sport, 
+                               marks.mark as Note, 
+                               marks.comment as Commentaire"))
+                    ->where('sports.label', $sport->label)
+                    ->orderBy('users.lastname', 'asc')
+                    ->get();
+
+                $datas = array();
+                foreach ($allStudents as $student) {
+                    $datas[] = (array)$student;
+                }
+
+                $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+                    $sheet->setOrientation('landscape');
+                    $sheet->setAllBorders('thin');
+                    $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                        'Prénom', 'Email_inscription',
+                        'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                    $sheet->row(1, function ($row) {
+                        $row->setBackground('#CCCCCC');;
+                    });
+                    $sheet->fromArray($datas, null, 'A1', true, true);
+                });
+            }
+        })->download('pdf');
     }
 }
