@@ -75,10 +75,10 @@
     @endif
 
     <div class="content">
-        <img src="images/UDL_logo_couleur-01.png" style="width: 30%;">
-        <div class="title m-b-md">
-            Sport App
-        </div>
+        <img src="images/logo_welcomepage.png" width="70%">
+        {{--<div class="title m-b-md">--}}
+            {{--Sport App--}}
+        {{--</div>--}}
 
         @if (Route::has('login'))
             @if (!Auth::check())
