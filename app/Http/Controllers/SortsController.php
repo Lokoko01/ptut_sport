@@ -33,6 +33,8 @@ class SortsController extends Controller
                 }
             }
             //reset des tables
+            DB::table('absences')->delete();
+            DB::table('marks')->delete();
             DB::table('student_sport')->delete();
             DB::table('result_weights')->delete();
 
