@@ -34,8 +34,9 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/locations','AdminController@locations')->name('location');
     Route::get('/timeSlots','AdminController@timeSlots')->name('timeSlot');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
+    Route::get('/studentInfos', 'AdminController@studentInfos')->name('studentInfos');
     Route::get('/sortsWishes','AdminController@sortsWishes')->name('sortsWishes');
-    });
+});
 
 Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
     Route::get('/choose_sport', 'StudentController@chooseSport')->name('chooseSport');
@@ -87,3 +88,15 @@ Route::post('/professor/addMarks', 'MarkController@addMarks')->name('addMarks');
 Route::post('/newSession', 'AddSessionController@add')->name('register_session');
 
 Route::post('/adminRegister', 'Auth\RegisterAdminController@register')->name('register_admin');
+
+Route::post('/editStudent', 'AdminController@editStudent')->name('edit_student');
+
+Route::post('/editAbsence', 'AdminController@editAbsence')->name('edit_absence');
+
+Route::post('/editMark', 'AdminController@editMark')->name('edit_mark');
+
+Route::post('/deleteSession', 'AdminController@deleteSession')->name('delete_session');
+
+Route::post('/affectSession', 'AdminController@affectSession')->name('affect_session');
+
+//Route::post('/editStudentSports', 'AdminController@editStudentSports')->name('edit_student_sports');
