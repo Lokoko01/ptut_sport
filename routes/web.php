@@ -24,8 +24,8 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/listStudents', 'AdminController@showListOfStudents')->name('students');
     Route::get('/listStudents/search', 'AdminController@showStudentsBySearch')->name('students_by_search');
     Route::get('/downloadExcel/{type}', 'AdminController@downloadExcel');
-    Route::get('/downloadExcel', 'AdminController@exportStudentsBySportExcel')->name('students_by_sport_excel');
-    Route::get('/downloadPdf', 'AdminController@exportStudentsBySportPdf')->name('students_by_sport_pdf');
+    Route::get('/downloadExcel', 'AdminController@exportStudentsBySportExcel')->name('students_by_sport_excel_admin');
+    Route::get('/downloadPdf', 'AdminController@exportStudentsBySportPdf')->name('students_by_sport_pdf_admin');
     Route::get('/assignnote','AdminController@assignnote');
     Route::get('/addSession', 'AdminController@addsession')->name('add_session');
     Route::get('/addAdmin', 'AdminController@addAdmin')->name('add_admin');
@@ -46,6 +46,8 @@ Route::post('/addWishesToStudent','WishesController@addWishesToStudent')->name('
 
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
+    Route::get('/downloadExcel', 'ProfessorController@exportStudentsBySportExcel')->name('students_by_sport_excel_prof');
+    Route::get('/downloadPdf', 'ProfessorController@exportStudentsBySportPdf')->name('students_by_sport_pdf_prof');
     Route::get('/assignMark', 'ProfessorController@mark')->name("assignMark");
     Route::post('/getStudentsBySessions', 'ProfessorController@getStudentsBySessions')->name("getStudentsBySessions");
     Route::get('/main', function(){
