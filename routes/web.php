@@ -48,6 +48,7 @@ Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
     Route::get('/assignMark', 'ProfessorController@mark')->name("assignMark");
     Route::post('/getStudentsBySessions', 'ProfessorController@getStudentsBySessions')->name("getStudentsBySessions");
+    Route::get('/message','ProfessorController@Message')->name('messageProfessor');
     Route::get('/main', function(){
         return view('professor.main');
     });
@@ -61,7 +62,9 @@ Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
 
 Route::post('/addMessage', 'MessageController@addMessage')->name('addMessage');
+Route::post('/addMessage', 'MessageProfessorController@addMessage')->name('addMessage');
 Route::post('/deleteMessage', 'MessageController@deleteMessage')->name('deleteMessage');
+Route::post('/deleteMessageProfessor', 'MessageProfessorController@deleteMessage')->name('deleteMessageProfessor');
 
 Route::post('/sortsWishesConfirm', 'SortsController@validateSorts')->name('sortsWishesConfirm');
 
