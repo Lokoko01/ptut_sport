@@ -20,7 +20,6 @@ class CreateLocationsTable extends Migration
             $table->string('streetName');
             $table->string('streetNumber');
             $table->string('city');
-            $table->string('name');
             $table->timestamps();
         });
     }
