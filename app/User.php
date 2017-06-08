@@ -32,6 +32,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
     public function isStudent()
     {
         return $this->hasRole('student');
@@ -39,7 +40,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->hasrole('admin');
+        return $this->hasRole('admin');
     }
 
     public function isProfessor()
@@ -63,12 +64,25 @@ class User extends Authenticatable
             echo "Etudiant";
         }
         if ($this->hasRole('admin')) {
-            echo "Admin";
+            echo "Administrateur";
         }
         if ($this->hasRole('professor')) {
             echo "Professeur";
         }
     }
+    public function ReturnRole()
+    {
+        if ($this->hasRole('student')) {
+            return "Etudiant";
+        }
+        if ($this->hasRole('admin')) {
+            return "Administrateur";
+        }
+        if ($this->hasRole('professor')) {
+            return "Professeur";
+        }
+    }
+
 
     public function afficheStudentID()
     {
@@ -154,6 +168,32 @@ class User extends Authenticatable
 
         } else return "Erreur: impossible de récuperer les notes (problème d'authentification)";
     }
+
+
+
+    public function displayMessage(){
+        $studentId = Auth::user()->student->id;
+        $mySessionsId = DB::table('student_sport')->where('student_id',$studentId)->get();
+
+         $myRole=Auth::user()->ReturnRole();
+         $myRoleMessage=DB::table('roles')->where('display_name',$myRole)->get();
+        foreach ($myRoleMessage as $roleMessage){
+            $myMessage=DB::table('messages')
+                ->where('type_user',$roleMessage->id)
+                ->orWhere('type_user', 'all')->get();
+            foreach ($myMessage as $message){
+                echo "<tr><td>".$message->message."</td></tr>";
+            }
+        }
+        foreach ($mySessionsId as $session){
+
+            $myMessage=DB::table('messages')->where('session_id',$session->session_id)->get();
+          foreach ($myMessage as $message){
+              echo "<tr><td>".$message->message."</td></tr>";
+          }
+        }
+    }
+
 
     public function displayMissings()
     {

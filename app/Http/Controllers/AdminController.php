@@ -443,4 +443,29 @@ class AdminController extends Controller
             
         return view('admin.timeSlots')->with('timeSlots', $timeSlots);
     }
+
+
+    public function Message(){
+        $sessions = DB::table('sessions')
+            ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
+            ->join('locations', 'sessions.location_id', '=', 'locations.id')
+            ->join('sports', 'sessions.sport_id', '=', 'sports.id')
+            ->select('sports.label',
+                'timeSlots.startTime',
+                'timeSlots.endTime',
+                'timeSlots.dayOfWeek',
+                'locations.postCode',
+                'locations.streetName',
+                'locations.city',
+                'locations.name',
+                'sessions.id'
+            )->get();
+        $typeOfUser = DB::table('roles')->get();
+
+        $messages = DB::table('messages')->get();
+        return view('message.addMessage')
+            ->with('typeOfUser', $typeOfUser)
+            ->with('messages', $messages)
+            ->with('sessions', $sessions);
+    }
 }

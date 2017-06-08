@@ -33,6 +33,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/timeSlots','AdminController@timeSlots')->name('timeSlot');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
     Route::get('/sortsWishes','AdminController@sortsWishes');
+    Route::get('/message','AdminController@Message')->name('message');
     });
 
 Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
@@ -55,6 +56,9 @@ Auth::routes();
 Route::post('/ufrRegister', 'UfrController@addUfr')->name('ufrRegister');
 Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
+
+Route::post('/addMessage', 'MessageController@addMessage')->name('addMessage');
+Route::post('/deleteMessage', 'MessageController@deleteMessage')->name('deleteMessage');
 
 Route::post('/sortsWishesConfirm', 'SortsController@validateSorts')->name('sortsWishesConfirm');
 

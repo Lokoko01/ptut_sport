@@ -33,37 +33,14 @@
                                 </table>
                             </div>
                         </div>
-                        {{--<div class="informations-messages flex-div">--}}
-                            {{--<h3>--}}
-                                {{--Informations--}}
-                            {{--</h3>--}}
-                            {{--<table class="main-table">--}}
-                                {{--<tr>--}}
-                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
-                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
-                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
-                                {{--<tr>--}}
-                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
-                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
-                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
-                                {{--<tr>--}}
-                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
-                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
-                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
-                                {{--<tr>--}}
-                                    {{--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a massa sed nibh--}}
-                                        {{--tempor cursus. Vivamus imperdiet congue dolor, eget ultrices elit facilisis et.--}}
-                                        {{--Quisque sed justo odio. Aliquam laoreet.--}}
-                                    {{--</td>--}}
-                                {{--</tr>--}}
-                            {{--</table>--}}
-                        {{--</div>--}}
+                        <div class="informations-messages flex-div">
+                            <h3>
+                                Informations
+                            </h3>
+                            <table class="main-table">
+                                {!! Auth::user()->displayMessage() !!}
+                           </table>
+                        </div>
                     </div>
                 </div>
             </div>
