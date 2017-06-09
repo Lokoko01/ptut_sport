@@ -93,17 +93,25 @@ class AdminController extends Controller
             ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
             ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
             ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
-            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
-                               users.email as Email_inscription,
-                               case 
-                                  when students.studyLevel like '1' then '1ère année'
-                                  when students.studyLevel like '2' then '2ème année'
-                                  when students.studyLevel like '3' then '3ème année'
-                                  when students.studyLevel like '4' then '4ème année'
-                                  when students.studyLevel like '5' then '5ème année'
-                               end as Niveau_études, 
-                               students.privateEmail as Email_privé, 
-                               DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
+            ->leftJoin('ufr', 'ufr.id', '=', 'students.ufr_id')
+            ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, 
+				users.lastname as Nom, 
+				users.firstname as Prénom,
+				case 
+                	when users.sex like 'female' then 'Femme'
+                	when users.sex like 'male' then 'Homme'
+                end as Sexe,  
+                ufr.label as UFR,
+				case 
+                	when students.studyLevel like '1' then '1ère année'
+                	when students.studyLevel like '2' then '2ème année'
+                	when students.studyLevel like '3' then '3ème année'
+                	when students.studyLevel like '4' then '4ème année'
+                	when students.studyLevel like '5' then '5ème année'
+                end as Niveau_études,
+                users.email as Email_inscription,
+                students.privateEmail as Email_privé, 
+                DATE_FORMAT(users.created_at, \"%d-%m-%Y\") as Date_inscription, 
                                sports.label as Sport, 
                                marks.mark as Note, 
                                marks.comment as Commentaire"))
@@ -362,7 +370,7 @@ class AdminController extends Controller
         ) {
             $excel->sheet('liste_etudiants', function ($sheet) use ($dataAll) {
                 $sheet->row(1, ['Numéro_étudiant', 'Nom',
-                    'Prénom', 'Email_inscription',
+                    'Prénom', 'Sexe', 'UFR', 'Email_inscription',
                     'Niveau_études', 'Email_privé',
                     'Date_inscription', 'Sport', 'Note', 'Commentaire']);
                 $sheet->row(1, function ($row) {
