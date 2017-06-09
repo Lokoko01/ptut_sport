@@ -532,7 +532,7 @@ class AdminController extends Controller
             )->get();
         $typeOfUser = DB::table('roles')->get();
 
-        $messages = DB::table('messages')->orderBy('created_at', 'desc')->get();
+        $messages = DB::table('messages')->orderBy('created_at', 'desc')->paginate(5);
         return view('message.addMessage')
             ->with('typeOfUser', $typeOfUser)
             ->with('messages', $messages)
