@@ -22,7 +22,7 @@
                             'md' => [4, 6]
                         ];
                         ?>
-                        {!! BootForm::openHorizontal($columnSizes)->action(route('add_session')) !!}
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('register_session')) !!}
                         {!! BootForm::select('Sport', 'sport')->options($sports) !!}
                         {!! BootForm::select('Créneau', 'timeSlot')->options($timeSlots) !!}
                         {!! BootForm::select('Professeur', 'professor')->options($professors) !!}
