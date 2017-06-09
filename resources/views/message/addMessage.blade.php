@@ -10,7 +10,7 @@
                             {{ session()->get('message') }}
                         </div>
                     @endif
-                    <div class="panel-heading">Envoie de message - {{ Auth::user()->afficheRole() }}</div>
+                    <div class="panel-heading">Envoi de message - {{ Auth::user()->afficheRole() }}</div>
                     <div class="panel-body">
                         <?php
                         $columnSizes = [
@@ -19,33 +19,41 @@
                             'lg' => [5, 4]
                         ];
                         ?>
-                            {!! BootForm::openHorizontal($columnSizes)->action(route('addMessage')) !!}
-                            <select name="select_sessions">
-                                <option value="0">Selectionnez votre séance</option>
-                                @foreach($sessions as $session)
-                                        <option value="{{$session->id}}">{{$session->label}}
-                                            - {{$session->dayOfWeek}} {{$session->startTime}} : {{$session->endTime}}
-                                            - {{$session->name}} ({{$session->city}})
-                                        </option>
-                                @endforeach
-                            </select>
-                            <select name="select_user">
-                                <option value="0">Selectionnez votre type utilisateur</option>
-                                @foreach($typeOfUser as $type)
-                                        <option value="{{$type->id}}">{{$type->display_name}}</option>
-                                @endforeach
-                                <option value="all">Tout les utilisateurs</option>
-                            </select>
+                        {!! BootForm::openHorizontal($columnSizes)->action(route('addMessage')) !!}
+                        <h4>Choisir les destinataires</h4>
+                        <select name="select_sessions">
+                            <option value="0">Par séance</option>
+                            @foreach($sessions as $session)
+                                <option value="{{$session->id}}">{{$session->label}}
+                                    - {{$session->dayOfWeek}} {{$session->startTime}} : {{$session->endTime}}
+                                    - {{$session->name}} ({{$session->city}})
+                                </option>
+                            @endforeach
+                        </select>
                             <br>
-                            <h4>Message</h4>
+                            et/ou
                             <br>
-                            <textarea name="message" rows="4" cols="50" maxlength="250">
+                        <select name="select_user">
+                            <option value="0">Par type utilisateur</option>
+                            @foreach($typeOfUser as $type)
+                                <option value="{{$type->id}}">{{$type->display_name}}</option>
+                            @endforeach
+                            <option value="all">Tout les utilisateurs</option>
+                        </select>
+                        <br>
+                        <h4>Message</h4>
+                        <br>
+                        <textarea name="message" rows="4" cols="50" maxlength="250" style="width: 100%">
                             </textarea>
-                            {!! BootForm::submit("Envoyer le message")->class('btn btn-success') !!}
-                            {!! BootForm::close() !!}
-                            <table><tbody>
-                        @foreach($messages as $message)
+                        {!! BootForm::submit("Envoyer le message")->class('btn btn-success') !!}
+                        {!! BootForm::close() !!}
+                        <table class="main-table">
+                            <tbody>
+                            @foreach($messages as $message)
                                 <tr>
+                                    <td>
+                                        {{$message->created_at}}
+                                    </td>
                                     <td>
                                         {{$message->message}}
                                     </td>
@@ -85,8 +93,8 @@
                                     </td>
                                 </tr>
                             @endforeach
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

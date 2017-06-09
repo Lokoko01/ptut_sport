@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
     Route::get('/locations','AdminController@locations')->name('location');
     Route::get('/timeSlots','AdminController@timeSlots')->name('timeSlot');
     Route::get('/ufr','AdminController@ufr')->name('Ufr');
-    Route::get('/message','AdminController@Message')->name('message');
+    Route::get('/message','AdminController@Message')->name('admin_message');
     Route::get('/studentInfos', 'AdminController@studentInfos')->name('studentInfos');
     Route::get('/sortsWishes','AdminController@sortsWishes')->name('sortsWishes');
 });
@@ -50,7 +50,7 @@ Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
     Route::get('/downloadPdf', 'ProfessorController@exportStudentsBySportPdf')->name('students_by_sport_pdf_prof');
     Route::get('/assignMark', 'ProfessorController@mark')->name("assignMark");
     Route::post('/getStudentsBySessions', 'ProfessorController@getStudentsBySessions')->name("getStudentsBySessions");
-    Route::get('/message','ProfessorController@Message')->name('messageProfessor');
+    Route::get('/message','ProfessorController@Message')->name('professor_message');
     Route::get('/main', function(){
         return view('professor.main');
     });
@@ -64,9 +64,8 @@ Route::post('/updateUfr', 'UfrController@updateUfr')->name('updateUfr');
 Route::post('/deleteUfr', 'UfrController@deleteUfr')->name('deleteUfr');
 
 Route::post('/addMessage', 'MessageController@addMessage')->name('addMessage');
-Route::post('/addMessage', 'MessageProfessorController@addMessage')->name('addMessage');
+Route::post('/addMessageProfessor', 'MessageProfessorController@addMessage')->name('addMessageProfessor');
 Route::post('/deleteMessage', 'MessageController@deleteMessage')->name('deleteMessage');
-Route::post('/deleteMessageProfessor', 'MessageProfessorController@deleteMessage')->name('deleteMessageProfessor');
 
 Route::post('/sortsWishesConfirm', 'SortsController@validateSorts')->name('sortsWishesConfirm');
 

@@ -32,7 +32,7 @@
                                 <a href="{{route('sortsWishes')}}" class="btn btn-default">Lancer l'attribution des
                                     sports</a><br>
                                 <a href="{{ route('home') }}" class="btn btn-default" disabled>RAZ de l'année</a><br>
-                                <a href="{{ route('message') }}" class="btn btn-default">Envoyer un message</a><br>
+                                <a href="{{ route('admin_message') }}" class="btn btn-default">Envoyer un message</a><br>
                             </div>
                             <div class="informations-messages flex-div">
                                 <h3>

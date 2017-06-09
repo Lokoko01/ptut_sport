@@ -25,6 +25,7 @@
 
 .main-table td {
     padding: 7px;
+    border-left: 1px dotted #adadad;
 }
 
 /*professor home page*/

@@ -100,10 +100,8 @@ class ProfessorController extends Controller
             )->get();
         $typeOfUser = DB::table('roles')->get();
 
-        $messages = DB::table('messages')->get();
         return view('message.addMessageProfessor')
             ->with('typeOfUser', $typeOfUser)
-            ->with('messages', $messages)
             ->with('sessions', $sessions);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Message;
+use App\MessageInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -16,8 +17,9 @@ class MessageController extends Controller
             ['select_sessions', 'select_user', 'message']);
 
 
+
         if ($data['select_sessions'] == 0 && $data['select_user'] == 0) {
-            return redirect('/professor/message')->with('message', 'Il faut choisoir au moins un critère');
+            return redirect(route('admin_message'))->with('message', 'Il faut choisir au moins un critère');
         }
 
 
@@ -44,20 +46,22 @@ class MessageController extends Controller
 
 
         if ($data['message']) {
-            DB::table("messages")->insert(['session_id' => $data['select_sessions'],
-                'type_user' => $data['select_user'], 'message' => $data['message']]);
-            return redirect('/admin/message')->with('message', 'Message envoyé.');
+            MessageInformation::create([
+                'message' => $data['message'],
+                'session_id' => $data['select_sessions'],
+                'type_user' => $data['select_user']
+            ]);
+            return redirect(route('admin_message'))->with('message', 'Message envoyé.');
         } else {
-            return redirect('/admin/message')->with('message', 'Message vide');
+            return redirect(route('admin_message'))->with('message', 'Message vide');
         }
     }
 
     public function deleteMessage(Request $request)
     {
         $data = ['messageId' => $request->input('messageId')];
-        DB::table('messages')->where('id', $data['messageId'])->delete();
-        return redirect('/admin/message')->with('message', 'Le message a été supprimé.');
-
+        MessageInformation::destroy($data['messageId']);
+        return redirect(route('admin_message'))->with('message', 'Le message a été supprimé.');
     }
 
     public function getRoleUser($userId){
