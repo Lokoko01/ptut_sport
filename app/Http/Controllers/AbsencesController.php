@@ -44,6 +44,6 @@ class AbsencesController extends Controller
                 'date' => $date
             ]);
         }
-        return redirect(route('home'))->with('message', 'L\'appel à été fait');
+        return redirect(route('home'))->with('message', 'L\'appel a été fait');
     }
 }
