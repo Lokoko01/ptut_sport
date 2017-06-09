@@ -30,9 +30,9 @@
                                 </option>
                             @endforeach
                         </select>
-                            <br>
-                            et/ou
-                            <br>
+                        <br>
+                        et/ou
+                        <br>
                         <select name="select_user">
                             <option value="0">Par type utilisateur</option>
                             @foreach($typeOfUser as $type)
@@ -95,6 +95,9 @@
                             @endforeach
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            {!! $messages->render() !!}
+                        </div>
                     </div>
                 </div>
             </div>

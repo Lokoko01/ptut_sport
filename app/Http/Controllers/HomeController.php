@@ -30,14 +30,18 @@ class HomeController extends Controller
             $myRole = Auth::user()->ReturnRole();
             $myRoleMessage = DB::table('roles')->where('display_name', $myRole)->first();
 
+
+            $query = DB::table('messages')
+                ->where('type_user', $myRoleMessage->id);
             foreach ($sessions as $session) {
-                $myMessages = DB::table('messages')
-                    ->where('type_user', $myRoleMessage->id)
-                    ->orWhere('session_id', $session->session_id)
-                    ->orderBy('created_at')->paginate(10);
+                $query->orWhere('session_id', $session->session_id);
             }
+            $query->orderBy('created_at');
+
+            $myMessages = $query->paginate(10);
             return view('student.main')->with('myMessages', $myMessages);
         }
+
         if (Auth::user()->isProfessor()) {
             $myRole = Auth::user()->ReturnRole();
             $myRoleMessage = DB::table('roles')->where('display_name', $myRole)->first();
@@ -47,6 +51,7 @@ class HomeController extends Controller
                 ->orderBy('created_at')->paginate(10);
             return view('professor.main')->with('myMessages', $myMessages);
         }
+
         if (Auth::user()->isAdmin()) {
             $myMessages = DB::table('messages')
                 ->orderBy('created_at')->paginate(10);
