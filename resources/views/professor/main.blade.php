@@ -20,8 +20,7 @@
                                 Générer les feuilles d'appel <i class="fa fa-file-pdf-o"></i></a><br>
                             <a href="{{ route('assignMark') }}" class="btn btn-default">Rentrer les notes des
                                 étudiants</a><br>
-                            <a href="{{ route('professor_message') }}" class="btn btn-default">Envoyer un message aux
-                                étudiants</a><br>
+                            <a href="{{ route('professor_message') }}" class="btn btn-default">Envoyer un message</a><br>
                         </div>
                         <div class="informations-messages flex-div">
                             <h3>
