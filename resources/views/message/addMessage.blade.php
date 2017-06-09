@@ -52,10 +52,10 @@
                             @foreach($messages as $message)
                                 <tr>
                                     <td>
-                                        {{$message->created_at}}
+                                        {{ Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
                                     </td>
                                     <td>
-                                        {{$message->message}}
+                                        {{ $message->message }}
                                     </td>
                                     <td>
                                         <button

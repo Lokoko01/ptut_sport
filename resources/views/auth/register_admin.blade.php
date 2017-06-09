@@ -29,7 +29,7 @@
                         {!! BootForm::email('Email', 'email') !!}
                         {!! BootForm::password('Mot de passe', 'password') !!}
                         {!! BootForm::password('Confirmation du mot de passe', 'password_confirmation') !!}
-                        {!! BootForm::submit("S'inscrire")->class('btn btn-primary') !!}
+                        {!! BootForm::submit("Inscrire")->class('btn btn-primary') !!}
 
                         {!! BootForm::close() !!}
 
