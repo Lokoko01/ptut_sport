@@ -492,10 +492,11 @@ class AdminController extends Controller
         return view('auth.register_admin');
     }
 
-    public function sortsWishes(){
-       return view('admin.sort_wishes');
-     }
-     
+    public function sortsWishes()
+    {
+        return view('admin.sort_wishes');
+    }
+
     public function locations()
     {
         $locations = DB::table('locations')
@@ -508,12 +509,13 @@ class AdminController extends Controller
     {
         $timeSlots = DB::table('timeSlots')
             ->paginate(10);
-            
+
         return view('admin.timeSlots')->with('timeSlots', $timeSlots);
     }
 
 
-    public function Message(){
+    public function Message()
+    {
         $sessions = DB::table('sessions')
             ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
             ->join('locations', 'sessions.location_id', '=', 'locations.id')
@@ -536,7 +538,7 @@ class AdminController extends Controller
             ->with('messages', $messages)
             ->with('sessions', $sessions);
     }
-  
+
     public function editStudent(Request $request)
     {
         $data = [
@@ -675,32 +677,36 @@ class AdminController extends Controller
 
 
         if (!empty($sessionId) && !empty($studentId)) {
-           $studentSport = StudentSport::firstOrCreate([
-                    'student_id' => $studentId,
-                    'session_id' => $sessionId
-                ]);
+            $studentSport = StudentSport::firstOrCreate([
+                'student_id' => $studentId,
+                'session_id' => $sessionId
+            ]);
 
-           if($studentSport->wasRecentlyCreated){
-               return redirect(route('students'))->with('message', 'L\'étudiant a bien été inscrit au sport');
-           } else return redirect(route('students'))->with('warning', 'L\'étudiant est déjà inscrit au sport');
+            if ($studentSport->wasRecentlyCreated) {
+                return redirect(route('students'))->with('message', 'L\'étudiant a bien été inscrit au sport');
+            } else return redirect(route('students'))->with('warning', 'L\'étudiant est déjà inscrit au sport');
         } else {
             return redirect(route('students'))->with('error', 'L\'étudiant n\'a pas été inscrit');
         }
-    } 
+    }
+
     public function exportStudentsBySportExcel()
     {
-        return Excel::create('listes_etudiants_par_sport', function ($excel) {
-            $sports = DB::table('sports')->get();
+        $sports = DB::table('sports')->get();
 
-            foreach ($sports as $sport) {
-                /* Tous les étudiants par sport */
-                $allStudents = DB::table('students')
-                    ->leftJoin('users', 'users.id', '=', 'students.user_id')
-                    ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
-                    ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
-                    ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
-                    ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
-                    ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
+        if (!empty($sports)) {
+            return Excel::create('listes_etudiants_par_sport', function ($excel) {
+                $sports = DB::table('sports')->get();
+
+                foreach ($sports as $sport) {
+                    /* Tous les étudiants par sport */
+                    $allStudents = DB::table('students')
+                        ->leftJoin('users', 'users.id', '=', 'students.user_id')
+                        ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+                        ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                        ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                        ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+                        ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom, 
                                users.email as Email_inscription,
                                case 
                                   when students.studyLevel like '1' then '1ère année'
@@ -712,43 +718,63 @@ class AdminController extends Controller
                                sports.label as Sport, 
                                marks.mark as Note, 
                                marks.comment as Commentaire"))
-                    ->where('sports.label', $sport->label)
-                    ->orderBy('users.lastname', 'asc')
-                    ->get();
+                        ->where('sports.label', $sport->label)
+                        ->orderBy('users.lastname', 'asc')
+                        ->get();
 
-                $datas = array();
-                foreach ($allStudents as $student) {
-                    $datas[] = (array)$student;
+                    $datas = array();
+                    foreach ($allStudents as $student) {
+                        $datas[] = (array)$student;
+                    }
+
+                    $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+
+                        $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                            'Prénom', 'Email_inscription',
+                            'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                        $sheet->row(1, function ($row) {
+                            $row->setBackground('#CCCCCC');;
+                        });
+                        $sheet->fromArray($datas);
+                    });
                 }
+            })->download('xls');
 
-                $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+        } else {
+            return Excel::create('listes_etudiants_par_sport', function ($excel) {
+                $excel->sheet('liste_etudiants_', function ($sheet) {
 
                     $sheet->row(1, ['Numéro_étudiant', 'Nom',
-                    'Prénom', 'Email_inscription',
-                    'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                        'Prénom', 'Email_inscription',
+                        'Niveau_études', 'Sport', 'Note', 'Commentaire']);
                     $sheet->row(1, function ($row) {
                         $row->setBackground('#CCCCCC');;
                     });
-                    $sheet->fromArray($datas);
+                    $sheet->fromArray(array(
+                        array('Pas de données.')
+                    ));
                 });
-            }
-        })->download('xls');
+            })->download('xls');
+        }
     }
 
     public function exportStudentsBySportPdf()
     {
-        return Excel::create('listes_etudiants_par_sport', function ($excel) {
-            $sports = DB::table('sports')->get();
+        $sports = DB::table('sports')->get();
 
-            foreach ($sports as $sport) {
-                /* Tous les étudiants par sport */
-                $allStudents = DB::table('students')
-                    ->leftJoin('users', 'users.id', '=', 'students.user_id')
-                    ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
-                    ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
-                    ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
-                    ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
-                    ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom,
+        if (!empty($sports)) {
+            return Excel::create('listes_etudiants_par_sport', function ($excel) {
+                $sports = DB::table('sports')->get();
+
+                foreach ($sports as $sport) {
+                    /* Tous les étudiants par sport */
+                    $allStudents = DB::table('students')
+                        ->leftJoin('users', 'users.id', '=', 'students.user_id')
+                        ->leftJoin('student_sport', 'student_sport.student_id', '=', 'students.id')
+                        ->leftJoin('marks', 'marks.student_sport_id', '=', 'student_sport.id')
+                        ->leftJoin('sessions', 'sessions.id', '=', 'student_sport.session_id')
+                        ->leftJoin('sports', 'sports.id', '=', 'sessions.sport_id')
+                        ->select(DB::raw("distinct students.studentNumber as Numéro_étudiant, users.lastname as Nom, users.firstname as Prénom,
                                users.email as Email_inscription,
                                case 
                                   when students.studyLevel like '1' then '1ère année'
@@ -760,27 +786,44 @@ class AdminController extends Controller
                                sports.label as Sport, 
                                marks.mark as Note, 
                                marks.comment as Commentaire"))
-                    ->where('sports.label', $sport->label)
-                    ->orderBy('users.lastname', 'asc')
-                    ->get();
+                        ->where('sports.label', $sport->label)
+                        ->orderBy('users.lastname', 'asc')
+                        ->get();
 
-                $datas = array();
-                foreach ($allStudents as $student) {
-                    $datas[] = (array)$student;
-                }
+                    $datas = array();
+                    foreach ($allStudents as $student) {
+                        $datas[] = (array)$student;
+                    }
 
-                $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
-                    $sheet->setOrientation('landscape');
-                    $sheet->setAllBorders('thin');
-                    $sheet->row(1, ['Numéro_étudiant', 'Nom',
-                    'Prénom', 'Email_inscription',
-                    'Niveau_études', 'Sport', 'Note', 'Commentaire']);
-                    $sheet->row(1, function ($row) {
-                        $row->setBackground('#CCCCCC');;
+                    $excel->sheet('liste_etudiants_' . $sport->label, function ($sheet) use ($datas) {
+                        $sheet->setOrientation('landscape');
+                        $sheet->setAllBorders('thin');
+                        $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                            'Prénom', 'Email_inscription',
+                            'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                        $sheet->row(1, function ($row) {
+                            $row->setBackground('#CCCCCC');;
+                        });
+                        $sheet->fromArray($datas, null, 'A1', true, true);
                     });
-                    $sheet->fromArray($datas, null, 'A1', true, true);
-                });
+                }
+            })->download('pdf');
+
+        } else {
+                return Excel::create('listes_etudiants_par_sport', function ($excel) {
+                    $excel->sheet('liste_etudiants_', function ($sheet) {
+
+                        $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                            'Prénom', 'Email_inscription',
+                            'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                        $sheet->row(1, function ($row) {
+                            $row->setBackground('#CCCCCC');;
+                        });
+                        $sheet->fromArray(array(
+                            array('Pas de données.')
+                        ));
+                    });
+                })->download('pdf');
             }
-        })->download('pdf');
-    }
+        }
 }
