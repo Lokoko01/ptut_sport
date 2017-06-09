@@ -41,6 +41,7 @@ class HomeController extends Controller
             $myMessages = $query->paginate(10);
             return view('student.main')->with('myMessages', $myMessages);
         }
+
         if (Auth::user()->isProfessor()) {
             $myRole = Auth::user()->ReturnRole();
             $myRoleMessage = DB::table('roles')->where('display_name', $myRole)->first();
@@ -50,6 +51,7 @@ class HomeController extends Controller
                 ->orderBy('created_at')->paginate(10);
             return view('professor.main')->with('myMessages', $myMessages);
         }
+
         if (Auth::user()->isAdmin()) {
             $myMessages = DB::table('messages')
                 ->orderBy('created_at')->paginate(10);
