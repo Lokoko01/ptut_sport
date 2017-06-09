@@ -2,12 +2,11 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
-use App\Student;
 
 class User extends Authenticatable
 {
@@ -31,12 +30,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-
-    public function isStudent()
-    {
-        return $this->hasRole('student');
-    }
 
     public function isAdmin()
     {
@@ -83,7 +76,6 @@ class User extends Authenticatable
             return "Professeur";
         }
     }
-
 
     public function afficheStudentID()
     {
@@ -141,6 +133,17 @@ class User extends Authenticatable
         } else return "Erreur: impossible de récupérer les sports (problème d'authentification)";
     }
 
+    private function _haveSport($studentId)
+    {
+        $sports = DB::table('student_sport')
+            ->select('*')
+            ->where('student_id', '=', $studentId)
+            ->get();
+
+        if (empty($sports->all())) {
+            return false;
+        } else return true;
+    }
 
     public function displayMarks()
     {
@@ -170,36 +173,10 @@ class User extends Authenticatable
         } else return "Erreur: impossible de récuperer les notes (problème d'authentification)";
     }
 
-
-    public function displayMessage()
+    public function isStudent()
     {
-
-       if($this->isStudent()){
-           $studentId = Auth::user()->student->id;
-           $mySessionsId = DB::table('student_sport')->where('student_id', $studentId)->get();
-           foreach ($mySessionsId as $session) {
-
-               $myMessage = DB::table('messages')->where('session_id', $session->session_id)->get();
-               foreach ($myMessage as $message) {
-                   echo "<tr><td>" . $message->message . "</td></tr>";
-               }
-       }
-
-
-        $myRole = Auth::user()->ReturnRole();
-        $myRoleMessage = DB::table('roles')->where('display_name', $myRole)->get();
-        foreach ($myRoleMessage as $roleMessage) {
-            $myMessage = DB::table('messages')
-                ->where('type_user', $roleMessage->id)
-                ->orWhere('type_user', 'all')->get();
-            foreach ($myMessage as $message) {
-                echo "<tr><td>" . $message->message . "</td></tr>";
-            }
-        }
-
-        }
+        return $this->hasRole('student');
     }
-
 
     public function displayMissings()
     {
@@ -249,18 +226,6 @@ class User extends Authenticatable
             ->get();
 
         if (empty($wishes->all())) {
-            return false;
-        } else return true;
-    }
-
-    private function _haveSport($studentId)
-    {
-        $sports = DB::table('student_sport')
-            ->select('*')
-            ->where('student_id', '=', $studentId)
-            ->get();
-
-        if (empty($sports->all())) {
             return false;
         } else return true;
     }

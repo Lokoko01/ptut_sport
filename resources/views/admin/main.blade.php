@@ -39,8 +39,20 @@
                                     Informations
                                 </h3>
                                 <table class="main-table">
-                                    {!! Auth::user()->displayMessage() !!}
+                                    @foreach($myMessages as $message)
+                                        <tr>
+                                            <td>
+                                                {{ Carbon\Carbon::parse($message->created_at)->format('d/m/Y') }}
+                                            </td>
+                                            <td>
+                                                {{ $message->message }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </table>
+                                <div class="text-center">
+                                    {!! $myMessages->render() !!}
+                                </div>
                             </div>
                         </div>
                     </div>
