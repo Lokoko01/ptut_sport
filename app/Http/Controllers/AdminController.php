@@ -694,7 +694,7 @@ class AdminController extends Controller
     {
         $sports = DB::table('sports')->get();
 
-        if (!($sports)->isEmpty()) {
+        if (!$sports->isEmpty()) {
             return Excel::create('listes_etudiants_par_sport', function ($excel) {
                 $sports = DB::table('sports')->get();
 
@@ -762,7 +762,7 @@ class AdminController extends Controller
     {
         $sports = DB::table('sports')->get();
 
-        if (!($sports)->isEmpty()) {
+        if (!$sports->isEmpty()) {
             return Excel::create('listes_etudiants_par_sport', function ($excel) {
                 $sports = DB::table('sports')->get();
 
