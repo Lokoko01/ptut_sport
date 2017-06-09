@@ -5,6 +5,10 @@
 </head>
 <body>
     Bonjour {{$contact['studentEmail']}},
-    <p>Pour vous inscrire veuillez <a href="http://2017-gestionsport.iutinfobourg.fr/register/{{$contact['studentEmail']}}/{{$contact['token']}}">cliquer ici</a>.</p>
+    <p>Pour vous inscrire veuillez <a href={{$contact['route']}}>cliquer ici</a>.</p>
+
+{{--C'est ici pour modifier le template d'email de préinscription. Il faut mettre un template au format HTML.--}}
+{{--Le lien vers le formulaire d'inscription est {{$contact['route']}},
+il est impéritf de le garder dans l'email pour que les étiduants puissent s'inscrire (voir l'exemple actuel).--}}
 </body>
 </html>

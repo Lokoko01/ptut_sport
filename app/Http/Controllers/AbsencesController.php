@@ -44,6 +44,6 @@ class AbsencesController extends Controller
                 'date' => $date
             ]);
         }
-        return view('professor.main');
+        return redirect(route('home'))->with('message', 'L\'appel à été fait');
     }
 }

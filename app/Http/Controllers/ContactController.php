@@ -29,6 +29,7 @@ class ContactController extends Controller
             return redirect('preregister')->with('error', 'Un email a déjà été envoyé, vérfiez votre boite mail ou contactez l\'admin. Nous ne pouvons pas vous envoyer un deuxième email.');
         }
 
+        $data['route'] = route('register_with_token', ['studentEmail'=> $data['studentEmail'], 'token' => $data['token']]);
 
         Preregister::create([
             'email' => $data['studentEmail'],

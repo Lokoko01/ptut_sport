@@ -5,6 +5,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
+                    @if(session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
                     <div class="panel-heading">Accueil - Professeur</div>
                     <div class="panel-body panel-professor panel-home">
                         <div class="button-professor flex-div">
