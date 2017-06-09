@@ -16,9 +16,9 @@ class CreateStudentSportTable extends Migration
         Schema::create('student_sport', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->integer('session_id')->unsigned();
-            $table->foreign('session_id')->references('id')->on('sessions');
+            $table->foreign('session_id')->references('id')->on('sessions')->onDelete('cascade');
             $table->timestamps();
         });
     }

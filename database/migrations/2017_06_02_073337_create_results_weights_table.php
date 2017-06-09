@@ -16,9 +16,9 @@ class CreateResultsWeightsTable extends Migration
         Schema::create('result_weights', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->integer('student_wishes_id')->unsigned();
-            $table->foreign('student_wishes_id')->references('id')->on('student_wishes');
+            $table->foreign('student_wishes_id')->references('id')->on('student_wishes')->onDelete('cascade');
             $table->integer('weight');
             $table->timestamps();
         });
