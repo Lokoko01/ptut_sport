@@ -18,18 +18,17 @@
                                 <a href="{{route('add_professor')}}" class="btn btn-default">Ajouter un
                                     professeur</a><br>
                                 <a href="{{route('add_admin')}}" class="btn btn-default">Ajouter un admin</a><br>
-                                <a href="{{route('sport')}}" class="btn btn-default">Ajouter / Supprimer un
-                                    sport</a><br>
-                                <a href="{{route('location')}}" class="btn btn-default">Ajouter un lieu</a><br>
-                                <a href="{{route('timeSlot')}}" class="btn btn-default">Ajouter un créneau</a><br>
+                                <a href="{{route('sport')}}" class="btn btn-default">Editer les
+                                    sports</a><br>
+                                <a href="{{route('location')}}" class="btn btn-default">Editer les lieux</a><br>
+                                <a href="{{route('timeSlot')}}" class="btn btn-default">Editer les créneaux</a><br>
                                 <a href="{{route('add_session')}}" class="btn btn-default">Ajouter une séance</a><br>
-                                <a href="{{ route('students')}}" class="btn btn-default">Afficher la liste des
-                                    étudiants</a><br>
+                                <a href="{{ route('students')}}" class="btn btn-default">Editer les érutiants</a><br>
                                 <a href="{{ route('students_by_sport_excel_admin')}}" class="btn btn-default">Liste des
                                     étudiants par sport <i class="fa fa-file-excel-o"></i></a><br>
                                 <a href="{{route('sortsWishes')}}" class="btn btn-default">Lancer l'attribution des
                                     sports</a><br>
-                                <a href="{{ route('home') }}" class="btn btn-default" disabled>RAZ de l'année</a><br>
+                                {{--<a href="{{ route('home') }}" class="btn btn-default" disabled>RAZ de l'année</a><br>--}}
                                 <a href="{{ route('admin_message') }}" class="btn btn-default">Envoyer un message</a><br>
                             </div>
                             <div class="informations-messages flex-div">

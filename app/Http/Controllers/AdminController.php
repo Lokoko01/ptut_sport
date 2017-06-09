@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Absence;
 use App\Location;
 use App\Mark;
+use App\Session;
 use App\Sport;
 use App\Student;
 use App\StudentSport;
@@ -480,11 +481,26 @@ class AdminController extends Controller
             $collectionFormatedLocations[$oneLocation->id] = $oneLocation->name . " : " . $oneLocation->streetNumber . " " . $oneLocation->streetName . " " . $oneLocation->postCode . " " . $oneLocation->city;
         }
 
+        $sessions = DB::table('sessions')
+            ->join('sports', 'sessions.sport_id', '=', 'sports.id')
+            ->join('locations', 'sessions.location_id', '=', 'locations.id')
+            ->join('professors', 'sessions.professor_id', '=', 'professors.id')
+            ->join('timeSlots', 'sessions.timeSlot_id', '=', 'timeSlots.id')
+            ->join('users', 'professors.user_id', '=', 'users.id')
+            ->select(DB::raw('sessions.id, 
+            sports.label, 
+            sessions.max_seat,
+            CONCAT(users.firstname, " ", users.lastname) as prof_name,
+            CONCAT(timeSlots.dayOfWeek, " ", timeSlots.startTime, " - ", timeSlots.endTime) as timeSlot,
+            CONCAT(locations.name, " : ", locations.city, " (", locations.postCode, ")") as location
+            '))->get();
+
         return view('admin.addsession')
             ->with('sports', $sports)
             ->with('timeSlots', $collectionFormatedTimeSlots)
             ->with('professors', $collectionFormatedProfessors)
-            ->with('locations', $collectionFormatedLocations);
+            ->with('locations', $collectionFormatedLocations)
+            ->with('sessions', $sessions);
     }
 
     public function addAdmin()
@@ -653,7 +669,7 @@ class AdminController extends Controller
         return redirect(route('students'))->with('message', 'La note a bien été modifiée');
     }
 
-    public function deleteSession(Request $request)
+    public function deallocateSession(Request $request)
     {
         $studentId = $request->input('studentId');
         $sessionId = $request->input('sessionId');
@@ -758,6 +774,8 @@ class AdminController extends Controller
         }
     }
 
+
+    //ne fonctionne pas sur le serveur de prod
 //    public function exportStudentsBySportPdf()
 //    {
 //        $sports = DB::table('sports')->get();
@@ -825,5 +843,7 @@ class AdminController extends Controller
 //                });
 //            })->download('pdf');
 //        }
-//    }
+//
+
+
 }

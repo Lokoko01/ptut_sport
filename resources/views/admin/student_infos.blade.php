@@ -164,7 +164,7 @@
                                                         <h4 class="modal-title"
                                                             id="favoritesModalLabel">Modifier la note</h4>
                                                     </div>
-                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('delete_session')) !!}
+                                                    {!! BootForm::openHorizontal($columnSizes)->action(route('deallocate_session')) !!}
                                                     {!! BootForm::hidden('sessionId')->value($session->id) !!}
                                                     {!! BootForm::hidden('studentId')->value($userInfos->id) !!}
                                                     {!! BootForm::label('Voulez-vraiment supprimer cet étudiant de ce sport ?') !!}

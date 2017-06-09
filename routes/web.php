@@ -103,6 +103,8 @@ Route::post('/editAbsence', 'AdminController@editAbsence')->name('edit_absence')
 
 Route::post('/editMark', 'AdminController@editMark')->name('edit_mark');
 
-Route::post('/deleteSession', 'AdminController@deleteSession')->name('delete_session');
+Route::post('/deallocateSession', 'AdminController@deallocateSession')->name('deallocate_session');
 
 Route::post('/affectSession', 'AdminController@affectSession')->name('affect_session');
+
+Route::post('/deleteSession', 'AddSessionController@deleteSession')->name('delete_session');

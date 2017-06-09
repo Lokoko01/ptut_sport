@@ -14,7 +14,7 @@
                         <div class="alert alert-warning">
                             {{ session()->get('error_message_session') }}
                         </div>
-                     @endif
+                    @endif
                     <div class="panel-heading">Ajout d'une séance</div>
                     <div class="panel-body">
                         <?php
@@ -30,6 +30,27 @@
                         {!! BootForm::text('Nombre de places max', 'max_seat')->attribute('type', 'number')->max('50') !!}
                         {!! BootForm::submit("Ajouter")->class('btn btn-primary') !!}
                         {!! BootForm::close() !!}
+
+                        <table class="table">
+                            <tr>
+                                <th>Sport</th>
+                                <th>Créneau</th>
+                                <th>Professeur</th>
+                                <th>Lieu</th>
+                                <th>Nombre de places max</th>
+                            </tr>
+                            @isset($sessions)
+                            @foreach($sessions as $session)
+                                <tr>
+                                    <td>{{$session->label}}</td>
+                                    <td>{{$session->timeSlot}}</td>
+                                    <td>{{$session->prof_name}}</td>
+                                    <td>{{$session->location}}</td>
+                                    <td>{{$session->max_seat}}</td>
+                                </tr>
+                            @endforeach
+                            @endisset
+                        </table>
                     </div>
                 </div>
             </div>
