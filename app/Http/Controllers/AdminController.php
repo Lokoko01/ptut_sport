@@ -810,20 +810,20 @@ class AdminController extends Controller
             })->download('pdf');
 
         } else {
-                return Excel::create('listes_etudiants_par_sport', function ($excel) {
-                    $excel->sheet('liste_etudiants_', function ($sheet) {
+            return Excel::create('listes_etudiants_par_sport', function ($excel) {
+                $excel->sheet('liste_etudiants_', function ($sheet) {
 
-                        $sheet->row(1, ['Numéro_étudiant', 'Nom',
-                            'Prénom', 'Email_inscription',
-                            'Niveau_études', 'Sport', 'Note', 'Commentaire']);
-                        $sheet->row(1, function ($row) {
-                            $row->setBackground('#CCCCCC');;
-                        });
-                        $sheet->fromArray(array(
-                            array('Pas de données.')
-                        ));
+                    $sheet->row(1, ['Numéro_étudiant', 'Nom',
+                        'Prénom', 'Email_inscription',
+                        'Niveau_études', 'Sport', 'Note', 'Commentaire']);
+                    $sheet->row(1, function ($row) {
+                        $row->setBackground('#CCCCCC');;
                     });
-                })->download('pdf');
-            }
+                    $sheet->fromArray(array(
+                        array('Pas de données.')
+                    ));
+                });
+            })->download('pdf');
         }
+    }
 }
