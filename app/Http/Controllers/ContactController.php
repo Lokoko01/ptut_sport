@@ -18,7 +18,7 @@ class ContactController extends Controller
         ];
 
         $this->validate($request, [
-            'studentEmail' => 'required|email|max:255|regex:/^(\.?\-?[a-z0-9]?)+@((etu\.univ-lyon+[1-2])|(univ-lyon3))\.fr$/'
+            'studentEmail' => 'required|email|max:255|regex:/ ^[a-z0-9](\.?[a-z0-9]){5,}@((etu\.univ-lyon+[1-2])|(univ-lyon3))\.fr$/'
         ]);
 
         $token = uniqid();
