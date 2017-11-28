@@ -32,12 +32,13 @@ class MarkController extends Controller
                 }
 
                 $studentSportId = StudentSport::where('session_id', '=', $session_id)->where('student_id', '=', $values['student_id'])->value('id');
-
-                Mark::create([
-                    'student_sport_id' => $studentSportId,
-                    'mark' => $mark,
-                    'comment' => $values['comment']
-                ]);
+                    if($mark !=null) {
+                        Mark::updateOrCreate([
+                            'student_sport_id' => $studentSportId],
+                            ['mark' => $mark,
+                                'comment' => $values['comment']
+                            ]);
+                    }
             }
         }
         return redirect(route('home'));

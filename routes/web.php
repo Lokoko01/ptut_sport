@@ -19,7 +19,7 @@ Route::get('/preregister/', function () {
     return view('auth.preregister');
 })->name('preregister');
 
-Route::group(['prefix' => 'admin', 'roles' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'roles' => 'admin', 'roles'], function () {
     Route::get('/home', 'AdminController@index');
     Route::get('/listStudents', 'AdminController@showListOfStudents')->name('students');
     Route::get('/listStudents/search', 'AdminController@showStudentsBySearch')->name('students_by_search');
@@ -45,6 +45,8 @@ Route::group(['prefix' => 'student', 'roles' => 'student'], function() {
 Route::post('/addWishesToStudent','WishesController@addWishesToStudent')->name('addWishesToStudent');
 
 Route::group(['prefix' => 'professor', 'roles' => 'professor'], function() {
+    Route::get('/listStudentEdit', 'ProfessorController@listEdit')->name("listStudentEdit");
+    Route::get('/studentInfos', 'ProfessorController@studentInfos')->name('studentInfosProf');
     Route::get('/checkAbsences', 'ProfessorController@check')->name("checkAbsences");
     Route::get('/downloadExcel', 'ProfessorController@exportStudentsBySportExcel')->name('students_by_sport_excel_prof');
     Route::get('/downloadPdf', 'ProfessorController@exportStudentsBySportPdf')->name('students_by_sport_pdf_prof');
@@ -100,8 +102,10 @@ Route::post('/adminRegister', 'Auth\RegisterAdminController@register')->name('re
 Route::post('/editStudent', 'AdminController@editStudent')->name('edit_student');
 
 Route::post('/editAbsence', 'AdminController@editAbsence')->name('edit_absence');
+Route::post('/editAbsenceProf', 'ProfessorController@editAbsence')->name('edit_absence_prof');
 
 Route::post('/editMark', 'AdminController@editMark')->name('edit_mark');
+Route::post('/editMarkProf', 'ProfessorController@editMark')->name('edit_mark_prof');
 
 Route::post('/deleteSession', 'AdminController@deleteSession')->name('delete_session');
 
