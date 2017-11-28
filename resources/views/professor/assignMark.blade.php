@@ -45,11 +45,12 @@
                         @foreach($students as $student)
                             <div style="float: left">
                                 {!! BootForm::hidden('students[' . $loop->index . '][student_id]')->value($student->student_id) !!}
-                                {!! BootForm::text($student->full_name, 'students[' . $loop->index . '][mark]')->attribute('type', 'number')->max(20)->required(true) !!}
+                                        {!! BootForm::text($student->full_name, 'students[' . $loop->index . '][mark]')->attribute('type', 'number')->max(20)->value($student->mark) !!}
                             </div>
                             <div style="margin-bottom: 20px">
-                                {!! Form::textarea('students[' . $loop->index . '][comment]', null, ['class' => 'form-control', 'size' => '20x3', 'placeholder' => 'Commentaire']) !!}
+                                {!! Form::textarea('students[' . $loop->index . '][comment]', $student->comment, ['class' => 'form-control', 'size' => '20x3']) !!}
                             </div>
+
                         @endforeach
                         {!! BootForm::hidden('sessionId')->value($sessionId) !!}
                         {!! BootForm::submit("Ajouter les notes")->class('btn btn-primary') !!}

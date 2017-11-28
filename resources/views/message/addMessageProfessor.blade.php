@@ -21,13 +21,18 @@
                         ?>
                         {!! BootForm::openHorizontal($columnSizes)->action(route('addMessageProfessor')) !!}
                         <h4>Choisir les destinataires</h4>
+
                         <select name="select_sessions">
                             <option value="0">Par séance</option>
                             @foreach($sessions as $session)
+                                @foreach($sessionIdTab as $id)
+                                   @if($id === $session->id){
                                 <option value="{{$session->id}}">{{$session->label}}
                                     - {{$session->dayOfWeek}} {{$session->startTime}} : {{$session->endTime}}
                                     - {{$session->name}} ({{$session->city}})
                                 </option>
+                                }@endif
+                                @endforeach
                             @endforeach
                         </select>
                         <br>
