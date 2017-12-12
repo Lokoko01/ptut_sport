@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class ProfessorController extends Controller
 {
@@ -156,6 +157,15 @@ class ProfessorController extends Controller
         $idSession = $request->input('select_sessions');
         $view = 'professor.' . $request->input('view');
         $sessions = $this->getSessions();
+        $date=null;
+
+        // Récupérer la date du jour
+        if($request->input('isToday')){
+            $date = Carbon::now()->toDateString();
+        } else {
+            $date = $request->input('dateSelector');
+        }
+
 
         if ($idSession == 0 || !isset($idSession)) {
             return view($view)->with('sessions', $sessions);
@@ -165,14 +175,22 @@ class ProfessorController extends Controller
                 ->join('users', 'users.id', '=', 'students.user_id')
                 ->join('ufr', 'ufr.id', '=', 'students.ufr_id')
                 ->leftjoin('marks','marks.student_sport_id','=','student_sport.id')
-                ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name, students.id as student_id, ufr.label as label_ufr,session_id,mark,comment"))
+                ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name, students.id as student_id, ufr.label as label_ufr,session_id,student_sport.id as student_sport_id"))
                 ->where('student_sport.session_id', '=', $idSession)
+                ->orderBy('users.lastname', 'asc')
                 ->get();
+            $absences= DB::table('absences')
+                ->where('absences.date','=',$date)
+                ->select('student_sport_id')
+                ->get()
+                ->all();
             $students = $students->all();
             return view($view)
                 ->with('students', $students)
                 ->with('sessions', $sessions)
-                ->with('sessionId', $idSession);
+                ->with('sessionId', $idSession)
+                ->with('absences',$absences)
+                ->with('date',$date);
         }
     }
 

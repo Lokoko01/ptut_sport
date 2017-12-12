@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Absence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,21 +16,35 @@ class AbsencesController extends Controller
         $data = [
             'check' => $request->input('check'),
             'sessionId' => $request->input('sessionId'),
-            'isToday' => $request->input('isToday'),
-            'dateSelector' => $request->input('dateSelector')
+            'date' => $request->input('date'),
         ];
+
+
+
         // Récupérer l'id du professeur connecté
         $professor = Auth::user()->professor->id;
 
-        // Récupérer la date du jour
-        if($data['isToday']){
-            $date = Carbon::now()->toDateTimeString();
-        } else {
-            $date = $data['dateSelector'];
+
+        $students = DB::table('student_sport')
+            ->join('students', 'students.id', '=', 'student_sport.student_id')
+            ->join('users', 'users.id', '=', 'students.user_id')
+            ->join('ufr', 'ufr.id', '=', 'students.ufr_id')
+            ->select(DB::raw("student_sport.id as student_sport_id"))
+            ->where('student_sport.session_id', '=', $data['sessionId'])
+            ->orderBy('users.lastname', 'asc')
+            ->get();
+
+        foreach ($students as $student){
+                $exists = DB::table('absences')
+                    ->where('student_sport_id', $student->student_sport_id)
+                    ->where('date',$data['date'])
+                    ->first();
+                if($exists){
+                    Absence::where('student_sport_id',$student->student_sport_id)
+                        ->where('date',$data['date'])
+                        ->delete();
+                }
         }
-
-        // Récupérer les valeurs du formulaire
-
 
         // Pour chaque étudiant coché absent
         for ($i = 0; $i < sizeof($data['check']); $i++) {
@@ -39,9 +54,9 @@ class AbsencesController extends Controller
                 ->where('session_id', $data['sessionId'])
                 ->first();
 
-            $studentSport->absence()->create([
+            $studentSport->absence()->updateOrCreate([
                 'isJustified' => 0,
-                'date' => $date
+                'date' => $data['date']
             ]);
         }
         return redirect(route('home'))->with('message', 'L\'appel a été fait');
