@@ -17,7 +17,7 @@ class CreateMarksTable extends Migration
             $table->increments('id');
             $table->integer('student_sport_id')->unsigned();
             $table->foreign('student_sport_id')->references('id')->on('student_sport')->onDelete('cascade');
-            $table->integer('mark');
+            $table->float('mark');
             $table->string('comment')->nullable();
             $table->timestamps();
         });
