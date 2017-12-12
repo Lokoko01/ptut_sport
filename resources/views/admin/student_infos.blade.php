@@ -115,7 +115,7 @@
                                                     </div>
                                                     {!! BootForm::openHorizontal($columnSizes)->action(route('edit_mark')) !!}
                                                     {!! BootForm::hidden('mark_id')->value($mark->id) !!}
-                                                    {!! BootForm::text('Note', 'mark')->value($mark->mark)->type('number')!!}
+                                                    {!! BootForm::text('Note', 'mark')->value($mark->mark)->type('number')->max(20)->min(0)->step('any')!!}
                                                     {!! BootForm::textarea('Commentaire', 'comment')->value($mark->comment) !!}
                                                     {!! BootForm::submit("Valider")->class('btn btn-primary') !!}
                                                     {!! BootForm::close() !!}
