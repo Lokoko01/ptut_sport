@@ -175,7 +175,7 @@ class ProfessorController extends Controller
                 ->join('users', 'users.id', '=', 'students.user_id')
                 ->join('ufr', 'ufr.id', '=', 'students.ufr_id')
                 ->leftjoin('marks','marks.student_sport_id','=','student_sport.id')
-                ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name, students.id as student_id, ufr.label as label_ufr,session_id,student_sport.id as student_sport_id"))
+                ->select(DB::raw("CONCAT(users.lastname,' ',users.firstname) as full_name, students.id as student_id, ufr.label as label_ufr,session_id,student_sport.id as student_sport_id, mark,comment"))
                 ->where('student_sport.session_id', '=', $idSession)
                 ->orderBy('users.lastname', 'asc')
                 ->get();
