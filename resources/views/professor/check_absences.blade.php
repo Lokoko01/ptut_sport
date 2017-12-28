@@ -1,6 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
+    <script type="text/javascript">
+        var datefield=document.createElement("input")
+        datefield.setAttribute("type", "date")
+        if (datefield.type!="date"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+            document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
+        }
+    </script>
+
+    <script>
+        if (datefield.type!="date"){ //if browser doesn't support input type="date", initialize date picker widget:
+            jQuery(function($){ //on document.ready
+                $('#dateSelector').datepicker({
+                    dateFormat: 'dd.mm.yy',
+                    monthNames: ['janv.','févr.', 'mars', 'avr.', 'mai','juin','juil','août','sept.','oct.','nov.','déc'],
+                    dayNames: ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'],
+                    dayNamesMin: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
+                });
+            })
+        }
+    </script>
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -95,6 +117,7 @@
         </div>
     </div>
     <script type="text/javascript">
+
         function displayDate() {
             var otherDate = document.getElementById('otherDate');
             var dateSelector = document.getElementById('dateSelector');
